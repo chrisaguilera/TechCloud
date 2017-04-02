@@ -1,0 +1,28 @@
+body {
+	font-family: 'Montserrat', sans-serif;
+}
+
+.highlight{
+	background-color:yellow; 
+}
+
+#headerDiv{
+	text-align: center;
+}
+
+/*.container-fluid {
+	margin: 0 auto;
+	width: 800px;
+}*/
+
+.content {
+	text-align: center;
+}
+
+#buttondownload {
+	margin-top: 40px;
+}
+
+#abstractContent {
+	margin-top: 40px;
+}

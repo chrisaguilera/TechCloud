@@ -1,0 +1,20 @@
+#headerDiv {
+	text-align: center;
+}
+
+.container-fluid {
+	margin: 0 auto;
+	width: 800px;
+}
+
+#exportButtons{
+	text-align: center;
+}
+
+.iconfloat {
+	float: right;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+}
