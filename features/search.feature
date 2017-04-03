@@ -1,10 +1,10 @@
-Feature: Search
-  In order to see a word cloud
+Feature: Page Traversal
+  In order to traverse between pages
   As a website user
-  I need to be able to search for a word and be directed to the wordcloud page
+  I need to be able to be directed from one page to a new page
 
-  Scenario: Searching for any word
+  Scenario: Search button clicked on index page
     Given I am on "/index.html"
-    When I fill in "search" with "Behavior Driven Development"
+    When I fill in "search" with "Halfond"
     And I press "searchButton"
     Then I should be on "/wordcloud.html"
