@@ -13,3 +13,8 @@ Feature: Page Traversal
     Given I am on "/wordcloud.html"
     When I follow "link"
     Then I should be on "/titleListPage.html"
+
+  Scenario: Paper title clicked on paper title list page
+    Given I am on "/titleListPage.html"
+    When I follow "link"
+    Then I should be on "/abstractPage.html"
