@@ -8,3 +8,8 @@ Feature: Page Traversal
     When I fill in "search" with "Halfond"
     And I press "searchButton"
     Then I should be on "/wordcloud.html"
+
+  Scenario: Word clicked on word cloud page
+    Given I am on "/wordcloud.html"
+    When I follow "link"
+    Then I should be on "/titleListPage.html"
