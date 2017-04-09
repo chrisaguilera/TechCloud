@@ -32,6 +32,7 @@
 	</div>
 
 	<script type="text/javascript">
+	
 		// function checkRadio(){
 		// 	if (document.getElementById('nameRadio').checked){
 		// 		console.log('name is checked');
@@ -42,7 +43,21 @@
 
 		$(document).ready(function(){
 			
+			$(".search-button").click(function() {
+			var inputField = document.getElementById("input-text");
+
+			var request = $.ajax({
+				url: "StoreSearch.php",
+				type: "POST",
+				data: {search : inputField.value},
+				dataType: "text"
+			});
+			request.done(function(msg) {
+				console.log(msg);
+			});
+		})
 		});
+
 	</script>
 </body>
 </html>
