@@ -40,8 +40,19 @@
 		// 	}
 		// }
 
+		function populatePreviousSearches(array){
+			if (array.length != 0){
+				var datalisthtml = '';
+				for (var i = 0; i < array.length; i++){
+					datalisthtml += '<option value="' + array[i] + '">';
+				}
+				console.log(datalisthtml);
+				document.getElementById('previoussearchlist').innerHTML = datalisthtml;
+			}
+		}
+
 		$(document).ready(function(){
-			
+			//populatePreviousSearches();
 		});
 	</script>
 </body>
