@@ -14,7 +14,7 @@
 	<h1 id="mainHeader">Welcome to TechCloud</h1>
 	<div class="container">
 		<div class="form-group">
-			<input class="form-control" id="input-text" list="previoussearchlist" aria-describedby="emailHelp" placeholder="Enter Artist" autocomplete="off"></input>
+			<input class="form-control" id="input-text" list="previoussearchlist" aria-describedby="emailHelp" placeholder="Enter Search Term" autocomplete="off"></input>
 			<datalist id="previoussearchlist"></datalist>
 		</div>
 
