@@ -19,18 +19,23 @@
 	<div class="content">
 		<div class="list-group">
 			<li class="list-group-item">
-				<a id="link" href="abstractPage.html">Paper 1 Title</a>
-				<a href="#" class="icon iconfloat"> <span class="glyphicon glyphicon-download"></span></a>
+				<input type="checkbox">
+				<a href="" value="Paper 1 Title" class="papertitle">Paper 1 Title</a>
+				<a href="" class="icon iconfloat"><span class="glyphicon glyphicon-download" value="Download paper 1"></span></a>
+				<!-- <span class="title" value="Paper 1 Title">Paper 1 Title</span>
+				<span class="glyphicon glyphicon-download pull-right" value="Download paper 1"></span> -->
 			</li>
 
 			<li class="list-group-item">
-				<a href="abstractPage.html">Paper 2 Title</a>
-				<a href="#" class="icon iconfloat"> <span class="glyphicon glyphicon-download"></span></a>
+				<input type="checkbox">
+				<a href="abstractPage.html" value="Paper 2 Title" class="papertitle">Paper 2 Title</a>
+				<a href="" class="icon iconfloat"><span class="glyphicon glyphicon-download" value="Download paper 2"></span></a>
 			</li>
 
 			<li class="list-group-item">
-				<a href="abstractPage.html">Paper 3 Title</a>
-				<a href="#" class="icon iconfloat"> <span class="glyphicon glyphicon-download"></span></a>
+				<input type="checkbox">
+				<a href="abstractPage.html" value="Paper 3 Title" class="papertitle">Paper 3 Title</a>
+				<a href="" class="icon iconfloat"> <span class="glyphicon glyphicon-download" value="Download paper 3"></span></a>
 			</li>
 
 			<!-- <a href="#" class="list-group-item">Paper 1 Title </a>
@@ -39,14 +44,28 @@
 		</div>
 
 		<div id="exportButtons">
-			<button class="btn">Export as PDF</button>
-			<button class="btn">Export as Plain Text</button>
+			<button class="btn" id="exportpdf">Export as PDF</button>
+			<button class="btn" id="exportplaintext">Export as Plain Text</button>
+			<button class="btn" id="generatewordcloud">Generate WordCloud Subset</button>
 		</div>
 	</div>
   </div>
 
   <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/bootstrap.listgroup/1.1.2/listgroup.min.js"></script> -->
+<!--   <script src="https://cdn.jsdelivr.net/bootstrap.listgroup/1.1.2/listgroup.min.js"></script>
+ -->
+  <script>
+  	
+  	$(document).ready(function(){
+  		$('.papertitle').click(function(){
+  			alert($(this).attr('value'));
+  		});
+
+  		$('.glyphicon-download').click(function(){
+  			alert($(this).attr('value'));
+  		});
+  	});
+  </script>
 </body>
 </html>
