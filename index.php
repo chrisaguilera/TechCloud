@@ -41,9 +41,34 @@
 		// 	}
 		// }
 
+		function populatePreviousSearches() {
+
+			var request = $.ajax({
+				url: "GetPrevSearches.php",
+				type: "GET",
+				dataType: "JSON"
+			});
+			request.done(function(msg) {
+				
+				array = msg;
+
+				if (array.length != 0){
+					var datalisthtml = '';
+					for (var i = 0; i < array.length; i++){
+						datalisthtml += '<option value="' + array[i] + '">';
+					}
+					console.log(datalisthtml);
+					document.getElementById('previoussearchlist').innerHTML = datalisthtml;
+				}
+			});
+		}
+
 		$(document).ready(function(){
-			
+
+			populatePreviousSearches();
+
 			$(".search-button").click(function() {
+
 				// Check whether the search is valid before storing
 				var inputField = document.getElementById("input-text");
 
