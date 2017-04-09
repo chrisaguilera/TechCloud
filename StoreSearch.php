@@ -12,11 +12,6 @@ if(!in_array($raw_search, $_SESSION['prevSearches'])) {
 	$_SESSION['prevSearches'][] = $raw_search;
 }
 
-$searches;
-foreach ($_SESSION['prevSearches'] as &$search) {
-	$searches .= $search . " ";
-}
-
-echo $searches;
+echo json_encode($_SESSION['prevSearches']);
 
 ?>

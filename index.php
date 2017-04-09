@@ -49,7 +49,6 @@
 				dataType: "JSON"
 			});
 			request.done(function(msg) {
-				
 				array = msg;
 
 				if (array.length != 0){
@@ -79,7 +78,7 @@
 					dataType: "text"
 				});
 				request.done(function(msg) {
-					console.log(msg);
+					populatePreviousSearches();
 				});
 			})
 		});
