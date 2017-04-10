@@ -3,18 +3,32 @@
 <head>
 	<meta charset="utf-8">
 	<title>TechCloud Home</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-	<link rel="stylesheet" href="css/artistsearchstyle.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/wordcloud.css">
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 </head>
 <body>
-  <h1 id="maindHeader"><center>Title</center><h1>
-  <p id = "something"> </p>
-  <input class="form-control" id="input-text" list="previoussearchlist" aria-describedby="emailHelp" placeholder="Enter Scholar"></input>
-  <datalist id="previoussearchlist"></datalist>
-<center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center>
-<button onclick="myFunction()">click me</button>
+	<div class="container-fluid">
+
+	<div class="header">
+		<h1 id="mainHeader">WordCloud</h1>
+	</div>
+	<div class="content">
+	  	<p id="wordcloudparagraph"></p>
+	  	<div class="form-group">
+	  		<input class="form-control" id="input-text" list="previoussearchlist" aria-describedby="emailHelp" placeholder="Enter Search Term" autocomplete="off">
+	  		<datalist id="previoussearchlist"></datalist>
+	  	</div>
+	  	<div id="buttonclass">
+	  		<button class="btn">Add </button>
+	  		<button class="btn">Search</button>
+	  		<button class="btn" onclick="myFunction();">click me </button>
+	  	</div>
+	</div>
+<!-- <center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center> -->
+<!-- <button onclick="myFunction()">click me</button> -->
 </body>
 <script>
 
@@ -89,7 +103,7 @@
 	        }
 
 	        //console.log(document.getElementById("something"));
-	        document.getElementById("something").appendChild(span);//adding span to element
+	        document.getElementById("wordcloudparagraph").appendChild(span);//adding span to element
 	    }
 			
 

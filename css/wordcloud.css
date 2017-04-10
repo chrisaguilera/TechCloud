@@ -1,0 +1,28 @@
+#mainHeader {
+  text-align: center;
+  /*color: #c53fff;*/
+  margin-top: 50px; 
+  margin-bottom: 50px;
+  font-size: 60px;
+ }
+
+ .btn {
+ 	/*background: #c53fff;*/
+ 	/*color: white;*/
+ 	/*font-size: 20%;*/
+ }
+
+.container-fluid {
+	margin: 0 auto;
+	width: 900px;
+ 	font-family: 'Montserrat', sans-serif;
+}
+
+ body {
+ 	/*background-color: #d9d9d9;*/
+ 	font-family: 'Montserrat', sans-serif;
+ }
+
+#buttonclass {
+	text-align: center;
+}
