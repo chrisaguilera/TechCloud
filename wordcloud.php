@@ -42,7 +42,7 @@
 		html2canvas((div), {
 			onrendered: function(canvas){
 				var img = canvas.toDataURL("image/png");
-				downloadURI("data:" + img, "yourImage.png");
+				downloadURI("data:" + img, "wordcloud.png");
 			}
 		});
 	}

@@ -23,6 +23,10 @@
  	font-family: 'Montserrat', sans-serif;
  }
 
+p {
+	background-color: white;
+}
+
 #buttonclass {
 	text-align: center;
 }
