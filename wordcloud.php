@@ -8,6 +8,9 @@
 	<link rel="stylesheet" href="css/wordcloud.css">
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	<script src="html2canvas.js"></script>
+	<script src="FileSaver.js"></script>
+
 </head>
 <body>
 	<div class="container-fluid">
@@ -24,13 +27,33 @@
 	  	<div id="buttonclass">
 	  		<button class="btn">Add </button>
 	  		<button class="btn">Search</button>
-	  		<button class="btn" onclick="myFunction();">click me </button>
+	  		<button class="btn" onclick="downloadImage();">Download Image</button>
+	  		<button class="btn" onclick="myFunction();">Click Me</button>
 	  	</div>
 	</div>
 <!-- <center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center> -->
 <!-- <button onclick="myFunction()">click me</button> -->
 </body>
 <script>
+
+	function downloadImage() {
+
+		var div = document.getElementById('wordcloudparagraph');
+		html2canvas((div), {
+			onrendered: function(canvas){
+				var img = canvas.toDataURL("image/png");
+				downloadURI("data:" + img, "yourImage.png");
+			}
+		});
+	}
+
+	function downloadURI(uri, name) {
+    	var link = document.createElement("a");
+    	link.download = name;
+    	link.href = uri;
+    	document.body.appendChild(link);
+    	link.click(); 
+	}
 
 	function myFunction() {
 
