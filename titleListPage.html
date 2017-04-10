@@ -15,9 +15,9 @@
 	  	<h3> Associated Papers: </h3>
 	</div>
 
-	
+
 	<div class="content">
-		<div class="list-group">
+		<div id = "list" class="list-group">
 			<li class="list-group-item">
 				<input type="checkbox">
 				<a href="" value="Paper 1 Title" class="papertitle">Paper 1 Title</a>
@@ -48,6 +48,7 @@
 			<button class="btn" id="exportplaintext">Export as Plain Text</button>
 			<button class="btn" id="generatewordcloud">Generate WordCloud Subset</button>
 		</div>
+		<button onclick="newItem()"> click me </button>
 	</div>
   </div>
 
@@ -56,7 +57,7 @@
 <!--   <script src="https://cdn.jsdelivr.net/bootstrap.listgroup/1.1.2/listgroup.min.js"></script>
  -->
   <script>
-  	
+
   	$(document).ready(function(){
   		$('.papertitle').click(function(){
   			alert($(this).attr('value'));
@@ -67,5 +68,37 @@
   		});
   	});
   </script>
+	<script>
+	function newItem() {
+		var li = document.createElement("li");
+		li.className = "list-group-item";
+		var input = document.createElement("input");
+		input.type= "checkbox";
+		var t = document.createTextNode("Test paper"); //creating the text node
+
+		b = document.createElement('a');
+    b.href =  'abstractPage.html';
+		b.innerHTML = " Test this shit";
+
+
+		li.appendChild(input);
+		li.appendChild(b);
+
+		download = document.createElement('a');
+		download.className= "icon iconfloat";
+		download.href="";
+
+		var span = document.createElement('span');
+		span.className="glyphicon glyphicon-download";
+		//span.setAttribute("value", "Test this fucking shit");
+		download.appendChild(span);
+		li.appendChild(download);
+
+
+		document.getElementById("list").appendChild(li);
+
+
+	}
+		</script>
 </body>
 </html>
