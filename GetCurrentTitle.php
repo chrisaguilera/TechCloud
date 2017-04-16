@@ -11,7 +11,10 @@ if(!isset($_SESSION['authors'])) {
 if(!isset($_SESSION['keywords'])) {
 	$_SESSION['keywords'] = [];
 }
+if(!isset($_SESSION['currentTitle'])) {
+	$_SESSION['currentTitle'] = ;
+}
 
-echo json_encode($_SESSION['authors']);
+echo ($_SESSION['currentTitle']);
 
 ?>

@@ -5,6 +5,12 @@ session_start();
 if(!isset($_SESSION['prevSearches'])) {
 	$_SESSION['prevSearches'] = [];
 }
+if(!isset($_SESSION['authors'])) {
+	$_SESSION['authors'] = [];
+}
+if(!isset($_SESSION['keywords'])) {
+	$_SESSION['keywords'] = [];
+}
 
 $raw_search = isset($_POST['search']) ? $_POST['search'] : '';
 
