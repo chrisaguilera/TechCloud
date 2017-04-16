@@ -10,6 +10,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	<script src="html2canvas.js"></script>
 	<script src="FileSaver.js"></script>
+	<script src="IEEEHandler.js"></script>
 
 </head>
 <body>
@@ -33,14 +34,16 @@
 	</div>
 
 
-	<button class="btn" onclick="abstracttest"> kill it</button>
+	<button class="btn" onclick="abstracttest()"> kill it</button>
 <!-- <center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center> -->
 <!-- <button onclick="myFunction()">click me</button> -->
 </body>
 <script>
-function abstracttest() {
-	printResultsForAuthor("Halfond");
-}
+	function abstracttest() {
+		console.log("fuck");
+		printResultsForAuthor("Halfond");
+	}
+
 	function downloadImage() {
 
 		var div = document.getElementById('wordcloudparagraph');
