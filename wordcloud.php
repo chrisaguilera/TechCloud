@@ -31,11 +31,16 @@
 	  		<button class="btn" onclick="myFunction();">Click Me</button>
 	  	</div>
 	</div>
+
+
+	<button class="btn" onclick="abstracttest"> kill it</button>
 <!-- <center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center> -->
 <!-- <button onclick="myFunction()">click me</button> -->
 </body>
 <script>
-
+function abstracttest() {
+	printResultsForAuthor("Halfond");
+}
 	function downloadImage() {
 
 		var div = document.getElementById('wordcloudparagraph');
@@ -52,13 +57,13 @@
     	link.download = name;
     	link.href = uri;
     	document.body.appendChild(link);
-    	link.click(); 
+    	link.click();
 	}
 
 	function myFunction() {
 
 		var arr = [["door", 5], ["building",4] , ["and",4] , ["the",3] , ["boy",3] , ["screamed",2] , ["wolf",2] , ["kobyashi", 2], ["meru",2]];
-	    
+
 	    //Different font sizes
 	    var fontSizes = [ "10px", "20px", "30px", "40px", "50px", "60px", "70px", "80px", "90px", "100px"];
 
@@ -128,7 +133,7 @@
 	        //console.log(document.getElementById("something"));
 	        document.getElementById("wordcloudparagraph").appendChild(span);//adding span to element
 	    }
-			
+
 
 	}
 
@@ -168,7 +173,7 @@
 			dataType: "JSON"
 		});
 		request.done(function(msg) {
-			
+
 			array = msg;
 
 			if (array.length != 0){
