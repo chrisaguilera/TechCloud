@@ -27,3 +27,14 @@ function publishtext(text) {
 	span.appendChild(text);
 	document.getElementById("wordcloudparagraph").appendChild(span);
 }
+
+function getAbstractForDocTitle(title){
+    $.ajax({
+      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
+      dataType: "xml",
+      success: function( response ) {
+        abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+        console.log(abstract);
+      }
+    });
+}
