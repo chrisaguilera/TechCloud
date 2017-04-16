@@ -39,10 +39,11 @@
 <!-- <button onclick="myFunction()">click me</button> -->
 </body>
 <script>
-function abstracttest() {
-	console.log("fuck");
-	printResultsForAuthor("Halfond");
-}
+	function abstracttest() {
+		console.log("fuck");
+		printResultsForAuthor("Halfond");
+	}
+
 	function downloadImage() {
 
 		var div = document.getElementById('wordcloudparagraph');

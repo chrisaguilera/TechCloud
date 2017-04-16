@@ -38,13 +38,13 @@
 
 	<script type="text/javascript">
 
-		// function checkRadio(){
-		// 	if (document.getElementById('nameRadio').checked){
-		// 		console.log('name is checked');
-		// 	} else if (document.getElementById('keywordRadio')){
-		// 		console.log('keywordRadio');
-		// 	}
-		// }
+		function checkRadio(){
+			if (document.getElementById('nameRadio').checked){
+				console.log('name is checked');
+			} else if (document.getElementById('keywordRadio')){
+				console.log('keywordRadio');
+			}
+		}
 
 		printResultsForAuthor("halfond");
 
@@ -75,18 +75,33 @@
 
 			$(".search-button").click(function() {
 
-				// Check whether the search is valid before storing
 				var inputField = document.getElementById("input-text");
 
-				var request = $.ajax({
-					url: "StoreSearch.php",
-					type: "POST",
-					data: {search : inputField.value},
-					dataType: "text"
-				});
-				request.done(function(msg) {
-					populatePreviousSearches();
-				});
+				if (document.getElementById('nameRadio').checked){
+
+					var request = $.ajax({
+						url: "StoreAuthor.php",
+						type: "POST",
+						data: {author : inputField.value},
+						dataType: "text"
+					});
+					request.done(function(msg) {
+						populatePreviousSearches();
+					});
+
+				} else if (document.getElementById('keywordRadio')){
+					var request = $.ajax({
+						url: "StoreKeyword.php",
+						type: "POST",
+						data: {keyword : inputField.value},
+						dataType: "text"
+					});
+					request.done(function(msg) {
+						populatePreviousSearches();
+					});
+				}
+
+
 			})
 		});
 

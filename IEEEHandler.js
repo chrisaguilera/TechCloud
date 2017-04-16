@@ -7,21 +7,21 @@ function printResultsForAuthor(author){
 	    dataType: "xml",
 	    success: function( response ) {
 	      // console.log( response ); // server response
-				//response.get
-				var dict = {};
-				for (var i = 0; i < 5; i++) {
-					text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+		  //response.get
+		  var dict = {};
+		  for (var i = 0; i < 5; i++) {
+			text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
 
-					dict = frequency(text, dict);
-				}
-				var items = Object.keys(dict).map(function(key) {
-		      return [key, dict[key]];
-		    });
-		    items.sort(function(first, second) {
-		      return second[1] - first[1];
-		    });
-		    
-			publishtext(items);
+			dict = frequency(text, dict);
+		  }
+		  var items = Object.keys(dict).map(function(key) {
+		    return [key, dict[key]];
+		  });
+		  items.sort(function(first, second) {
+		    return second[1] - first[1];
+     	  });
+	    
+		  publishtext(items);
 
 	    }
   	});
