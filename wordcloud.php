@@ -10,6 +10,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	<script src="html2canvas.js"></script>
 	<script src="FileSaver.js"></script>
+	<script src="IEEEHandler.js"></script>
 
 </head>
 <body>
@@ -24,23 +25,35 @@
 	  		<input class="form-control" id="input-text" list="previoussearchlist" aria-describedby="emailHelp" placeholder="Enter Search Term" autocomplete="off">
 	  		<datalist id="previoussearchlist"></datalist>
 	  	</div>
+	  	<div class="radio">
+			<form>
+			    <label class="radio-inline">
+			      <input type="radio" name="optradio" id="nameRadio" checked="true">Search by Name
+			    </label>
+			    <label class="radio-inline">
+			      <input type="radio" name="optradio" id="keywordRadio">Search by Keyword Phrase
+			    </label>
+			</form>
+		</div>
 	  	<div id="buttonclass">
 	  		<button class="btn">Add </button>
-	  		<button class="btn">Search</button>
+	  		<button class="search-button btn">Search</button>
 	  		<button class="btn" onclick="downloadImage();">Download Image</button>
 	  		<button class="btn" onclick="myFunction();">Click Me</button>
 	  	</div>
 	</div>
 
 
-	<button class="btn" onclick="abstracttest"> kill it</button>
+	<button class="btn" onclick="abstracttest()"> kill it</button>
 <!-- <center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center> -->
 <!-- <button onclick="myFunction()">click me</button> -->
 </body>
 <script>
-function abstracttest() {
-	printResultsForAuthor("Halfond");
-}
+	function abstracttest() {
+		console.log("fuck");
+		printResultsForAuthor("Halfond");
+	}
+
 	function downloadImage() {
 
 		var div = document.getElementById('wordcloudparagraph');
@@ -193,18 +206,33 @@ function abstracttest() {
 
 		$(".search-button").click(function() {
 
-			// Check whether the search is valid before storing
 			var inputField = document.getElementById("input-text");
 
-			var request = $.ajax({
-				url: "StoreSearch.php",
-				type: "POST",
-				data: {search : inputField.value},
-				dataType: "text"
-			});
-			request.done(function(msg) {
-				populatePreviousSearches();
-			});
+			if (document.getElementById('nameRadio').checked){
+
+				var request = $.ajax({
+					url: "StoreAuthor.php",
+					type: "POST",
+					data: {author : inputField.value},
+					dataType: "text"
+				});
+				request.done(function(msg) {
+					populatePreviousSearches();
+				});
+
+			} else if (document.getElementById('keywordRadio')){
+				var request = $.ajax({
+					url: "StoreKeyword.php",
+					type: "POST",
+					data: {keyword : inputField.value},
+					dataType: "text"
+				});
+				request.done(function(msg) {
+					populatePreviousSearches();
+				});
+			}
+
+
 		})
 	});
 

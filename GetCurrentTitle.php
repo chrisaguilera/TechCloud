@@ -11,13 +11,10 @@ if(!isset($_SESSION['authors'])) {
 if(!isset($_SESSION['keywords'])) {
 	$_SESSION['keywords'] = [];
 }
-
-$raw_search = isset($_POST['search']) ? $_POST['search'] : '';
-
-if(!in_array($raw_search, $_SESSION['prevSearches'])) {
-	$_SESSION['prevSearches'][] = $raw_search;
+if(!isset($_SESSION['currentTitle'])) {
+	$_SESSION['currentTitle'] = ;
 }
 
-echo json_encode($_SESSION['prevSearches']);
+echo ($_SESSION['currentTitle']);
 
 ?>

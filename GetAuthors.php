@@ -12,12 +12,6 @@ if(!isset($_SESSION['keywords'])) {
 	$_SESSION['keywords'] = [];
 }
 
-$raw_search = isset($_POST['search']) ? $_POST['search'] : '';
-
-if(!in_array($raw_search, $_SESSION['prevSearches'])) {
-	$_SESSION['prevSearches'][] = $raw_search;
-}
-
-echo json_encode($_SESSION['prevSearches']);
+echo json_encode($_SESSION['authors']);
 
 ?>

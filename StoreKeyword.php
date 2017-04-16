@@ -12,10 +12,13 @@ if(!isset($_SESSION['keywords'])) {
 	$_SESSION['keywords'] = [];
 }
 
-$raw_search = isset($_POST['search']) ? $_POST['search'] : '';
+$raw_keyword = isset($_POST['keyword']) ? $_POST['keyword'] : '';
 
-if(!in_array($raw_search, $_SESSION['prevSearches'])) {
-	$_SESSION['prevSearches'][] = $raw_search;
+if(!in_array($raw_keyword, $_SESSION['keywords'])) {
+	$_SESSION['keywords'][] = $raw_keyword;
+}
+if(!in_array($raw_keyword, $_SESSION['prevSearches'])) {
+	$_SESSION['prevSearches'][] = $raw_keyword;
 }
 
 echo json_encode($_SESSION['prevSearches']);
