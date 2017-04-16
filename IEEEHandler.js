@@ -7,15 +7,23 @@ function printResultsForAuthor(author){
 	    dataType: "xml",
 	    success: function( response ) {
 	      // console.log( response ); // server response
-		  pdfURL = response.getElementsByTagName("document")[0].getElementsByTagName("pdf")[0]["textContent"];
-		  console.log(pdfURL);
+		  text = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+		  /*console.log(pdfURL);
 		  $.ajax({
 		  	url: pdfURL,
 		  	dataType: "xml",
 		  	success: function(pdf){
 		  		console.log(pdf);
 		  	}
-		  });
+		  });*/
+			publishtext(text);
+
 	    }
   	});
+}
+
+function publishtext(text) {
+	var span  = document.createElement('span');
+	span.appendChild(text);
+	document.getElementById("wordcloudparagraph").appendChild(span);
 }
