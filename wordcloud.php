@@ -10,7 +10,7 @@
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<script src="html2canvas.js"></script>
 	<script src="FileSaver.js"></script>
-	<script src="IEEEHandler.js"></script>
+<script src="IEEEHandler.js"></script>
 
 </head>
 <body>
@@ -39,13 +39,14 @@
 	  		<button class="btn">Add </button>
 	  		<button class="search-button btn">Search</button>
 	  		<button class="btn" onclick="downloadImage();">Download Image</button>
-	  		<button class="btn" onclick="myFunction();">Click Me</button>
+	  		<button class="btn" onclick="myFunction()">Click Me</button>
 	  	</div>
 	</div>
+	<button onclick="populate()"> click this fucker </button>
 <!-- <center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center> -->
 <!-- <button onclick="myFunction()">click me</button> -->
-</body>
-<script>
+
+<script type= "text/javascript">
 
 	function abstractTest(authors) {
 		printResultsForAuthor(authors);
@@ -230,5 +231,5 @@
 	});
 
 </script>
-
+</body>
 </html>

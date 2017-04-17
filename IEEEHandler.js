@@ -1,34 +1,37 @@
 
-function printResultsForAuthor(authors){
+function printResultsForAuthor(name) {
 	var pdfURL;
 	var dict  = {};
+	var items;
+	//show_overlay();
 		$.ajax({
-		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+"halfond",
+				async: false,
+		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+name,
 		    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
 		    dataType: "xml",
 		    success: function( response ) {
-		      // console.log( response ); // server response
-			  //response.get
-			  //var dict = {};
-			  for (var i = 0; i < 5; i++) {
-				text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
-				console.log(text);
-				dict = frequency(text, dict);
-			  }
 
-		    }
+ 				for (var i = 0; i < 5; i++) {
+ 					text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
 
+ 					dict = frequency(text, dict);
+ 				}
+ 				items = Object.keys(dict).map(function(key) {
+ 		      return [key, dict[key]];
+ 		    });
+
+			}
+			//remove_overlay();
 	  	});
 
 
-	var items = Object.keys(dict).map(function(key) {
-		return [key, dict[key]];
-	});
-	items.sort(function(first, second) {
-		return second[1] - first[1];
-	});
+			items.sort(function(first, second) {
+				return second[1] - first[1];
+			});
 
-	publishtext(items);
+			publishtext(items);
+
+
 }
 
 function frequency (text, dict) {
@@ -39,6 +42,7 @@ function frequency (text, dict) {
 			dict[arr[i]] = 1;
 		} else {
 			dict[arr[i]]++;
+			//console.log(dict[arr[i]]);
 
 		}
 	}
