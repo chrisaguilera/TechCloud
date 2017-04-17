@@ -186,37 +186,11 @@ var stop_words = [
 "yourselves"];
 
 var dict  = {};
+var items;
 
 function printResultsForAuthor(authors, index) {
 	var pdfURL;
-<<<<<<< HEAD
-	var dict  = {};
-	for (var j = 0; j < authors.length; j++) {
-		$.ajax({
-		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+authors[j],
-		    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
-		    dataType: "xml",
-		    success: function( response ) {
-		      // console.log( response ); // server response
-			  //response.get
-			  //var dict = {};
-			  for (var i = 0; i < 5; i++) {
-				text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
 
-				dict = frequency(text, dict);
-			  }
-
-		    }
-
-	  	});
-	}
-	var items = Object.keys(dict).map(function(key) {
-		return [key, dict[key]];
-	});
-	items.sort(function(first, second) {
-		return second[1] - first[1];
-=======
-	var items;
 	//show_overlay();
 	var count = 0;
 	$.ajax({
@@ -227,32 +201,29 @@ function printResultsForAuthor(authors, index) {
 	    success: function(response) {
 
 	    	for (var i = 0; i < 5; i++) {
-	    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
-					text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
-					dict = frequency(text, dict);
+		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){	
+		    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
+						text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+						dict = frequency(text, dict);
+					}
 				}
 			}
-
-			items = Object.keys(dict).map(function(key) {
-		    	return [key, dict[key]];
-		    });
-
-		    index++;
-		    if (index < authors.length) {
-		    	printResultsForAuthor(authors, index);
-		    }
+			index++;
+			if (index < authors.length) {
+				printResultsForAuthor(authors, index);
+			} else {
+				items = Object.keys(dict).map(function(key) {
+	    			return [key, dict[key]];
+	    		});
+	    		items.sort(function(first, second) {
+					return second[1] - first[1];
+				});
+				items = items.slice(0, 250);
+				publishtext(items);
+			}
 		}
->>>>>>> 0549f670f02d5f3c752c693fb90fdf74a194dea1
+
 	});
-
-	if (index == authors.length) {
-		items.sort(function(first, second) {
-			return second[1] - first[1];
-		});
-		items = items.slice(0, 250);
-
-		publishtext(items);
-	}
 }
 
 function frequency (text, dict) {
@@ -437,4 +408,3 @@ function keyTermsSearchedDocsWith(word){
 		}
 	});
 }
-
