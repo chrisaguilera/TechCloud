@@ -360,6 +360,36 @@ function getAbstractForDocTitle(title){ // we don't need this, its here just for
 //     });
 // }
 
+function newItem(title, author) {
+		var li = document.createElement("li");
+		li.className = "list-group-item";
+		var input = document.createElement("input");
+		input.type= "checkbox";
+		var t = document.createTextNode("Test paper"); //creating the text node
+
+		b = document.createElement('a');
+		b.href =  'abstractPage.html';
+		b.innerHTML = title +" - " + author;
+
+
+		li.appendChild(input);
+		li.appendChild(b);
+
+		download = document.createElement('a');
+		download.className= "icon iconfloat";
+		download.href="";
+
+		var span = document.createElement('span');
+		span.className="papertitle";
+		span.setAttribute("value", title);
+		download.appendChild(span);
+		li.appendChild(download);
+
+
+		document.getElementById("list").appendChild(li);
+
+	}
+
 function authorsSearchedDocsWith(word){
 	$.ajax({
 		url:"GetAuthors.php",
@@ -376,6 +406,11 @@ function authorsSearchedDocsWith(word){
 						dataType: "xml",
 						success: function (data){
 							console.log(data);
+							for(var i = 0; i < 5; i++){
+								var title = data.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
+								var author = data.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
+								newItem(title, author)
+							}
 						}
 					});
 				}
