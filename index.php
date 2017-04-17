@@ -91,6 +91,7 @@
 						dataType: "text"
 					});
 					request.done(function(msg) {
+						window.location.href = "wordcloud.php";
 						populatePreviousSearches();
 					});
 
@@ -102,6 +103,7 @@
 						dataType: "text"
 					});
 					request.done(function(msg) {
+						window.location.href = "wordcloud.php";
 						populatePreviousSearches();
 					});
 				}
