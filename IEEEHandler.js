@@ -201,9 +201,11 @@ function printResultsForAuthor(authors, index) {
 	    success: function(response) {
 
 	    	for (var i = 0; i < 5; i++) {
-	    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
-					text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
-					dict = frequency(text, dict);
+		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){	
+		    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
+						text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+						dict = frequency(text, dict);
+					}
 				}
 			}
 
