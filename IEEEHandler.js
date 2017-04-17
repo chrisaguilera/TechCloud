@@ -145,7 +145,7 @@ function getListOfTitlesForAuthor(author){ // we don't need this, its here just 
       dataType: "xml",
       success: function( response ) {
       	for(int i=0; i<5; i++){
-      		abstract = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+      		abstract = response.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
         	console.log(abstract);	
       	}
         
