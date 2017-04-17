@@ -439,9 +439,9 @@ function keyTermsSearchedDocsWith(word){
 			var i;
 			for (i in response) {
 				if(response[i] != ""){
-					console.log("http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?querytext="+response[i]+" AND "+word);
+					console.log("http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?querytext=("+response[i]+" AND "+word+")");
 					$.ajax({
-						url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?querytext="+response[i]+" AND "+word,
+						url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?querytext=("+response[i]+" AND "+word,
 						dataType: "xml",
 						success: function (data){
 							console.log(data);
