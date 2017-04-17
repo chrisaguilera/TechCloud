@@ -49,7 +49,8 @@
 		//testing
 		//printResultsForAuthor("halfond");
 		// getListOfTitlesForAuthor("halfond");
-		authorsSearchedDocsWith("love");
+		// authorsSearchedDocsWith("love");
+		keyTermsSearchedDocsWith("optimized");
 
 
 		function populatePreviousSearches() {

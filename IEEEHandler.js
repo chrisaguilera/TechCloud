@@ -390,8 +390,9 @@ function keyTermsSearchedDocsWith(word){
 		url:"GetKeywords.php",
 		type: "GET",
 		dataType:"json",
-		success: function (response) {
-			console.log(response);
+		success: function (response1) {
+			console.log(response1);
+			var response = ["prevention", "localization and search"];
 			var i;
 			for (i in response) {
 				if(response[i] != ""){
