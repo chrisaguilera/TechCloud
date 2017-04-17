@@ -20,7 +20,7 @@
 		<div id = "list" class="list-group">
 			<li class="list-group-item">
 				<input type="checkbox">
-				<a href="" value="Detecting and Localizing Internationalization Presentation Failures in Web Applications" class="papertitle link_cursor">Detecting and Localizing Internationalization Presentation Failures in Web Applications</span>
+				<span value="Detecting and Localizing Internationalization Presentation Failures in Web Applications" class="papertitle link_cursor">Detecting and Localizing Internationalization Presentation Failures in Web Applications</span>
 				<a href="" class="icon iconfloat" onclick="return testFunction();"><span class="glyphicon glyphicon-download" value="Download paper 1"></span></a>
 				<!-- <span class="title" value="Paper 1 Title">Paper 1 Title</span>
 				<span class="glyphicon glyphicon-download pull-right" value="Download paper 1"></span> -->
@@ -60,6 +60,7 @@
 
   	$(document).ready(function(){
   		$('.papertitle').click(function(){
+  			store
   			var title = $(this).attr('value');
   			alert(title);
   			$.ajax({
