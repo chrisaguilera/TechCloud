@@ -71,19 +71,23 @@ function wait(ms){
   }
 }
 	function abstractTest(authors) {
-		move();
+		move(50);
 
-		setTimeout(function(){printResultsForAuthor(authors, 0);}, 900);
 
+		setTimeout(function(){printResultsForAuthor(authors, 0);
+		setTimeout(function(){link.style.display = 'none'; }, 900);
+		}, 900);
+		move(100);
 		var link = document.getElementById('myProgress');
+		//
 		//link.style.display = 'none';
 	}
-	function move() {
+	function move(num) {
     var elem = document.getElementById("myBar");
     var width = 1;
     var id = setInterval(frame, 10);
     function frame() {
-        if (width >= 100) {
+        if (width >= num) {
             clearInterval(id);
         } else {
             width++;
