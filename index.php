@@ -49,7 +49,7 @@
 		//testing
 		//printResultsForAuthor("halfond");
 		// authorDocsWith("test");
-		getListOfTitlesForAuthor("halfond");
+		// getListOfTitlesForAuthor("halfond");
 
 		function populatePreviousSearches() {
 

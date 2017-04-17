@@ -47,8 +47,8 @@
 </body>
 <script>
 
-	function abstractTest(authorName) {
-		printResultsForAuthor(authorName);
+	function abstractTest(authors) {
+		printResultsForAuthor(authors);
 	}
 
 	function downloadImage() {
@@ -193,7 +193,7 @@
 		});
 		request.done(function(msg) {
 			authorArray = msg;
-			abstractTest(authorArray[0]);
+			abstractTest(authorArray);
 			console.log(msg);
 		});
 
