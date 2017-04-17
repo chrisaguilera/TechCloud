@@ -365,30 +365,20 @@ function newItem(title, author) {
 		li.className = "list-group-item";
 		var input = document.createElement("input");
 		input.type= "checkbox";
-		var t = document.createTextNode("Test paper"); //creating the text node
-
-		b = document.createElement('a');
-		b.href =  'abstractPage.html';
-		b.innerHTML = title +" - " + author;
-
 
 		li.appendChild(input);
-		li.appendChild(b);
-
-		download = document.createElement('a');
-		download.className= "icon iconfloat";
-		download.href="";
 
 		var span = document.createElement('span');
-		span.className="papertitle";
+		span.value = title;
+		span.innerHTML = " " + title + " - " + author;
+		span.setAttribute("class", "papertitle link_cursor");
 		span.setAttribute("value", title);
-		download.appendChild(span);
-		li.appendChild(download);
-
+		span.setAttribute("onclick", "clickedPaperTitle(this);");
+		li.appendChild(span);
 
 		document.getElementById("list").appendChild(li);
 
-	}
+}
 
 function authorsSearchedDocsWith(word){
 	$.ajax({

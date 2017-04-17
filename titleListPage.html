@@ -47,7 +47,6 @@
 			<button class="btn" id="exportplaintext">Export as Plain Text</button>
 			<button class="btn" id="generatewordcloud">Generate WordCloud Subset</button>
 		</div>
-		<button onclick=""> click me </button>
 	</div>
   </div>
 
@@ -56,6 +55,22 @@
 <!--   <script src="https://cdn.jsdelivr.net/bootstrap.listgroup/1.1.2/listgroup.min.js"></script>
  -->
   <script>
+
+  	function clickedPaperTitle(element) {
+  		var paperTitle = element.value;
+  		// alert(paperTitle);
+
+		var request = $.ajax({
+			url: "StoreCurrentTitle.php",
+			type: "POST",
+			data: {title : paperTitle},
+			dataType: "text"
+		});
+		request.done(function(msg) {
+			// alert(msg);
+			window.location.href = "abstractPage.html";
+		});
+  	}
 
   	$(document).ready(function(){
   		populateList();
@@ -71,9 +86,7 @@
 				dataType: "text"
 			});
 			request.done(function(msg) {
-				console.log(msg);
 				window.location.href = "abstractPage.html";
-				
 			});
 
   		 	// $.ajax({
