@@ -189,33 +189,7 @@ var dict  = {};
 
 function printResultsForAuthor(authors, index) {
 	var pdfURL;
-<<<<<<< HEAD
-	var dict  = {};
-	for (var j = 0; j < authors.length; j++) {
-		$.ajax({
-		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+authors[j],
-		    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
-		    dataType: "xml",
-		    success: function( response ) {
-		      // console.log( response ); // server response
-			  //response.get
-			  //var dict = {};
-			  for (var i = 0; i < 5; i++) {
-				text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
 
-				dict = frequency(text, dict);
-			  }
-
-		    }
-
-	  	});
-	}
-	var items = Object.keys(dict).map(function(key) {
-		return [key, dict[key]];
-	});
-	items.sort(function(first, second) {
-		return second[1] - first[1];
-=======
 	var items;
 	//show_overlay();
 	var count = 0;
@@ -242,7 +216,7 @@ function printResultsForAuthor(authors, index) {
 		    	printResultsForAuthor(authors, index);
 		    }
 		}
->>>>>>> 0549f670f02d5f3c752c693fb90fdf74a194dea1
+
 	});
 
 	if (index == authors.length) {
@@ -437,4 +411,3 @@ function keyTermsSearchedDocsWith(word){
 		}
 	});
 }
-
