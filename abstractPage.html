@@ -47,12 +47,12 @@
 			      success: function( response ) {
 			        var abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
 			        console.log("abstract is: " + abstract);
-
-			        document.getElementById('abstractContent').innerHTML = abstract;
+			        var newAbstract = abstract.split("the").join('<span class="highlight">' + "the" + '</span>');
+			        document.getElementById('abstractContent').innerHTML = newAbstract;
 			        
 			      },
 			      error: function(xhr, error){
-			      	alert(error + xhr);
+			      	// alert(error + xhr);
 			      }
 		    	});
 			}
