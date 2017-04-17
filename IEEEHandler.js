@@ -2,10 +2,8 @@
 function printResultsForAuthor(authors){
 	var pdfURL;
 	var dict  = {};
-	if (authors.instanceof Array) {
-	for (var j = 0; j < authors.length; j++) {
 		$.ajax({
-		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+authors[j],
+		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+"halfond",
 		    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
 		    dataType: "xml",
 		    success: function( response ) {
@@ -14,34 +12,15 @@ function printResultsForAuthor(authors){
 			  //var dict = {};
 			  for (var i = 0; i < 5; i++) {
 				text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
-
+				console.log(text);
 				dict = frequency(text, dict);
 			  }
 
 		    }
 
 	  	});
-	}
-}
-else {
-	$.ajax({
-			url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+authors,
-			// url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
-			dataType: "xml",
-			success: function( response ) {
-				// console.log( response ); // server response
-			//response.get
-			//var dict = {};
-			for (var i = 0; i < 5; i++) {
-			text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
 
-			dict = frequency(text, dict);
-			}
 
-			}
-
-		});
-}
 	var items = Object.keys(dict).map(function(key) {
 		return [key, dict[key]];
 	});
