@@ -7,6 +7,17 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/wordcloud.css">
+	<style>
+	#myProgress {
+	    width: 100%;
+	    background-color: grey;
+	}
+	#myBar {
+	    width: 1%;
+	    height: 30px;
+	    background-color: green;
+	}
+	</style>
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<script src="html2canvas.js"></script>
 	<script src="FileSaver.js"></script>
@@ -20,6 +31,9 @@
 		<h1 id="mainHeader">WordCloud</h1>
 	</div>
 	<div class="content">
+		<div id="myProgress">
+  <div id="myBar"></div>
+</div>
 	  	<p id="wordcloudparagraph"></p>
 	  	<div class="form-group">
 	  		<input class="form-control" id="input-text" list="previoussearchlist" aria-describedby="emailHelp" placeholder="Enter Search Term" autocomplete="off">
@@ -48,9 +62,36 @@
 
 <script type= "text/javascript">
 
+
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end < start + ms) {
+     end = new Date().getTime();
+  }
+}
 	function abstractTest(authors) {
-		printResultsForAuthor(authors, 0);
+		move();
+
+		setTimeout(function(){printResultsForAuthor(authors, 0);}, 900);
+
+		var link = document.getElementById('myProgress');
+		//link.style.display = 'none';
 	}
+	function move() {
+    var elem = document.getElementById("myBar");
+    var width = 1;
+    var id = setInterval(frame, 10);
+    function frame() {
+        if (width >= 100) {
+            clearInterval(id);
+        } else {
+            width++;
+            elem.style.width = width + '%';
+        }
+    }
+		//wait(5000);
+}
 
 	function downloadImage() {
 
