@@ -9,13 +9,15 @@
 	<link rel="stylesheet" href="css/wordcloud.css">
 	<style>
 	#myProgress {
+		border-radius: 5px;
 	    width: 100%;
-	    background-color: grey;
+	    background-color: lightgrey;
 	}
 	#myBar {
+		border-radius:	5px;
 	    width: 1%;
 	    height: 30px;
-	    background-color: green;
+	    background-color: rgb(0,174,85);
 	}
 	</style>
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
