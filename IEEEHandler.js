@@ -186,11 +186,11 @@ var stop_words = [
 "yourselves"];
 
 var dict  = {};
+var items;
 
 function printResultsForAuthor(authors, index) {
 	var pdfURL;
 
-	var items;
 	//show_overlay();
 	var count = 0;
 	$.ajax({
@@ -208,27 +208,22 @@ function printResultsForAuthor(authors, index) {
 					}
 				}
 			}
-
-			items = Object.keys(dict).map(function(key) {
-		    	return [key, dict[key]];
-		    });
-
-		    index++;
-		    if (index < authors.length) {
-		    	printResultsForAuthor(authors, index);
-		    }
+			index++;
+			if (index < authors.length) {
+				printResultsForAuthor(authors, index);
+			} else {
+				items = Object.keys(dict).map(function(key) {
+	    			return [key, dict[key]];
+	    		});
+	    		items.sort(function(first, second) {
+					return second[1] - first[1];
+				});
+				items = items.slice(0, 250);
+				publishtext(items);
+			}
 		}
 
 	});
-
-	if (index == authors.length) {
-		items.sort(function(first, second) {
-			return second[1] - first[1];
-		});
-		items = items.slice(0, 250);
-
-		publishtext(items);
-	}
 }
 
 function frequency (text, dict) {
