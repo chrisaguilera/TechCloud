@@ -1,6 +1,195 @@
+var stop_words = [
+"",
+"a",
+"also",
+"about",
+"above",
+"after",
+"again",
+"against",
+"all",
+"am",
+"an",
+"and",
+"any",
+"are",
+"aren't",
+"as",
+"at",
+"be",
+"because",
+"been",
+"before",
+"being",
+"below",
+"between",
+"both",
+"but",
+"by",
+"can",
+"can't",
+"cannot",
+"could",
+"couldn't",
+"did",
+"didn't",
+"do",
+"does",
+"doesn't",
+"doing",
+"don't",
+"down",
+"due",
+"during",
+"each",
+"few",
+"for",
+"from",
+"further",
+"had",
+"hadn't",
+"has",
+"hasn't",
+"have",
+"haven't",
+"having",
+"he",
+"he'd",
+"he'll",
+"he's",
+"her",
+"here",
+"here's",
+"hers",
+"herself",
+"him",
+"himself",
+"his",
+"how",
+"how's",
+"i",
+"i'd",
+"i'll",
+"i'm",
+"i've",
+"if",
+"in",
+"into",
+"is",
+"isn't",
+"it",
+"it's",
+"its",
+"itself",
+"let's",
+"made",
+"me",
+"more",
+"most",
+"mustn't",
+"my",
+"myself",
+"no",
+"nor",
+"not",
+"of",
+"off",
+"on",
+"once",
+"only",
+"or",
+"other",
+"ought",
+"our",
+"ours",
+"ourselves",
+"out",
+"over",
+"own",
+"same",
+"shan't",
+"she",
+"she'd",
+"she'll",
+"she's",
+"should",
+"shouldn't",
+"so",
+"some",
+"such",
+"than",
+"that",
+"that's",
+"the",
+"their",
+"theirs",
+"them",
+"themselves",
+"then",
+"there",
+"there's",
+"these",
+"they",
+"they'd",
+"they'll",
+"they're",
+"they've",
+"this",
+"those",
+"through",
+"to",
+"too",
+"under",
+"until",
+"up",
+"use",
+"using",
+"very",
+"via",
+"was",
+"wasn't",
+"will",
+"won't",
+"wont",
+"we",
+"we'd",
+"we'll",
+"we're",
+"we've",
+"were",
+"weren't",
+"what",
+"what's",
+"when",
+"when's",
+"where",
+"where's",
+"which",
+"while",
+"who",
+"who's",
+"whom",
+"why",
+"why's",
+"with",
+"won't",
+"would",
+"wouldn't",
+"you",
+"you'd",
+"you'll",
+"you're",
+"you've",
+"your",
+"yours",
+"yourself",
+"yourselves"];
 
-function printResultsForAuthor(authors){
+var dict  = {};
+
+function printResultsForAuthor(authors, index) {
 	var pdfURL;
+<<<<<<< HEAD
 	var dict  = {};
 	for (var j = 0; j < authors.length; j++) {
 		$.ajax({
@@ -26,21 +215,64 @@ function printResultsForAuthor(authors){
 	});
 	items.sort(function(first, second) {
 		return second[1] - first[1];
+=======
+	var items;
+	//show_overlay();
+	var count = 0;
+	$.ajax({
+		async: false,
+	    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+authors[index],
+	    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
+	    dataType: "xml",
+	    success: function(response) {
+
+	    	for (var i = 0; i < 5; i++) {
+	    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
+					text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+					dict = frequency(text, dict);
+				}
+			}
+
+			items = Object.keys(dict).map(function(key) {
+		    	return [key, dict[key]];
+		    });
+
+		    index++;
+		    if (index < authors.length) {
+		    	printResultsForAuthor(authors, index);
+		    }
+		}
+>>>>>>> 0549f670f02d5f3c752c693fb90fdf74a194dea1
 	});
 
-	publishtext(items);
+	if (index == authors.length) {
+		items.sort(function(first, second) {
+			return second[1] - first[1];
+		});
+		items = items.slice(0, 250);
+
+		publishtext(items);
+	}
 }
 
 function frequency (text, dict) {
+	text = text.toLowerCase();
 	var arr = text.split(/[().,;!?\[\]\n\s]/g);
 	for (var i = 0; i < arr.length; i++) {
-
-		if (!(arr[i] in dict)) {
+		var stop = false;
+	    for (j = 0; j < stop_words.length; j++) {
+	   		if (arr[i] === stop_words[j]) {
+	    		stop = true;
+	    		break;
+	    	}
+	    }
+	    if (!stop) {
+	    	if (!(arr[i] in dict)) {
 			dict[arr[i]] = 1;
-		} else {
-			dict[arr[i]]++;
-
-		}
+			} else {
+				dict[arr[i]]++;
+			}
+	   	}
 	}
 	return dict;
 }
@@ -157,15 +389,52 @@ function getAbstractForDocTitle(title){ // we don't need this, its here just for
 //     });
 // }
 
-function authorDocsWith(word){
+function authorsSearchedDocsWith(word){
 	$.ajax({
 		url:"GetAuthors.php",
 		type: "GET",
 		dataType:"json",
 		success: function (response) {
-			for (author in response) {
-
+			console.log(response);
+			var i;
+			for (i in response) {
+				if(response[i] != ""){
+					console.log("http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+response[i]+"&querytext="+word);
+					$.ajax({
+						url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+response[i]+"&querytext="+word,
+						dataType: "xml",
+						success: function (data){
+							console.log(data);
+						}
+					});
+				}
 			}
 		}
 	});
 }
+
+function keyTermsSearchedDocsWith(word){
+	$.ajax({
+		url:"GetKeywords.php",
+		type: "GET",
+		dataType:"json",
+		success: function (response1) {
+			console.log(response1);
+			var response = ["prevention", "localization and search"];
+			var i;
+			for (i in response) {
+				if(response[i] != ""){
+					console.log("http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?querytext="+response[i]+" AND "+word);
+					$.ajax({
+						url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?querytext="+response[i]+" AND "+word,
+						dataType: "xml",
+						success: function (data){
+							console.log(data);
+						}
+					});
+				}
+			}
+		}
+	});
+}
+
