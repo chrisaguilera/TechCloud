@@ -392,6 +392,7 @@ function newItem(title, author) {
 		span.innerHTML = " " + title + " - " + author;
 		span.setAttribute("class", "papertitle link_cursor");
 		span.setAttribute("value", title);
+		span.style.color = "rgb(47, 121, 185)";
 		span.setAttribute("onclick", "clickedPaperTitle(this);");
 		li.appendChild(span);
 
