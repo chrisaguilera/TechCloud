@@ -123,7 +123,7 @@ function shuffle(array) {
   return array;
 }
 
-function getAbstractForDocTitle(title){
+function getAbstractForDocTitle(title){ // we don't need this, its here just for reference. Can delete it.
     $.ajax({
       url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
       dataType: "xml",
@@ -132,4 +132,31 @@ function getAbstractForDocTitle(title){
         console.log(abstract);
       }
     });
+}
+
+function getListOfTitlesForAuthor(author){ // we don't need this, its here just for reference. Can delete it.
+    $.ajax({
+      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+author,
+      dataType: "xml",
+      success: function( response ) {
+      	for(int i=0; i<5; i++){
+      		abstract = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+        	console.log(abstract);	
+      	}
+        
+      }
+    });
+}
+
+function authorDocsWith(word){
+	$.ajax({
+		url:"GetAuthors.php",
+		type: "GET",
+		dataType:"json",
+		success: function (response) {
+			for (author in response) {
+
+			}
+		}
+	});
 }

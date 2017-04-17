@@ -46,7 +46,10 @@
 			}
 		}
 
-		printResultsForAuthor("halfond");
+		//testing
+		//printResultsForAuthor("halfond");
+		// authorDocsWith("test");
+		getListOfTitlesForAuthor("halfond");
 
 		function populatePreviousSearches() {
 
