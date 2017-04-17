@@ -20,7 +20,7 @@
 		<div id = "list" class="list-group">
 			<li class="list-group-item">
 				<input type="checkbox">
-				<a href="" value="Detecting and Localizing Internationalization Presentation Failures in Web Applications" class="papertitle link_cursor">Detecting and Localizing Internationalization Presentation Failures in Web Applications</span>
+				<span value="Detecting and Localizing Internationalization Presentation Failures in Web Applications" class="papertitle link_cursor">Detecting and Localizing Internationalization Presentation Failures in Web Applications</span>
 				<a href="" class="icon iconfloat" onclick="return testFunction();"><span class="glyphicon glyphicon-download" value="Download paper 1"></span></a>
 				<!-- <span class="title" value="Paper 1 Title">Paper 1 Title</span>
 				<span class="glyphicon glyphicon-download pull-right" value="Download paper 1"></span> -->
@@ -59,21 +59,33 @@
   <script>
 
   	$(document).ready(function(){
+
   		$('.papertitle').click(function(){
-  			var title = $(this).attr('value');
-  			alert(title);
-  			$.ajax({
-		      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
-		      dataType: "xml",
-		      success: function( response ) {
-		        abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
-		        alert(abstract);
+
+  			var paperTitle = $(this).attr('value');
+
+  			var request = $.ajax({
+				url: "StoreCurrentTitle.php",
+				type: "POST",
+				data: {title : paperTitle},
+				dataType: "text"
+			});
+			request.done(function(msg) {
+				console.log(msg);
+			});
+
+  		 	// $.ajax({
+		    //   url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
+		    //   dataType: "xml",
+		    //   success: function( response ) {
+		    //     abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+		    //     alert(abstract);
 		        
-		      },
-		      error: function(xhr, error){
-		      	alert(error + xhr);
-		      }
-	    	});
+		    //   },
+		    //   error: function(xhr, error){
+		    //   	alert(error + xhr);
+		    //   }
+	    	// });
   			
   		});
 
