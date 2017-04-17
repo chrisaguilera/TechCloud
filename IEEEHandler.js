@@ -161,15 +161,51 @@ function getAbstractForDocTitle(title){ // we don't need this, its here just for
 //     });
 // }
 
-function authorDocsWith(word){
+function authorsSearchedDocsWith(word){
 	$.ajax({
 		url:"GetAuthors.php",
 		type: "GET",
 		dataType:"json",
 		success: function (response) {
-			for (author in response) {
-
+			console.log(response);
+			var i;
+			for (i in response) {
+				if(response[i] != ""){
+					console.log("http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+response[i]+"&querytext="+word);
+					$.ajax({
+						url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+response[i]+"&querytext="+word,
+						dataType: "xml",
+						success: function (data){
+							console.log(data);
+						}
+					});
+				}
 			}
 		}
 	});
 }
+
+function keyTermsSearchedDocsWith(word){
+	$.ajax({
+		url:"GetKeywords.php",
+		type: "GET",
+		dataType:"json",
+		success: function (response) {
+			console.log(response);
+			var i;
+			for (i in response) {
+				if(response[i] != ""){
+					console.log("http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?querytext="+response[i]+" AND "+word);
+					$.ajax({
+						url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?querytext="+response[i]+" AND "+word,
+						dataType: "xml",
+						success: function (data){
+							console.log(data);
+						}
+					});
+				}
+			}
+		}
+	});
+}
+
