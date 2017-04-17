@@ -20,7 +20,7 @@
 		<div id = "list" class="list-group">
 			<li class="list-group-item">
 				<input type="checkbox">
-				<a href="" value="Paper 1 Title" class="papertitle">Paper 1 Title</a>
+				<span value="Detecting and Localizing Internationalization Presentation Failures in Web Applications" class="papertitle link_cursor">Detecting and Localizing Internationalization Presentation Failures in Web Applications</a>
 				<a href="" class="icon iconfloat"><span class="glyphicon glyphicon-download" value="Download paper 1"></span></a>
 				<!-- <span class="title" value="Paper 1 Title">Paper 1 Title</span>
 				<span class="glyphicon glyphicon-download pull-right" value="Download paper 1"></span> -->
@@ -38,7 +38,7 @@
 				<a href="" class="icon iconfloat"> <span class="glyphicon glyphicon-download" value="Download paper 3"></span></a>
 			</li>
 
-			<!-- <a href="#" class="list-group-item">Paper 1 Title </a>
+			<!-- <a href="#" class="liDost-group-item">Paper 1 Title </a>
 			<a href="#" class="list-group-item">Paper 2 Title </a>
 			<a href="#" class="list-group-item">Paper 3 Title </a> -->
 		</div>
@@ -59,13 +59,41 @@
   <script>
 
   	$(document).ready(function(){
+
   		$('.papertitle').click(function(){
-  			alert($(this).attr('value'));
+
+  			var paperTitle = $(this).attr('value');
+
+  			var request = $.ajax({
+				url: "StoreCurrentTitle.php",
+				type: "POST",
+				data: {title : paperTitle},
+				dataType: "text"
+			});
+			request.done(function(msg) {
+				console.log(msg);
+				window.location.href = "abstractPage.html";
+				
+			});
+
+  		 	// $.ajax({
+		    //   url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
+		    //   dataType: "xml",
+		    //   success: function( response ) {
+		    //     abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+		    //     alert(abstract);
+		        
+		    //   },
+		    //   error: function(xhr, error){
+		    //   	alert(error + xhr);
+		    //   }
+	    	// });
+  			
   		});
 
-  		$('.glyphicon-download').click(function(){
-  			alert($(this).attr('value'));
-  		});
+  	// 	$('.glyphicon-download').click(function(){
+  	// 		alert($(this).attr('value'));
+  	// 	});
   	});
   </script>
 	<script>
@@ -77,7 +105,7 @@
 		var t = document.createTextNode("Test paper"); //creating the text node
 
 		b = document.createElement('a');
-    b.href =  'abstractPage.html';
+	b.href =  'abstractPage.html';
 		b.innerHTML = " Test this shit";
 
 
@@ -99,6 +127,24 @@
 
 
 	}
-		</script>
+
+	function getAbstractForDocTitle(title){
+	    $.ajax({
+	      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
+	      dataType: "xml",
+	      success: function( response ) {
+	        abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+	        alert("hello");
+	        alert(abstract);
+	        
+	      },
+	      error: function(xhr, error){
+	      	alert(error + xhr);
+	      }
+    	});
+}
+
+
+	</script>
 </body>
 </html>

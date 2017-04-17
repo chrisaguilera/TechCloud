@@ -129,7 +129,12 @@ function getAbstractForDocTitle(title){ // we don't need this, its here just for
       dataType: "xml",
       success: function( response ) {
         abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
-        console.log(abstract);
+        alert("hello");
+        alert(abstract);
+        
+      },
+      error: function(xhr, error){
+      	alert(error + xhr);
       }
     });
 }

@@ -12,7 +12,7 @@ if(!isset($_SESSION['keywords'])) {
 	$_SESSION['keywords'] = [];
 }
 if(!isset($_SESSION['currentTitle'])) {
-	$_SESSION['currentTitle'] = ;
+	$_SESSION['currentTitle'] = '';
 }
 
 echo ($_SESSION['currentTitle']);
