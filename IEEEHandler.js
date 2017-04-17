@@ -1,6 +1,7 @@
 var stop_words = [
 "",
 "a",
+"also",
 "about",
 "above",
 "after",
@@ -25,6 +26,7 @@ var stop_words = [
 "both",
 "but",
 "by",
+"can",
 "can't",
 "cannot",
 "could",
@@ -37,6 +39,7 @@ var stop_words = [
 "doing",
 "don't",
 "down",
+"due",
 "during",
 "each",
 "few",
@@ -79,6 +82,7 @@ var stop_words = [
 "its",
 "itself",
 "let's",
+"made",
 "me",
 "more",
 "most",
@@ -138,9 +142,15 @@ var stop_words = [
 "under",
 "until",
 "up",
+"use",
+"using",
 "very",
+"via",
 "was",
 "wasn't",
+"will",
+"won't",
+"wont",
 "we",
 "we'd",
 "we'll",
@@ -175,9 +185,10 @@ var stop_words = [
 "yourself",
 "yourselves"];
 
+var dict  = {};
+
 function printResultsForAuthor(authors, index) {
 	var pdfURL;
-	var dict  = {};
 	var items;
 	//show_overlay();
 	var count = 0;
@@ -206,17 +217,18 @@ function printResultsForAuthor(authors, index) {
 		}
 	});
 
+	if (index == authors.length) {
+		items.sort(function(first, second) {
+			return second[1] - first[1];
+		});
+		items = items.slice(0, 250);
 
-	items.sort(function(first, second) {
-		return second[1] - first[1];
-	});
-
-	publishtext(items);
-
-
+		publishtext(items);
+	}
 }
 
 function frequency (text, dict) {
+	text = text.toLowerCase();
 	var arr = text.split(/[().,;!?\[\]\n\s]/g);
 	for (var i = 0; i < arr.length; i++) {
 		var stop = false;
