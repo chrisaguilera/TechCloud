@@ -117,6 +117,7 @@ var stop_words = [
 "so",
 "some",
 "such",
+"take",
 "than",
 "that",
 "that's",
@@ -143,6 +144,7 @@ var stop_words = [
 "until",
 "up",
 "use",
+"uses",
 "using",
 "very",
 "via",
@@ -211,7 +213,7 @@ function printResultsForAuthor(authors, index) {
 			index++;
 			if (index < authors.length) {
 				printResultsForAuthor(authors, index);
-			} else {
+			} else if (index == authors.length) {
 				items = Object.keys(dict).map(function(key) {
 	    			return [key, dict[key]];
 	    		});
@@ -259,56 +261,73 @@ function publishtext(arr) {
 
 	for(count = 0; count < arr.length; count++) {//Change this to iterate through the loop
 
-			var freq = arr[count][1]; //frequency of word you working on
+		var freq = arr[count][1]; //frequency of word you working on
 
-			var t = document.createTextNode(arr[count][0] + " "); //creating the text node
+		var t = document.createTextNode(arr[count][0] + " "); //creating the text node
 
-			var span = document.createElement('span');//creating a span
+		var span = document.createElement('span');//creating a span
 
-			var calc = freq/big_freq;
-			if (calc == 1) {
-				span.style.fontSize = fontSizes[9];
-			}
-			else if (calc < 1 && calc >= .875) {
-					span.style.fontSize = fontSizes[8];
-			}
-			else if (calc < .875 && calc >= .75) {
-					span.style.fontSize = fontSizes[7];
-			}
-			else if (calc < .75 && calc >= .625) {
-					span.style.fontSize = fontSizes[6];
-			}
-			else if (calc < .625 && calc >= .50) {
-					span.style.fontSize = fontSizes[5];
-			}
-			else if (calc < .50 && calc >= .375) {
-					span.style.fontSize = fontSizes[4];
-			}
-			else if (calc < .375 && calc >= .25) {
-					span.style.fontSize = fontSizes[3];
-			}
-			else if (calc < .25 && calc >= .125) {
-					span.style.fontSize = fontSizes[2];
-			}
-			else if (calc < .125 && calc >= .0) {
-					span.style.fontSize = fontSizes[1];
-			}
+		var calc = freq/big_freq;
+		if (calc == 1) {
+			span.style.fontSize = fontSizes[9];
+		}
+		else if (calc < 1 && calc >= .875) {
+				span.style.fontSize = fontSizes[8];
+		}
+		else if (calc < .875 && calc >= .75) {
+				span.style.fontSize = fontSizes[7];
+		}
+		else if (calc < .75 && calc >= .625) {
+				span.style.fontSize = fontSizes[6];
+		}
+		else if (calc < .625 && calc >= .50) {
+				span.style.fontSize = fontSizes[5];
+		}
+		else if (calc < .50 && calc >= .375) {
+				span.style.fontSize = fontSizes[4];
+		}
+		else if (calc < .375 && calc >= .25) {
+				span.style.fontSize = fontSizes[3];
+		}
+		else if (calc < .25 && calc >= .125) {
+				span.style.fontSize = fontSizes[2];
+		}
+		else if (calc < .125 && calc >= .0) {
+				span.style.fontSize = fontSizes[1];
+		}
 
-			span.style.color = getRandomColor(); //changing color
-			span.appendChild(t); //adding text to span
+		span.style.color = getRandomColor(); //changing color
+		span.appendChild(t); //adding text to span
+		// span.innerHTML = arr[count][0];
+		span.onclick = function() {
+			var word = this.innerHTML;
 
-			//console.log(document.getElementById("something"));
-			document.getElementById("wordcloudparagraph").appendChild(span);//adding span to element
+			// console.log("Word clicked from Word Cloud Page: " + word);
+
+			var request = $.ajax({
+				url: "StoreCurrentWord.php",
+				type: "POST",
+				data: {word : word},
+				dataType: "text"
+			});
+			request.done(function(msg) {
+				console.log(msg);
+				window.location.href = "titleListPage.html";
+			});
+
+		}
+		document.getElementById("wordcloudparagraph").appendChild(span);//adding span to element
 	}
+
 
 }
 function getRandomColor() {
-		var letters = '0123456789ABCDEF';
-		var color = '#';
-		for (var i = 0; i < 6; i++ ) {
-				color += letters[Math.floor(Math.random() * 16)];
-		}
-		return color;
+	var letters = '0123456789ABCDEF';
+	var color = '#';
+	for (var i = 0; i < 6; i++ ) {
+			color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
 }
 
 function shuffle(array) {

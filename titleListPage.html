@@ -12,7 +12,7 @@
 <body>
   <div class="container-fluid">
   	<div class="header" id="headerDiv">
-	  	<h1>Word Title</h1>
+	  	<h1 id="title"></h1>
 	  	<h3> Associated Papers: </h3>
 	</div>
 
@@ -73,6 +73,19 @@
   	}
 
   	$(document).ready(function(){
+  		var word;
+
+		var request0 = $.ajax({
+			url: "GetCurrentWord.php",
+			type: "GET",
+			dataType: "text"
+		});
+		request0.done(function(msg) {
+			console.log("Word: " + msg);
+			word = msg;
+			document.getElementById("title").innerHTML = word.toUpperCase();
+		});
+  		
   		populateList();
 
   		$('.papertitle').click(function(){

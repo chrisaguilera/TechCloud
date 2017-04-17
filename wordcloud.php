@@ -19,6 +19,10 @@
 	    height: 30px;
 	    background-color: rgb(0,174,85);
 	}
+	#wordcloudparagraph {
+		letter-spacing: -1.25px;
+		line-height: 280%;
+	}
 	</style>
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<script src="html2canvas.js"></script>
@@ -119,64 +123,64 @@ function move(num, start) {
     	link.click();
 	}
 
-	function myFunction() {
+	// function myFunction() {
 
-		var arr = [["door", 5], ["building",4] , ["and",4] , ["the",3] , ["boy",3] , ["screamed",2] , ["wolf",2] , ["kobyashi", 2], ["meru",2]];
+	// 	var arr = [["door", 5], ["building",4] , ["and",4] , ["the",3] , ["boy",3] , ["screamed",2] , ["wolf",2] , ["kobyashi", 2], ["meru",2]];
 
-	    //Different font sizes
-	    var fontSizes = [ "10px", "20px", "30px", "40px", "50px", "60px", "70px", "80px", "90px", "100px"];
+	//     //Different font sizes
+	//     var fontSizes = [ "10px", "20px", "30px", "40px", "50px", "60px", "70px", "80px", "90px", "100px"];
 
-	    var big_freq = arr[0][1]; //the number of the biggest frequency goes here
+	//     var big_freq = arr[0][1]; //the number of the biggest frequency goes here
 
-	    arr = shuffle(arr);
+	//     arr = shuffle(arr);
 
-	    for(count = 0; count < arr.length; count++) {//Change this to iterate through the loop
+	//     for(count = 0; count < arr.length; count++) {//Change this to iterate through the loop
 
-	        var freq = arr[count][1]; //frequency of word you working on
+	//         var freq = arr[count][1]; //frequency of word you working on
 
-	        var t = document.createTextNode(arr[count][0] + " "); //creating the text node
+	//         var t = document.createTextNode(arr[count][0] + " "); //creating the text node
 
-	        var span = document.createElement('span');//creating a span
+	//         var span = document.createElement('span');//creating a span
 
-	        var calc = freq/big_freq;
-	        if (calc == 1) {
-	          span.style.fontSize = fontSizes[9];
-	        }
-	        else if (calc < 1 && calc >= .875) {
-	            span.style.fontSize = fontSizes[8];
-	        }
-	        else if (calc < .875 && calc >= .75) {
-	            span.style.fontSize = fontSizes[7];
-	        }
-	        else if (calc < .75 && calc >= .625) {
-	            span.style.fontSize = fontSizes[6];
-	        }
-	        else if (calc < .625 && calc >= .50) {
-	            span.style.fontSize = fontSizes[5];
-	        }
-	        else if (calc < .50 && calc >= .375) {
-	            span.style.fontSize = fontSizes[4];
-	        }
-	        else if (calc < .375 && calc >= .25) {
-	            span.style.fontSize = fontSizes[3];
-	        }
-	        else if (calc < .25 && calc >= .125) {
-	            span.style.fontSize = fontSizes[2];
-	        }
-	        else if (calc < .125 && calc >= .0) {
-	            span.style.fontSize = fontSizes[1];
-	        }
+	//         var calc = freq/big_freq;
+	//         if (calc == 1) {
+	//           span.style.fontSize = fontSizes[9];
+	//         }
+	//         else if (calc < 1 && calc >= .875) {
+	//             span.style.fontSize = fontSizes[8];
+	//         }
+	//         else if (calc < .875 && calc >= .75) {
+	//             span.style.fontSize = fontSizes[7];
+	//         }
+	//         else if (calc < .75 && calc >= .625) {
+	//             span.style.fontSize = fontSizes[6];
+	//         }
+	//         else if (calc < .625 && calc >= .50) {
+	//             span.style.fontSize = fontSizes[5];
+	//         }
+	//         else if (calc < .50 && calc >= .375) {
+	//             span.style.fontSize = fontSizes[4];
+	//         }
+	//         else if (calc < .375 && calc >= .25) {
+	//             span.style.fontSize = fontSizes[3];
+	//         }
+	//         else if (calc < .25 && calc >= .125) {
+	//             span.style.fontSize = fontSizes[2];
+	//         }
+	//         else if (calc < .125 && calc >= .0) {
+	//             span.style.fontSize = fontSizes[1];
+	//         }
 
-	        span.style.color = getRandomColor(); //changing color
-	        span.appendChild(t); //adding text to span
-	        span.onclick = function() {
-				this.innerHTML = "";
-	        }
+	//         span.style.color = getRandomColor(); //changing color
+	//         span.appendChild(t); //adding text to span
+	//         span.onclick = function() {
+	// 			this.innerHTML = "";
+	//         }
 
-	        document.getElementById("wordcloudparagraph").appendChild(span);//adding span to element
-	    }
+	//         document.getElementById("wordcloudparagraph").appendChild(span);//adding span to element
+	//     }
 
-	}
+	// }
 
 	function getRandomColor() {
 	    var letters = '0123456789ABCDEF';
