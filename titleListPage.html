@@ -20,8 +20,8 @@
 		<div id = "list" class="list-group">
 			<li class="list-group-item">
 				<input type="checkbox">
-				<span value="Detecting and Localizing Internationalization Presentation Failures in Web Applications" class="papertitle link_cursor">Detecting and Localizing Internationalization Presentation Failures in Web Applications</span>
-				<a href="" class="icon iconfloat" onclick="return testFunction();"><span class="glyphicon glyphicon-download" value="Download paper 1"></span></a>
+				<span value="Detecting and Localizing Internationalization Presentation Failures in Web Applications" class="papertitle link_cursor">Detecting and Localizing Internationalization Presentation Failures in Web Applications</a>
+				<a href="" class="icon iconfloat"><span class="glyphicon glyphicon-download" value="Download paper 1"></span></a>
 				<!-- <span class="title" value="Paper 1 Title">Paper 1 Title</span>
 				<span class="glyphicon glyphicon-download pull-right" value="Download paper 1"></span> -->
 			</li>
@@ -72,6 +72,8 @@
 			});
 			request.done(function(msg) {
 				console.log(msg);
+				window.location.href = "abstractPage.html";
+				
 			});
 
   		 	// $.ajax({

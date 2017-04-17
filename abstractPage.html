@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="content">
-			<h4 id="abstractContent">This is where the abstract will go for the associated paper. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. This is where the abstract will go for the associated paper. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. This is where the abstract will go for the associated paper. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text. Continued filler text.</h4>
+			<h4 id="abstractContent"></h4>
 
 			<button class="btn" id="buttondownload">Download as PDF </button>
 		</div>
@@ -38,19 +38,24 @@
 				pageTitle = msg;
 			});
 
-			// $.ajax({
-		    //   url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
-		    //   dataType: "xml",
-		    //   success: function( response ) {
-		    //     abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
-		    //     alert(abstract);
-		        
-		    //   },
-		    //   error: function(xhr, error){
-		    //   	alert(error + xhr);
-		    //   }
-	    	// });
+			
 
+
+
+			$.ajax({
+		      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+pageTitle,
+		      dataType: "xml",
+		      success: function( response ) {
+		        var abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+		        console.log("abstract is: " + abstract);
+
+		        document.getElementById('abstractContent').innerHTML = abstract;
+		        
+		      },
+		      error: function(xhr, error){
+		      	alert(error + xhr);
+		      }
+	    	});
 	  	});
 	</script>
 </body>
