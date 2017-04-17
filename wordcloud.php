@@ -3,11 +3,11 @@
 <head>
 	<meta charset="utf-8">
 	<title>TechCloud Home</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/wordcloud.css">
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 	<script src="html2canvas.js"></script>
 	<script src="FileSaver.js"></script>
 	<script src="IEEEHandler.js"></script>
@@ -42,16 +42,13 @@
 	  		<button class="btn" onclick="myFunction();">Click Me</button>
 	  	</div>
 	</div>
-
-
-	<button class="btn" onclick="abstracttest()"> kill it</button>
 <!-- <center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center> -->
 <!-- <button onclick="myFunction()">click me</button> -->
 </body>
 <script>
-	function abstracttest() {
-		console.log("fuck");
-		printResultsForAuthor("Halfond");
+
+	function abstractTest(authorName) {
+		printResultsForAuthor(authorName);
 	}
 
 	function downloadImage() {
@@ -124,29 +121,11 @@
 	        span.style.color = getRandomColor(); //changing color
 	        span.appendChild(t); //adding text to span
 	        span.onclick = function() {
-						this.innerHTML = "";
-	          //var word = this.innerHTML;
-
-	          //console.log("Word clicked from Word Cloud Page: " + word);
-
-	        /*  var request = $.ajax({
-	            url: "SetWord.php",
-	            type: "POST",
-	            data: {word : word},
-	            dataType: "text"
-	          });
-
-	          request.done(function(msg) {
-
-	            // console.log(msg);
-	            window.location.href = "songListPage.php";
-	          });*/
+				this.innerHTML = "";
 	        }
 
-	        //console.log(document.getElementById("something"));
 	        document.getElementById("wordcloudparagraph").appendChild(span);//adding span to element
 	    }
-
 
 	}
 
@@ -203,6 +182,20 @@
 	$(document).ready(function(){
 
 		populatePreviousSearches();
+
+		// Stuff for word cloud
+		var authorArray;
+
+		var request = $.ajax({
+			url: "GetAuthors.php",
+			type: "GET",
+			dataType: "JSON"
+		});
+		request.done(function(msg) {
+			authorArray = msg;
+			abstractTest(authorArray[0]);
+			console.log(msg);
+		});
 
 		$(".search-button").click(function() {
 
