@@ -12,13 +12,13 @@ if(!isset($_SESSION['keywords'])) {
 	$_SESSION['keywords'] = [];
 }
 if(!isset($_SESSION['currentTitle'])) {
-	$_SESSION['currentTitle'] = ;
+	$_SESSION['currentTitle'] = '';
 }
 
 $raw_title = isset($_POST['title']) ? $_POST['title'] : '';
 
 $_SESSION['currentTitle'] = $raw_title;
 
-echo $_SESSION['currentTitle'];
+echo ($_SESSION['currentTitle']);
 
 ?>
