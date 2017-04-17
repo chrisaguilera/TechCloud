@@ -2,29 +2,34 @@
 function printResultsForAuthor(author){
 	var pdfURL;
 	$.ajax({
-	    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+author,
+		var dict {};
+		for (var j = 0; j < author.length; j++) {
+	    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+author[j],
 	    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
 	    dataType: "xml",
 	    success: function( response ) {
 	      // console.log( response ); // server response
 		  //response.get
-		  var dict = {};
+		  //var dict = {};
 		  for (var i = 0; i < 5; i++) {
 			text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
 
 			dict = frequency(text, dict);
 		  }
-		  var items = Object.keys(dict).map(function(key) {
-		    return [key, dict[key]];
-		  });
-		  items.sort(function(first, second) {
-		    return second[1] - first[1];
-     	  });
-	    
-		  publishtext(items);
+
+
 
 	    }
+		}
   	});
+		var items = Object.keys(dict).map(function(key) {
+			return [key, dict[key]];
+		});
+		items.sort(function(first, second) {
+			return second[1] - first[1];
+			});
+
+		publishtext(items);
 }
 
 function frequency (text, dict) {
@@ -123,7 +128,7 @@ function shuffle(array) {
   return array;
 }
 
-function getAbstractForDocTitle(title){
+function getAbstractForDocTitle(title){ // we don't need this, its here just for reference. Can delete it.
     $.ajax({
       url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
       dataType: "xml",
@@ -131,7 +136,7 @@ function getAbstractForDocTitle(title){
         abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
         alert("hello");
         alert(abstract);
-        
+
       },
       error: function(xhr, error){
       	alert(error + xhr);
@@ -139,3 +144,29 @@ function getAbstractForDocTitle(title){
     });
 }
 
+function getListOfTitlesForAuthor(author){ // we don't need this, its here just for reference. Can delete it.
+    $.ajax({
+      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+author,
+      dataType: "xml",
+      success: function( response ) {
+      	for(int i=0; i<5; i++){
+      		abstract = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+        	console.log(abstract);
+      	}
+
+      }
+    });
+}
+
+function authorDocsWith(word){
+	$.ajax({
+		url:"GetAuthors.php",
+		type: "GET",
+		dataType:"json",
+		success: function (response) {
+			for (author in response) {
+
+			}
+		}
+	});
+}
