@@ -26,7 +26,7 @@
 
 		$(document).ready(function(){
 				
-			var pageTitle;
+			var pageTitle = "Blank";
 
 		  	var request = $.ajax({
 				url: "GetCurrentTitle.php",
@@ -36,26 +36,30 @@
 			request.done(function(msg) {
 				console.log(msg);
 				pageTitle = msg;
+				getAbstract(pageTitle);
 			});
 
 			
 
+			function getAbstract(title){
+				$.ajax({
+			      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+ title,
+			      dataType: "xml",
+			      success: function( response ) {
+			        var abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+			        console.log("abstract is: " + abstract);
+
+			        document.getElementById('abstractContent').innerHTML = abstract;
+			        
+			      },
+			      error: function(xhr, error){
+			      	alert(error + xhr);
+			      }
+		    	});
+			}
 
 
-			$.ajax({
-		      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+pageTitle,
-		      dataType: "xml",
-		      success: function( response ) {
-		        var abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
-		        console.log("abstract is: " + abstract);
-
-		        document.getElementById('abstractContent').innerHTML = abstract;
-		        
-		      },
-		      error: function(xhr, error){
-		      	alert(error + xhr);
-		      }
-	    	});
+			
 	  	});
 	</script>
 </body>
