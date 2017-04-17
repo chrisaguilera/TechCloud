@@ -50,13 +50,11 @@
 			</form>
 		</div>
 	  	<div id="buttonclass">
-	  		<button class="btn">Add </button>
+	  		<button class="add-button btn">Add</button>
 	  		<button class="search-button btn">Search</button>
 	  		<button class="btn" onclick="downloadImage();">Download Image</button>
-	  		<button class="btn" onclick="myFunction()">Click Me</button>
 	  	</div>
 	</div>
-	<button onclick="populate()"> click this fucker </button>
 <!-- <center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center> -->
 <!-- <button onclick="myFunction()">click me</button> -->
 
@@ -70,20 +68,22 @@ function wait(ms){
      end = new Date().getTime();
   }
 }
-	function abstractTest(authors) {
-		move(50,1);
+
+function abstractTest(authors) {
+	move(50,1);
 
 
-		setTimeout(function(){printResultsForAuthor(authors, 0);
-			move(100,50);
-		setTimeout(function(){link.style.display = 'none'; }, 900);
-		}, 900);
-		
-		var link = document.getElementById('myProgress');
-		//
-		//link.style.display = 'none';
-	}
-	function move(num, start) {
+	setTimeout(function(){printResultsForAuthor(authors, 0);
+		move(100,50);
+	setTimeout(function(){link.style.display = 'none'; }, 900);
+	}, 900);
+	
+	var link = document.getElementById('myProgress');
+	//
+	//link.style.display = 'none';
+}
+
+function move(num, start) {
     var elem = document.getElementById("myBar");
     var width = start;
     var id = setInterval(frame, 10);
@@ -248,6 +248,13 @@ function wait(ms){
 
 			var inputField = document.getElementById("input-text");
 
+			var request0 = $.ajax({
+				url: "NewSearch.php",
+			});
+			request0.done(function(msg) {
+				populatePreviousSearches();
+			});
+
 			if (document.getElementById('nameRadio').checked){
 
 				var request = $.ajax({
@@ -257,6 +264,7 @@ function wait(ms){
 					dataType: "text"
 				});
 				request.done(function(msg) {
+					window.location.href = "wordcloud.php";
 					populatePreviousSearches();
 				});
 
@@ -268,11 +276,42 @@ function wait(ms){
 					dataType: "text"
 				});
 				request.done(function(msg) {
+					window.location.href = "wordcloud.php";
 					populatePreviousSearches();
 				});
 			}
 
 
+		})
+
+		$(".add-button").click(function() {
+			var inputField = document.getElementById("input-text");
+
+			if (document.getElementById('nameRadio').checked){
+
+				var request = $.ajax({
+					url: "StoreAuthor.php",
+					type: "POST",
+					data: {author : inputField.value},
+					dataType: "text"
+				});
+				request.done(function(msg) {
+					window.location.href = "wordcloud.php";
+					populatePreviousSearches();
+				});
+
+			} else if (document.getElementById('keywordRadio')){
+				var request = $.ajax({
+					url: "StoreKeyword.php",
+					type: "POST",
+					data: {keyword : inputField.value},
+					dataType: "text"
+				});
+				request.done(function(msg) {
+					window.location.href = "wordcloud.php";
+					populatePreviousSearches();
+				});
+			}
 		})
 	});
 
