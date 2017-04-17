@@ -1,9 +1,11 @@
 
 function printResultsForAuthor(author){
 	var pdfURL;
+	var dict {};
+	for (var j = 0; j < author.length; j++) {
 	$.ajax({
-		var dict {};
-		for (var j = 0; j < author.length; j++) {
+
+
 	    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+author[j],
 	    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
 	    dataType: "xml",
@@ -20,8 +22,9 @@ function printResultsForAuthor(author){
 
 
 	    }
-		}
+
   	});
+	}
 		var items = Object.keys(dict).map(function(key) {
 			return [key, dict[key]];
 		});
