@@ -77,7 +77,7 @@ function wait(ms){
 }
 
 function shit() {
-	findPaper("Web");
+	findPaper("web");
 }
 
 function abstractTest(authors) {

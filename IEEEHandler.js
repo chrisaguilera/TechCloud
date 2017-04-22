@@ -270,7 +270,7 @@ function findPaper(targetword) {
 					}
 				}
 			}
-			//console.log(papers);
+			console.log(papers);
 		}
 	});
 
@@ -280,8 +280,10 @@ function checkWord(text, targetword) {
 	text = text.toLowerCase();
 	var arr = text.split(/[().,;!?\[\]\n\s]/g);
 	var count = 0;
+	console.log(targetword);
 	for (var i = 0; i < arr.length; i++) {
 		if (arr[i] === targetword) {
+
 			count++;
 		}
 	}
