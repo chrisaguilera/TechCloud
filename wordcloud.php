@@ -7,10 +7,27 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/wordcloud.css">
+	<style>
+	#myProgress {
+		border-radius: 5px;
+	    width: 100%;
+	    background-color: lightgrey;
+	}
+	#myBar {
+		border-radius:	5px;
+	    width: 1%;
+	    height: 30px;
+	    background-color: rgb(0,174,85);
+	}
+	#wordcloudparagraph {
+		letter-spacing: -1.25px;
+		line-height: 280%;
+	}
+	</style>
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<script src="html2canvas.js"></script>
 	<script src="FileSaver.js"></script>
-	<script src="IEEEHandler.js"></script>
+<script src="IEEEHandler.js"></script>
 
 </head>
 <body>
@@ -20,6 +37,9 @@
 		<h1 id="mainHeader">WordCloud</h1>
 	</div>
 	<div class="content">
+		<div id="myProgress">
+  <div id="myBar"></div>
+</div>
 	  	<p id="wordcloudparagraph"></p>
 	  	<div class="form-group">
 	  		<input class="form-control" id="input-text" list="previoussearchlist" aria-describedby="emailHelp" placeholder="Enter Search Term" autocomplete="off">
@@ -36,20 +56,53 @@
 			</form>
 		</div>
 	  	<div id="buttonclass">
-	  		<button class="btn">Add </button>
+	  		<button class="add-button btn">Add</button>
 	  		<button class="search-button btn">Search</button>
 	  		<button class="btn" onclick="downloadImage();">Download Image</button>
-	  		<button class="btn" onclick="myFunction();">Click Me</button>
 	  	</div>
 	</div>
 <!-- <center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center> -->
 <!-- <button onclick="myFunction()">click me</button> -->
-</body>
-<script>
 
-	function abstractTest(authorName) {
-		printResultsForAuthor(authorName);
-	}
+<script type= "text/javascript">
+
+
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end < start + ms) {
+     end = new Date().getTime();
+  }
+}
+
+function abstractTest(authors) {
+	move(50,1);
+
+
+	setTimeout(function(){printResultsForAuthor(authors, 0);
+		move(100,50);
+	setTimeout(function(){link.style.display = 'none'; }, 900);
+	}, 900);
+	
+	var link = document.getElementById('myProgress');
+	//
+	//link.style.display = 'none';
+}
+
+function move(num, start) {
+    var elem = document.getElementById("myBar");
+    var width = start;
+    var id = setInterval(frame, 10);
+    function frame() {
+        if (width >= num) {
+            clearInterval(id);
+        } else {
+            width+=2;
+            elem.style.width = width + '%';
+        }
+    }
+		//wait(5000);
+}
 
 	function downloadImage() {
 
@@ -70,64 +123,64 @@
     	link.click();
 	}
 
-	function myFunction() {
+	// function myFunction() {
 
-		var arr = [["door", 5], ["building",4] , ["and",4] , ["the",3] , ["boy",3] , ["screamed",2] , ["wolf",2] , ["kobyashi", 2], ["meru",2]];
+	// 	var arr = [["door", 5], ["building",4] , ["and",4] , ["the",3] , ["boy",3] , ["screamed",2] , ["wolf",2] , ["kobyashi", 2], ["meru",2]];
 
-	    //Different font sizes
-	    var fontSizes = [ "10px", "20px", "30px", "40px", "50px", "60px", "70px", "80px", "90px", "100px"];
+	//     //Different font sizes
+	//     var fontSizes = [ "10px", "20px", "30px", "40px", "50px", "60px", "70px", "80px", "90px", "100px"];
 
-	    var big_freq = arr[0][1]; //the number of the biggest frequency goes here
+	//     var big_freq = arr[0][1]; //the number of the biggest frequency goes here
 
-	    arr = shuffle(arr);
+	//     arr = shuffle(arr);
 
-	    for(count = 0; count < arr.length; count++) {//Change this to iterate through the loop
+	//     for(count = 0; count < arr.length; count++) {//Change this to iterate through the loop
 
-	        var freq = arr[count][1]; //frequency of word you working on
+	//         var freq = arr[count][1]; //frequency of word you working on
 
-	        var t = document.createTextNode(arr[count][0] + " "); //creating the text node
+	//         var t = document.createTextNode(arr[count][0] + " "); //creating the text node
 
-	        var span = document.createElement('span');//creating a span
+	//         var span = document.createElement('span');//creating a span
 
-	        var calc = freq/big_freq;
-	        if (calc == 1) {
-	          span.style.fontSize = fontSizes[9];
-	        }
-	        else if (calc < 1 && calc >= .875) {
-	            span.style.fontSize = fontSizes[8];
-	        }
-	        else if (calc < .875 && calc >= .75) {
-	            span.style.fontSize = fontSizes[7];
-	        }
-	        else if (calc < .75 && calc >= .625) {
-	            span.style.fontSize = fontSizes[6];
-	        }
-	        else if (calc < .625 && calc >= .50) {
-	            span.style.fontSize = fontSizes[5];
-	        }
-	        else if (calc < .50 && calc >= .375) {
-	            span.style.fontSize = fontSizes[4];
-	        }
-	        else if (calc < .375 && calc >= .25) {
-	            span.style.fontSize = fontSizes[3];
-	        }
-	        else if (calc < .25 && calc >= .125) {
-	            span.style.fontSize = fontSizes[2];
-	        }
-	        else if (calc < .125 && calc >= .0) {
-	            span.style.fontSize = fontSizes[1];
-	        }
+	//         var calc = freq/big_freq;
+	//         if (calc == 1) {
+	//           span.style.fontSize = fontSizes[9];
+	//         }
+	//         else if (calc < 1 && calc >= .875) {
+	//             span.style.fontSize = fontSizes[8];
+	//         }
+	//         else if (calc < .875 && calc >= .75) {
+	//             span.style.fontSize = fontSizes[7];
+	//         }
+	//         else if (calc < .75 && calc >= .625) {
+	//             span.style.fontSize = fontSizes[6];
+	//         }
+	//         else if (calc < .625 && calc >= .50) {
+	//             span.style.fontSize = fontSizes[5];
+	//         }
+	//         else if (calc < .50 && calc >= .375) {
+	//             span.style.fontSize = fontSizes[4];
+	//         }
+	//         else if (calc < .375 && calc >= .25) {
+	//             span.style.fontSize = fontSizes[3];
+	//         }
+	//         else if (calc < .25 && calc >= .125) {
+	//             span.style.fontSize = fontSizes[2];
+	//         }
+	//         else if (calc < .125 && calc >= .0) {
+	//             span.style.fontSize = fontSizes[1];
+	//         }
 
-	        span.style.color = getRandomColor(); //changing color
-	        span.appendChild(t); //adding text to span
-	        span.onclick = function() {
-				this.innerHTML = "";
-	        }
+	//         span.style.color = getRandomColor(); //changing color
+	//         span.appendChild(t); //adding text to span
+	//         span.onclick = function() {
+	// 			this.innerHTML = "";
+	//         }
 
-	        document.getElementById("wordcloudparagraph").appendChild(span);//adding span to element
-	    }
+	//         document.getElementById("wordcloudparagraph").appendChild(span);//adding span to element
+	//     }
 
-	}
+	// }
 
 	function getRandomColor() {
 	    var letters = '0123456789ABCDEF';
@@ -193,13 +246,20 @@
 		});
 		request.done(function(msg) {
 			authorArray = msg;
-			abstractTest(authorArray[0]);
+			abstractTest(authorArray);
 			console.log(msg);
 		});
 
 		$(".search-button").click(function() {
 
 			var inputField = document.getElementById("input-text");
+
+			var request0 = $.ajax({
+				url: "NewSearch.php",
+			});
+			request0.done(function(msg) {
+				populatePreviousSearches();
+			});
 
 			if (document.getElementById('nameRadio').checked){
 
@@ -210,6 +270,7 @@
 					dataType: "text"
 				});
 				request.done(function(msg) {
+					window.location.href = "wordcloud.php";
 					populatePreviousSearches();
 				});
 
@@ -221,14 +282,45 @@
 					dataType: "text"
 				});
 				request.done(function(msg) {
+					window.location.href = "wordcloud.php";
 					populatePreviousSearches();
 				});
 			}
 
 
 		})
+
+		$(".add-button").click(function() {
+			var inputField = document.getElementById("input-text");
+
+			if (document.getElementById('nameRadio').checked){
+
+				var request = $.ajax({
+					url: "StoreAuthor.php",
+					type: "POST",
+					data: {author : inputField.value},
+					dataType: "text"
+				});
+				request.done(function(msg) {
+					window.location.href = "wordcloud.php";
+					populatePreviousSearches();
+				});
+
+			} else if (document.getElementById('keywordRadio')){
+				var request = $.ajax({
+					url: "StoreKeyword.php",
+					type: "POST",
+					data: {keyword : inputField.value},
+					dataType: "text"
+				});
+				request.done(function(msg) {
+					window.location.href = "wordcloud.php";
+					populatePreviousSearches();
+				});
+			}
+		})
 	});
 
 </script>
-
+</body>
 </html>

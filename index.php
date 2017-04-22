@@ -48,8 +48,10 @@
 
 		//testing
 		//printResultsForAuthor("halfond");
-		// authorDocsWith("test");
-		getListOfTitlesForAuthor("halfond");
+		// getListOfTitlesForAuthor("halfond");
+		// authorsSearchedDocsWith("love");
+		keyTermsSearchedDocsWith("optimized");
+
 
 		function populatePreviousSearches() {
 
@@ -89,6 +91,7 @@
 						dataType: "text"
 					});
 					request.done(function(msg) {
+						window.location.href = "wordcloud.php";
 						populatePreviousSearches();
 					});
 
@@ -100,6 +103,7 @@
 						dataType: "text"
 					});
 					request.done(function(msg) {
+						window.location.href = "wordcloud.php";
 						populatePreviousSearches();
 					});
 				}

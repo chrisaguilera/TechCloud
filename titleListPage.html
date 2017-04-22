@@ -6,37 +6,37 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<link rel="stylesheet" href ="css/titleListPage.css">
+	<script src = "IEEEHandler.js"></script>
 
 </head>
 <body>
   <div class="container-fluid">
   	<div class="header" id="headerDiv">
-	  	<h1 id="wordTitle">Word Title</h1>
+	  	<h1 id="title"></h1>
+
 	  	<h3> Associated Papers: </h3>
 	</div>
 
 
 	<div class="content">
 		<div id = "list" class="list-group">
-			<li class="list-group-item">
+			<!-- <li class="list-group-item">
 				<input type="checkbox">
 				<span value="Detecting and Localizing Internationalization Presentation Failures in Web Applications" class="papertitle link_cursor">Detecting and Localizing Internationalization Presentation Failures in Web Applications</a>
 				<a href="" class="icon iconfloat"><span class="glyphicon glyphicon-download" value="Download paper 1"></span></a>
-				<!-- <span class="title" value="Paper 1 Title">Paper 1 Title</span>
-				<span class="glyphicon glyphicon-download pull-right" value="Download paper 1"></span> -->
-			</li>
+			</li> -->
 
-			<li class="list-group-item">
+			<!-- <li class="list-group-item">
 				<input type="checkbox">
 				<a href="abstractPage.html" value="Paper 2 Title" class="papertitle">Paper 2 Title</a>
 				<a href="" class="icon iconfloat"><span class="glyphicon glyphicon-download" value="Download paper 2"></span></a>
-			</li>
+			</li> -->
 
-			<li class="list-group-item">
+			<!-- <li class="list-group-item">
 				<input type="checkbox">
 				<a href="abstractPage.html" value="Paper 3 Title" class="papertitle">Paper 3 Title</a>
 				<a href="" class="icon iconfloat"> <span class="glyphicon glyphicon-download" value="Download paper 3"></span></a>
-			</li>
+			</li> -->
 
 			<!-- <a href="#" class="liDost-group-item">Paper 1 Title </a>
 			<a href="#" class="list-group-item">Paper 2 Title </a>
@@ -48,7 +48,6 @@
 			<button class="btn" id="exportplaintext">Export as Plain Text</button>
 			<button class="btn" id="generatewordcloud">Generate WordCloud Subset</button>
 		</div>
-		<button onclick="newItem()"> click me </button>
 	</div>
   </div>
 
@@ -58,7 +57,37 @@
  -->
   <script>
 
+  	function clickedPaperTitle(element) {
+  		var paperTitle = element.value;
+  		// alert(paperTitle);
+
+		var request = $.ajax({
+			url: "StoreCurrentTitle.php",
+			type: "POST",
+			data: {title : paperTitle},
+			dataType: "text"
+		});
+		request.done(function(msg) {
+			// alert(msg);
+			window.location.href = "abstractPage.html";
+		});
+  	}
+
   	$(document).ready(function(){
+  		var word;
+
+		var request0 = $.ajax({
+			url: "GetCurrentWord.php",
+			type: "GET",
+			dataType: "text"
+		});
+		request0.done(function(msg) {
+			console.log("Word: " + msg);
+			word = msg;
+			document.getElementById("title").innerHTML = word.toUpperCase();
+		});
+  		
+  		populateList();
 
 
   		//if user searching by author, call getListoftitlesForWord function and pass in author and selected word from wordcloud
@@ -77,9 +106,7 @@
 				dataType: "text"
 			});
 			request.done(function(msg) {
-				console.log(msg);
 				window.location.href = "abstractPage.html";
-				
 			});
 
   		 	// $.ajax({
@@ -103,36 +130,40 @@
   	});
   </script>
 	<script>
-	function newItem() {
-		var li = document.createElement("li");
-		li.className = "list-group-item";
-		var input = document.createElement("input");
-		input.type= "checkbox";
-		var t = document.createTextNode("Test paper"); //creating the text node
-
-		b = document.createElement('a');
-	b.href =  'abstractPage.html';
-		b.innerHTML = " Test this shit";
-
-
-		li.appendChild(input);
-		li.appendChild(b);
-
-		download = document.createElement('a');
-		download.className= "icon iconfloat";
-		download.href="";
-
-		var span = document.createElement('span');
-		span.className="glyphicon glyphicon-download";
-		//span.setAttribute("value", "Test this fucking shit");
-		download.appendChild(span);
-		li.appendChild(download);
-
-
-		document.getElementById("list").appendChild(li);
-
-
+	function populateList(){
+		authorsSearchedDocsWith("test");
 	}
+
+	// function newItem(title, author) {
+	// 	var li = document.createElement("li");
+	// 	li.className = "list-group-item";
+	// 	var input = document.createElement("input");
+	// 	input.type= "checkbox";
+	// 	var t = document.createTextNode("Test paper"); //creating the text node
+
+	// 	b = document.createElement('a');
+	// 	b.href =  'abstractPage.html';
+	// 	b.innerHTML = title +" - " + author;
+
+
+	// 	li.appendChild(input);
+	// 	li.appendChild(b);
+
+	// 	download = document.createElement('a');
+	// 	download.className= "icon iconfloat";
+	// 	download.href="";
+
+	// 	var span = document.createElement('span');
+	// 	span.className="glyphicon glyphicon-download";
+	// 	//span.setAttribute("value", "Test this fucking shit");
+	// 	download.appendChild(span);
+	// 	li.appendChild(download);
+
+
+	// 	document.getElementById("list").appendChild(li);
+
+
+	// }
 
 	function getAbstractForDocTitle(title){
 	    $.ajax({
@@ -140,12 +171,12 @@
 	      dataType: "xml",
 	      success: function( response ) {
 	        abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
-	        alert("hello");
-	        alert(abstract);
+	        // alert("hello");
+	        // alert(abstract);
 	        
 	      },
 	      error: function(xhr, error){
-	      	alert(error + xhr);
+	      	// alert(error + xhr);
 	      }
     	});
 	}
