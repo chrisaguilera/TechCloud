@@ -23,6 +23,10 @@ body {
 	cursor: pointer;
 }
 
+.glyphicon {
+	font-size: 30px;
+}
+
 
 /*a {
 	color: #000000;
