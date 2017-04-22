@@ -11,7 +11,7 @@
 <body>
   <div class="container-fluid">
   	<div class="header" id="headerDiv">
-	  	<h1>Word Title</h1>
+	  	<h1 id="wordTitle">Word Title</h1>
 	  	<h3> Associated Papers: </h3>
 	</div>
 
@@ -59,6 +59,12 @@
   <script>
 
   	$(document).ready(function(){
+
+
+  		//if user searching by author, call getListoftitlesForWord function and pass in author and selected word from wordcloud
+  		//if user searching by keyphrase, call getListofTitlesForWord function and pass in ONLY selected word from wordcloud
+  		getListOfTitlesForWord("web");
+
 
   		$('.papertitle').click(function(){
 
@@ -142,7 +148,22 @@
 	      	alert(error + xhr);
 	      }
     	});
-}
+	}
+
+	function getListOfTitlesForWord(word){ // we don't need this, its here just for reference. Can delete it.
+	    $.ajax({
+	      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?querytext="+word,
+	      dataType: "xml",
+	      success: function( response ) {
+	      	for(var i=0; i<5; i++){
+	      		 var title = response.getElementsByTagName("document")[i].getElementsByTagName("pubtitle")[0]["textContent"];
+	        	console.log(title);
+	      	}
+
+	      }
+	    });
+	}
+
 
 
 	</script>
