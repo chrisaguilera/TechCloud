@@ -23,8 +23,9 @@ body {
 	cursor: pointer;
 }
 
-.glyphicon {
+.glyphicon.glyphicon-download {
 	font-size: 30px;
+	margin-right: 20px;
 }
 
 
