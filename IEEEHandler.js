@@ -274,6 +274,9 @@ function findPaper(targetword) {
 								var conference = response.getElementsByTagName("document")[i].getElementsByTagName("pubtitle")[0]["textContent"];
 								crap[2] = conference;
 
+								var download = response.getElementsByTagName("document")[i].getElementsByTagName("pdf")[0]["textContent"];
+								crap[3] = download;
+
 								papers[indx] = crap;
 								indx++;
 							}
@@ -305,6 +308,7 @@ function populatetargetlist(papers) {
 		var span = document.createElement('span');
 		span.className="glyphicon glyphicon-download";
 		a.className="icon iconfloat";
+		a.href = papers[0][3];
 		a.appendChild(span);
 		td.appendChild(a);
 		tr.appendChild(td);
