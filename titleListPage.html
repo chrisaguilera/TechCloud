@@ -108,9 +108,11 @@
 			console.log("Word: " + msg);
 			word = msg;
 			document.getElementById("title").innerHTML = word.toUpperCase();
+			functionword = msg.replace(/\s+/g, '');
+			findPaper(functionword);
 		});
-  		
-  		populateList();
+
+  		//populateList();
 
 
   		//if user searching by author, call getListoftitlesForWord function and pass in author and selected word from wordcloud
@@ -138,13 +140,13 @@
 		    //   success: function( response ) {
 		    //     abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
 		    //     alert(abstract);
-		        
+
 		    //   },
 		    //   error: function(xhr, error){
 		    //   	alert(error + xhr);
 		    //   }
 	    	// });
-  			
+
   		});
 
   	// 	$('.glyphicon-download').click(function(){
@@ -196,7 +198,7 @@
 	        abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
 	        // alert("hello");
 	        // alert(abstract);
-	        
+
 	      },
 	      error: function(xhr, error){
 	      	// alert(error + xhr);
@@ -211,7 +213,7 @@
 	      success: function( response ) {
 	      	for(var i=0; i<5; i++){
 	      		 var title = response.getElementsByTagName("document")[i].getElementsByTagName("pubtitle")[0]["textContent"];
-	        	console.log(title);
+	        	//console.log(title);
 	      	}
 
 	      }

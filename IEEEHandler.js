@@ -258,19 +258,31 @@ function findPaper(targetword) {
 	    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
 	    dataType: "xml",
 	    success: function(response) {
-
+				var indx = 0;
 	    	for (var i = 0; i < 5; i++) {
 		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
 		    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
 						text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
 							if (checkWord(text, targetword)) {
 								var tital = response.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
-								papers.push(tital);
+								var crap = [];
+								crap[0] = tital;
+								paperauthor = response.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
+								//console.log(papers[indx][0]);
+								crap[1] = paperauthor;
+								//console.log(crap[1]);
+								var conference = response.getElementsByTagName("document")[i].getElementsByTagName("pubtitle")[0]["textContent"];
+								crap[2] = conference;
+
+								papers[indx] = crap;
+								indx++;
 							}
 					}
 				}
 			}
-			console.log(papers);
+			console.log(papers[0])
+			//console.log(papers[0][0]);
+			//console.log(papers[0][1]);
 		}
 	});
 
