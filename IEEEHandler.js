@@ -280,13 +280,39 @@ function findPaper(targetword) {
 					}
 				}
 			}
+
 			console.log(papers[0])
+			populatetargetlist(papers);
 			//console.log(papers[0][0]);
 			//console.log(papers[0][1]);
 		}
 	});
 
 }
+
+function populatetargetlist(papers) {
+	var list = document.getElementById("listitems");
+	for (var i = 0; i < papers.length; i++) {
+		var tr = document.createElement('tr');
+		for (var j = 0; j < 3; j++) {
+			var td = document.createElement('td');
+			var t = document.createTextNode(papers[i][j]);
+			td.appendChild(t);
+			tr.appendChild(td);
+		}
+		var td = document.createElement('td');
+		var a = document.createElement('a');
+		var span = document.createElement('span');
+		span.className="glyphicon glyphicon-download";
+		a.className="icon iconfloat";
+		a.appendChild(span);
+		td.appendChild(a);
+		tr.appendChild(td);
+		list.appendChild(tr);
+	}
+
+}
+
 
 function checkWord(text, targetword) {
 	text = text.toLowerCase();
