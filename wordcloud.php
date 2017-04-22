@@ -27,7 +27,7 @@
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<script src="html2canvas.js"></script>
 	<script src="FileSaver.js"></script>
-<script src="IEEEHandler.js"></script>
+	<script src="IEEEHandler.js"></script>
 
 </head>
 <body>
@@ -59,10 +59,11 @@
 	  		<button class="add-button btn">Add</button>
 	  		<button class="search-button btn">Search</button>
 	  		<button class="btn" onclick="downloadImage();">Download Image</button>
+				<button onclick="shit()">click me</button>
 	  	</div>
 	</div>
 <!-- <center><button class="add-button btn pull-right" type="search"> Add </buton><button class="search-button btn pull-right" type="search"> Search </buton></center> -->
-<!-- <button onclick="myFunction()">click me</button> -->
+
 
 <script type= "text/javascript">
 
@@ -75,6 +76,10 @@ function wait(ms){
   }
 }
 
+function shit() {
+	findPaper("Web");
+}
+
 function abstractTest(authors) {
 	move(50,1);
 
@@ -83,7 +88,7 @@ function abstractTest(authors) {
 		move(100,50);
 	setTimeout(function(){link.style.display = 'none'; }, 900);
 	}, 900);
-	
+
 	var link = document.getElementById('myProgress');
 	//
 	//link.style.display = 'none';

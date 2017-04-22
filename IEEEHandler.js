@@ -203,7 +203,7 @@ function printResultsForAuthor(authors, index) {
 	    success: function(response) {
 
 	    	for (var i = 0; i < 5; i++) {
-		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){	
+		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
 		    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
 						text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
 						dict = frequency(text, dict);
@@ -248,6 +248,47 @@ function frequency (text, dict) {
 	   	}
 	}
 	return dict;
+}
+
+function findPaper(targetword) {
+	var papers = [];
+	$.ajax({
+		async: false,
+	    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au=Halfond",
+	    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
+	    dataType: "xml",
+	    success: function(response) {
+
+	    	for (var i = 0; i < 5; i++) {
+		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
+		    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
+						text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+							if (checkWord(text, targetword)) {
+								var tital = response.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
+								papers.push(tital);
+							}
+					}
+				}
+			}
+			//console.log(papers);
+		}
+	});
+
+}
+
+function checkWord(text, targetword) {
+	text = text.toLowerCase();
+	var arr = text.split(/[().,;!?\[\]\n\s]/g);
+	var count = 0;
+	for (var i = 0; i < arr.length; i++) {
+		if (arr[i] === targetword) {
+			count++;
+		}
+	}
+	if (count > 0) {
+		return true;
+	}
+	return false;
 }
 
 function publishtext(arr) {
