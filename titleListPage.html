@@ -99,11 +99,24 @@ function clickedPaperTitle(element) {
 			dataType: "text"
 		});
 		request0.done(function(msg) {
-			console.log("Word: " + msg);
-			word = msg;
-			document.getElementById("title").innerHTML = word.toUpperCase();
-			functionword = msg.replace(/\s+/g, '');
-			findPaper(functionword);
+			var request = $.ajax({
+				url: "GetAuthors.php",
+				type: "GET",
+				dataType: "JSON"
+			});
+			request.done(function(msg2) {
+				authorArray = msg2;
+				console.log("ms2 "  + authorArray);
+				//abstractTest(authorArray);
+				//console.log(msg2);
+				//console.log("Word: " + msg);
+				word = msg;
+				document.getElementById("title").innerHTML = word.toUpperCase();
+				functionword = msg.replace(/\s+/g, '');
+				var papers = [];
+				findPaper(authorArray, functionword, 0, papers);
+			});
+
 		});
 
   		//populateList();
