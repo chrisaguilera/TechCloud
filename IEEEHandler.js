@@ -309,6 +309,13 @@ function populatetargetlist(papers) {
 	for (var i = 0; i < papers.length; i++) {
 		var tr = document.createElement('tr');
 
+		//create checkbox
+		var checkboxtd = document.createElement('td');
+		var checkbox = document.createElement('input');
+		checkbox.type = "checkbox";
+		checkboxtd.appendChild(checkbox);
+		tr.appendChild(checkboxtd);
+
 		//title clickable
 		var td1 = document.createElement('td');
 		var t1 = document.createTextNode(papers[i][0]);
