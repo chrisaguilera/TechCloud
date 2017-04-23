@@ -422,12 +422,18 @@ function populatetargetlist(papers) {
 		var span = document.createElement('span');
 		span.className="glyphicon glyphicon-download";
 		a.className="icon iconfloat";
-		a.href = papers[0][3];
+		a.href = papers[i][3];
 		a.appendChild(span);
 		td.appendChild(a);
 		tr.appendChild(td);
 
-
+		var bibtexTD = document.createElement('td');
+		var bibtexText = document.createTextNode("Show BibTeX");
+		bibtexTD.onclick = function() {
+			showBibTeX(papers[i][4]);
+		}
+		bibtexTD.appendChild(bibtexText);
+		tr.appendChild(bibtexTD);
 
 		list.appendChild(tr);
 	}
@@ -669,4 +675,17 @@ function keyTermsSearchedDocsWith(word){
 			}
 		}
 	});
+}
+
+function showBibTeX(doi) {
+  $.ajax({
+    url : "http://dx.doi.org/"+doi,
+    headers: {
+      Accept: "application/x-bibtex; charset=utf-8",
+      "Content-Type": "application/x-bibtex; charset=utf-8"
+    },
+    success : function(result){
+        alert(result);
+    }
+  });
 }
