@@ -297,15 +297,54 @@ function populatetargetlist(papers) {
 	var list = document.getElementById("listitems");
 	for (var i = 0; i < papers.length; i++) {
 		var tr = document.createElement('tr');
-		for (var j = 0; j < 3; j++) {
+
+		//title clickable
+		var td1 = document.createElement('td');
+		var t1 = document.createTextNode(papers[i][0]);
+		td1.onclick = function() {
+			clickedPaperTitle(this.innerHTML);
+		}
+		td1.appendChild(t1);
+		tr.appendChild(td1);
+
+		var arrayy = papers[i][1].split(";");
+		console.log(arrayy);
+		var td2 = document.createElement('td');
+		for (var j = 0; j < arrayy.length; j++) {
+			if (j > 0) {
+				var and = document.createTextNode(" ; ");
+				var andspan = document.createElement('span');
+				andspan.appendChild(and);
+				td2.appendChild(andspan);
+			}
+			var link = document.createTextNode(arrayy[j]);
+			var span = document.createElement('span');
+			span.onclick = function () {
+				console.log(this);
+				newauthor(this.innerHTML);
+			}
+			span.appendChild(link);
+			td2.appendChild(span);
+		}
+		tr.appendChild(td2);
+
+
+		var td3 = document.createElement('td');
+		var conference = document.createTextNode(papers[i][2]);
+		var conferencespan = document.createElement('span');
+		conferencespan.appendChild(conference);
+		conferencespan.onclick = function() {
+			console.log(this);
+		}
+		td3.appendChild(conferencespan);
+		tr.appendChild(td3);
+		/*for (var j = 1; j < 3; j++) {
 			var td = document.createElement('td');
 			var t = document.createTextNode(papers[i][j]);
-			td.onclick = function() {
-				clickedPaperTitle(this.innerHTML);
-			}
+
 			td.appendChild(t);
 			tr.appendChild(td);
-		}
+		}*/
 		var td = document.createElement('td');
 		var a = document.createElement('a');
 		var span = document.createElement('span');
@@ -320,6 +359,21 @@ function populatetargetlist(papers) {
 
 }
 
+function newauthor(authorvalue) {
+	var request0 = $.ajax({
+		url: "NewSearch.php",
+	});
+	var request = $.ajax({
+		url: "StoreAuthor.php",
+		type: "POST",
+		data: {author : authorvalue},
+		dataType: "text"
+	});
+	request.done(function(msg) {
+		window.location.href = "wordcloud.php";
+		populatePreviousSearches();
+	});
+}
 
 function checkWord(text, targetword) {
 	text = text.toLowerCase();
