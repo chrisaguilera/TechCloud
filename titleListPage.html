@@ -73,8 +73,9 @@
  -->
   <script>
 
-  	function clickedPaperTitle(element) {
-  		var paperTitle = element.value;
+function clickedPaperTitle(element) {
+  		var paperTitle = element;
+			console.log("Check this out " +paperTitle);
   		// alert(paperTitle);
 
 		var request = $.ajax({

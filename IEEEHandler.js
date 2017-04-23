@@ -300,6 +300,9 @@ function populatetargetlist(papers) {
 		for (var j = 0; j < 3; j++) {
 			var td = document.createElement('td');
 			var t = document.createTextNode(papers[i][j]);
+			td.onclick = function() {
+				clickedPaperTitle(this.innerHTML);
+			}
 			td.appendChild(t);
 			tr.appendChild(td);
 		}

@@ -25,7 +25,7 @@
 	<script type="text/javascript">
 
 		$(document).ready(function(){
-				
+
 			var pageTitle = "Blank";
 
 		  	var request = $.ajax({
@@ -34,23 +34,36 @@
 				dataType: "text"
 			});
 			request.done(function(msg) {
-				console.log("Title: " + msg);
-				pageTitle = msg;
-				document.getElementById("title").innerHTML = pageTitle;
-				getAbstract(pageTitle);
+
+				var request = $.ajax({
+					url: "GetCurrentWord.php",
+					type: "GET",
+					dataType: "text"
+				});
+				request.done(function(msg2) {
+						console.log("Title: " + msg);
+						pageTitle = msg;
+						wordd = msg2;
+						document.getElementById("title").innerHTML = pageTitle;
+						getAbstract(pageTitle, wordd);
+				});
+
+
 			});
 
-			function getAbstract(title){
+			function getAbstract(title, wordd){
+				console.log("This is " + wordd);
 				$.ajax({
 			      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+ title,
 			      dataType: "xml",
 			      success: function( response ) {
 			        var abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
 			        console.log("abstract is: " + abstract);
+							abstract = abstract.toLowerCase();
+			        var newAbstract = abstract.split(wordd).join('<span class="highlight">' + wordd + '</span>');
 
-			        var newAbstract = abstract.split("the").join('<span class="highlight">' + "the" + '</span>');
 			        document.getElementById('abstractContent').innerHTML = newAbstract;
-			        
+
 			      },
 			      error: function(xhr, error){
 			      	// alert(error + xhr);
@@ -59,7 +72,7 @@
 			}
 
 
-			
+
 	  	});
 	</script>
 </body>
