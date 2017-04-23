@@ -250,21 +250,24 @@ function frequency (text, dict) {
 	return dict;
 }
 
-function findPaper(targetword) {
-	var papers = [];
+function findPaper(authors, targetword, index, papers) {
+	//console.log(authors);
+	//var papers = [];
 	$.ajax({
 		async: false,
-	    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au=Halfond",
+	    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au=" + authors[index],
 	    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
 	    dataType: "xml",
 	    success: function(response) {
 				var indx = 0;
+				//console.log(authors[index]);
 	    	for (var i = 0; i < 5; i++) {
 		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
 		    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
 						text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
 							if (checkWord(text, targetword)) {
 								var tital = response.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
+								console.log(tital);
 								var crap = [];
 								crap[0] = tital;
 								paperauthor = response.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
@@ -277,15 +280,23 @@ function findPaper(targetword) {
 								var download = response.getElementsByTagName("document")[i].getElementsByTagName("pdf")[0]["textContent"];
 								crap[3] = download;
 
-								papers[indx] = crap;
+								if (!papers.includes(crap)) {
+									papers.push(crap);
+								}
 								indx++;
 							}
 					}
 				}
 			}
-
-			console.log(papers[0])
-			populatetargetlist(papers);
+			index++;
+			if (authors.length > index ) {
+				findPaper(authors, targetword, index, papers);
+			}
+			else {
+				populatetargetlist(papers);
+			}
+			//console.log(papers[0])
+			//populatetargetlist(papers);
 			//console.log(papers[0][0]);
 			//console.log(papers[0][1]);
 		}
