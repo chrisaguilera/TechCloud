@@ -33,10 +33,16 @@
 			    </label>
 			</form>
 		</div>
-		<button class="search-button btn pull-left" type="search"> Search </button>
+  		<div>
+  			<form>
+  				<input id="num-input-text" type="number" name="quantity" min="1" max="100">
+			</form>
+			<button class="search-button btn pull-left" type="search"> Search </button>
+		</div>
 	</div>
 
 	<script type="text/javascript">
+		var numResults = 10;
 
 		function checkRadio(){
 			if (document.getElementById('nameRadio').checked){
@@ -52,7 +58,6 @@
 		// authorsSearchedDocsWith("love");
 		keyTermsSearchedDocsWith("optimized");
 
-
 		function populatePreviousSearches() {
 
 			var request = $.ajax({
@@ -60,6 +65,7 @@
 				type: "GET",
 				dataType: "JSON"
 			});
+
 			request.done(function(msg) {
 				array = msg;
 
@@ -79,6 +85,14 @@
 			populatePreviousSearches();
 
 			$(".search-button").click(function() {
+
+				var numInputField = document.getElementById("num-input-text");
+				$.ajax({
+					url: "StoreNumResults.php",
+					type: "POST",
+					data: {num : numInputField.value},
+					dataType: "text"
+				});
 
 				var inputField = document.getElementById("input-text");
 
