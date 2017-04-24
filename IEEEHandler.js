@@ -240,6 +240,55 @@ function printResultsForAuthor(authors, index) {
 	});
 }
 
+function conferencesearch(conference) {
+	//var pdfURL;
+
+	//show_overlay();
+	//var count = 0;
+	var papers = [];
+	$.ajax({
+		async: false,
+	    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?jn="+conference,
+	    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
+	    dataType: "xml",
+	    success: function(response) {
+
+				for (var i = 0; i < 10; i++) {
+		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
+		    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
+						//text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+							//if (checkWord(text, targetword)) {
+								var tital = response.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
+								console.log(tital);
+								var crap = [];
+								crap[0] = tital;
+								paperauthor = response.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
+								//console.log(papers[indx][0]);
+								crap[1] = paperauthor;
+								//console.log(crap[1]);
+								var conference = response.getElementsByTagName("document")[i].getElementsByTagName("pubtitle")[0]["textContent"];
+								crap[2] = conference;
+
+								var download = response.getElementsByTagName("document")[i].getElementsByTagName("pdf")[0]["textContent"];
+								crap[3] = download;
+
+								if (!papers.includes(crap)) {
+									papers.push(crap);
+								}
+							//}
+						}
+					}
+			///index++;
+		}
+
+
+				populatetargetlist(papers);
+			}
+
+
+	});
+}
+
 function frequency (text, dict) {
 	text = text.toLowerCase();
 	var arr = text.split(/[().,;!?\[\]\n\s]/g);
@@ -292,6 +341,9 @@ function findPaper(authors, targetword, index, papers) {
 								var download = response.getElementsByTagName("document")[i].getElementsByTagName("pdf")[0]["textContent"];
 								crap[3] = download;
 
+								var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
+								crap[4] = doi;
+
 								if (!papers.includes(crap)) {
 									papers.push(crap);
 								}
@@ -318,8 +370,16 @@ function findPaper(authors, targetword, index, papers) {
 
 function populatetargetlist(papers) {
 	var list = document.getElementById("listitems");
+	list.innerHTML = "";
 	for (var i = 0; i < papers.length; i++) {
 		var tr = document.createElement('tr');
+
+		//create checkbox
+		var checkboxtd = document.createElement('td');
+		var checkbox = document.createElement('input');
+		checkbox.type = "checkbox";
+		checkboxtd.appendChild(checkbox);
+		tr.appendChild(checkboxtd);
 
 		//title clickable
 		var td1 = document.createElement('td');
@@ -357,7 +417,8 @@ function populatetargetlist(papers) {
 		var conferencespan = document.createElement('span');
 		conferencespan.appendChild(conference);
 		conferencespan.onclick = function() {
-			console.log(this);
+
+			conferencesearch(this.innerHTML);
 		}
 		td3.appendChild(conferencespan);
 		tr.appendChild(td3);
@@ -373,10 +434,19 @@ function populatetargetlist(papers) {
 		var span = document.createElement('span');
 		span.className="glyphicon glyphicon-download";
 		a.className="icon iconfloat";
-		a.href = papers[0][3];
+		a.href = papers[i][3];
 		a.appendChild(span);
 		td.appendChild(a);
 		tr.appendChild(td);
+
+		var bibtexTD = document.createElement('td');
+		var bibtexText = document.createTextNode("Show BibTeX");
+		bibtexTD.onclick = function() {
+			showBibTeX(papers[i][4]);
+		}
+		bibtexTD.appendChild(bibtexText);
+		tr.appendChild(bibtexTD);
+
 		list.appendChild(tr);
 	}
 
@@ -617,4 +687,17 @@ function keyTermsSearchedDocsWith(word){
 			}
 		}
 	});
+}
+
+function showBibTeX(doi) {
+  $.ajax({
+    url : "http://dx.doi.org/"+doi,
+    headers: {
+      Accept: "application/x-bibtex; charset=utf-8",
+      "Content-Type": "application/x-bibtex; charset=utf-8"
+    },
+    success : function(result){
+        alert(result);
+    }
+  });
 }
