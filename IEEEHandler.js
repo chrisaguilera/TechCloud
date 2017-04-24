@@ -344,8 +344,11 @@ function findPaper(authors, targetword, index, papers) {
 								var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
 								crap[4] = doi;
 
+
+
 								if (!papers.includes(crap)) {
 									papers.push(crap);
+									//console.log(papers[0][0]);
 								}
 								indx++;
 							}
@@ -357,6 +360,7 @@ function findPaper(authors, targetword, index, papers) {
 				findPaper(authors, targetword, index, papers);
 			}
 			else {
+				console.log(papers[0][4]);
 				populatetargetlist(papers);
 			}
 			//console.log(papers[0])
@@ -440,9 +444,10 @@ function populatetargetlist(papers) {
 		tr.appendChild(td);
 
 		var bibtexTD = document.createElement('td');
-		var bibtexText = document.createTextNode("Show BibTeX");
+		var bibtexText = document.createTextNode(papers[i][4]);
 		bibtexTD.onclick = function() {
-			showBibTeX(papers[i][4]);
+
+			showBibTeX(this.innerHTML);
 		}
 		bibtexTD.appendChild(bibtexText);
 		tr.appendChild(bibtexTD);
