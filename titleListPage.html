@@ -7,6 +7,8 @@
 	<link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 	<link rel="stylesheet" href ="css/titleListPage.css">
 	<script src = "IEEEHandler.js"></script>
+	<script src="pdfmake.min.js"></script>
+	<script src="vfs_fonts.js"></script>
 
 </head>
 <body>
@@ -20,7 +22,7 @@
 
 	<div class="content">
 		<div class="paperTable">
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped table-bordered" id="realpapertable">
 				<thead>
 					<tr>
 						<th>WordCloud Subset</th>
@@ -28,6 +30,7 @@
 						<th>Author(s)</th>
 						<th>Conference</th>
 						<th>Download</th>
+						<th>BibText</th>
 					</tr>
 				</thead>
 				<tbody id = "listitems">
@@ -72,6 +75,110 @@
 <!--   <script src="https://cdn.jsdelivr.net/bootstrap.listgroup/1.1.2/listgroup.min.js"></script>
  -->
   <script>
+
+  $('#exportpdf').click(function(){
+  	var papertable = document.getElementById('realpapertable');
+  	var tableData = [];
+  	var tableColumns = ['title', 'author', 'conference'];
+
+  	buildTableData();
+  	//console.log(tableData);
+
+  	function buildTableData(){
+  		for (var i = 0, row; row = papertable.rows[i]; i++){
+	  		//console.log(row);
+
+	  		var col1 = row.cells[1].innerHTML;
+	  		var col2 = row.cells[2].innerHTML;
+	  		col2 = col2.replace(/<\/?span[^>]*>/g,"");
+	  		var col3 = row.cells[3].innerHTML;
+	  		col3 = col3.replace(/<\/?span[^>]*>/g,"");
+	  		// console.log(col1.innerHTML);
+	  		// console.log(col2.innerHTML);
+	  		// console.log(col3.innerHTML);
+
+	  		tableData.push(buildRow(col1, col2, col3));
+
+
+
+	  		// for (var j = 1, col; col = row.cells[j]; j++){
+	  		// 	if (j < 4){
+	  		// 		var cellcontent = col.innerHTML;
+	  		// 		buildRow(cell)
+	  		// 	}
+	  		// }
+	  	}
+  	}
+
+
+  	
+
+  	function buildRow(title, author, conference){
+  		return {
+  			title: title, 
+  			author: author, 
+  			conference: conference
+  		};
+  	}
+
+  	function buildTableBody(data, columns){
+  		var body = [];
+  		//body.push(columns);
+
+  		data.forEach(function(row) {
+  			var dataRow = [];
+
+  			//console.log(row);
+
+  			columns.forEach(function(column) {
+  				//console.log(column);
+  				dataRow.push(row[column].toString());
+  			});
+
+  			body.push(dataRow);
+  		});
+
+  		return body;
+
+  	}
+
+  	function table(data, columns){
+  		return {
+  			table: {
+  				headerRows: 1,
+  				widths: ['auto', 'auto', 'auto'],
+  				body: buildTableBody(data, columns)
+  			}
+  		};
+  	}
+
+  	var dd = {
+  		content: [
+  			table(tableData, tableColumns)
+  		]
+  	};
+
+  	// var docDef = {
+  	// 	content: [
+  	// 		{
+  	// 			table: {
+  	// 				headerRows: 1,
+  	// 				widths: ['auto', 'auto', 'auto'],
+  	// 				body: [
+  	// 					[{text: 'Header 1', bold:true}, {text: 'Header 2', bold: true}, {text: 'Header 3', bold: true}, {text: 'Header 4', bold: true}],
+  	// 					['First', 'Second', 'Third', 'The last one'],
+  	// 					['Value 1', 'Value 2', 'Value 3', 'Value 4'],
+  	// 					[{text: 'Bold value', bold: true}, 'Val 2', 'Val 3', 'Val 4']
+  	// 				]
+  	// 			}
+  	// 		}
+  	// 	]
+  	// };
+
+  	pdfMake.createPdf(dd).download('listofpapers.pdf');
+  });
+  	
+
 
 function clickedPaperTitle(element) {
   		var paperTitle = element;
