@@ -9,6 +9,10 @@
 	<script src = "IEEEHandler.js"></script>
 	<script src="pdfmake.min.js"></script>
 	<script src="vfs_fonts.js"></script>
+	<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/js/tableexport.js"></script>
+	<script src="tableExport.js"></script>
 
 </head>
 <body>
@@ -70,8 +74,7 @@
 	</div>
   </div>
 
-  <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
 <!--   <script src="https://cdn.jsdelivr.net/bootstrap.listgroup/1.1.2/listgroup.min.js"></script>
  -->
   <script>
@@ -261,6 +264,10 @@ function clickedPaperTitle(element) {
 		    //   }
 	    	// });
 
+  		});
+
+  		$('#exportplaintext').click(function(){
+  			$('#realpapertable').tableExport({type: 'txt', escape:'false', tableName: 'realpapertable'});
   		});
 
   	// 	$('.glyphicon-download').click(function(){
