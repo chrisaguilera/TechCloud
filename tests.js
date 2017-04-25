@@ -40,8 +40,6 @@ $(document).ready(function () {
         dataType: "xml",
         success: function( response ) {
           abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
-          console.log(response);
-          console.log(abstract);
         }
       });
     }
@@ -52,7 +50,6 @@ $(document).ready(function () {
     var done = assert.async();
     setTimeout(function(){
       assert.deepEqual(abstract, correctAbstract);
-      console.log("after timeout: " + abstract);
       done();
     }, 4000);
   });
@@ -87,7 +84,6 @@ $(document).ready(function () {
             if(correctAuthor == array[i]){
               author = correctAuthor;
             }
-            console.log(array[i]);
           }
         }
       });
