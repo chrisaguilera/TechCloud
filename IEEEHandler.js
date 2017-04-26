@@ -322,7 +322,7 @@ function findPaper(authors, targetword, index, papers) {
 	    success: function(response) {
 				var indx = 0;
 				//console.log(authors[index]);
-	    	for (var i = 0; i < 5; i++) {
+	    	for (var i = 0; i < 5; i++) { // TODO change 5 to numResults
 		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
 		    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
 						text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
@@ -658,7 +658,7 @@ function authorsSearchedDocsWith(word){
 						dataType: "xml",
 						success: function (data){
 							console.log(data);
-							for(var i = 0; i < 5; i++){
+							for(var i = 0; i < 5; i++){ // TODO: change 5 to numResults
 								var title = data.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
 								var author = data.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
 								newItem(title, author)

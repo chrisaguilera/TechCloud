@@ -77,15 +77,25 @@ $(document).ready(function () {
       });
 
       request.done(function(msg) {
-        array = msg;
+        var array = msg;
+        console.log("Before delete: " + msg);
 
         if (array.length != 0){
           for (var i = 0; i < array.length; i++){
             if(correctAuthor == array[i]){
-              author = correctAuthor;
+              author = array[i];
             }
           }
         }
+
+        $.ajax({
+          url: "RemoveTestAuthor.php",
+          type: "GET",
+          dataType: "JSON",
+          success: function(response){
+            console.log(response);
+          }
+        });        
       });
     }
 
@@ -98,5 +108,56 @@ $(document).ready(function () {
     }, 4000);
     
   });
-})
 
+  QUnit.test( "Test Store Current Word", function( assert ) {
+    assert.expect(1);
+    var correctWord = "algorithm";
+    var testWord;
+    var originalWord;
+
+    function storeCurrentWord(word){
+      
+      $.ajax({
+        url: "GetCurrentWord.php",
+        type: "GET",
+        dataType: "text",
+        success: function(response){
+          console.log("original word:" +response);
+          originalWord = response;
+
+          var request = $.ajax({
+            url: "StoreCurrentWord.php",
+            type: "POST",
+            data: {word : word},
+            dataType: "text"
+          });
+          request.done(function(msg) {
+            console.log("after storing test word: " + msg);
+            testWord = msg;
+            $.ajax({
+              url: "StoreCurrentWord.php",
+              type: "POST",
+              data: {word: originalWord},
+              dataType: "text",
+              success: function(response){
+                console.log("reseting to original word:" + response);
+              }
+            });
+          });
+        }
+      });
+    }
+
+    var input = correctWord;
+    storeCurrentWord(input);
+
+    var done = assert.async();
+    setTimeout(function(){
+      assert.deepEqual(testWord, correctWord);
+      console.log("after timeout, word: " + testWord);
+      console.log("after timeout, originalWord: " + originalWord);
+      done();
+    }, 4000);
+
+  });
+})
