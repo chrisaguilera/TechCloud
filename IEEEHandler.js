@@ -506,6 +506,8 @@ function publishtext(arr) {
 		var t = document.createTextNode(arr[count][0] + " "); //creating the text node
 
 		var span = document.createElement('span');//creating a span
+		span.id = arr[count][0];
+
 
 		var calc = freq/big_freq;
 		if (calc == 1) {
