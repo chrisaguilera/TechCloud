@@ -282,7 +282,7 @@ function conferencesearch(conference) {
 		}
 
 
-				populatetargetlist(papers);
+				populatetargetlist(papers, conference);
 			}
 
 
@@ -376,7 +376,7 @@ function findPaper(authors, targetword, index, papers, type) {
 				else if (type === 3) {
 					papers.sort(sortFunctionConf);
 				}
-				populatetargetlist(papers);
+				populatetargetlist(papers, targetword);
 			}
 			//console.log(papers[0])
 			//populatetargetlist(papers);
@@ -420,7 +420,10 @@ function sortFunctionConf(a, b) {
     }
 }
 
-function populatetargetlist(papers) {
+function populatetargetlist(papers, word) {
+
+	htmltitle= document.getElementById("title");
+	htmltitle.innerHTML = word;
 	var list = document.getElementById("listitems");
 	list.innerHTML = "";
 	for (var i = 0; i < papers.length; i++) {
