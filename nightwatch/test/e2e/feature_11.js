@@ -1,7 +1,7 @@
 var conf = require('../../nightwatch.conf.js');
 
 module.exports = {
-  'Feature 4 Test': function (browser) {
+  'Feature 11 Test': function (browser) {
     browser
       .url('http://localhost:8880/index.php')
       .waitForElementVisible('body')
@@ -12,7 +12,7 @@ module.exports = {
       .setValue('input[id="input-text"]', 'Boehm')
       .click('input[id="nameRadio"]')
       .click('button[type="add"]')
-      .waitForElementVisible('p[id="wordcloudparagraph"]')
+      .waitForElementVisible('p[id="wordcloudparagraph"]');
 
     browser
       .assert.elementPresent('option[value="Halfond"]')
