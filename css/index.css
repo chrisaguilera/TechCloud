@@ -29,6 +29,10 @@
  	font-family: 'Montserrat', sans-serif;
  }
 
+ #search-btn{
+ 	margin-top: 10px;
+ }
+
 /* .glyphicon {
  	margin-top: 3px;
  	font-size: 11px;
