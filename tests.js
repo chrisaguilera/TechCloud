@@ -233,7 +233,6 @@ $(document).ready(function () {
               testWidth = width;
               // elem.style.width = width + '%';
           }
-          console.log("width in frame: "+width);
           testWidth = width;
       }
       // testWidth = width;
