@@ -11,8 +11,10 @@
 	<script src="vfs_fonts.js"></script>
 	<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<script src="Blob.js"></script>
+  	<script src="TextFileSaver.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/js/tableexport.js"></script>
-	<script src="tableExport.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/TableExport/3.3.5/css/tableexport.css">
 
 </head>
 <body>
@@ -68,7 +70,7 @@
 
 		<div id="exportButtons">
 			<button class="btn" id="exportpdf">Export as PDF</button>
-			<button class="btn" id="exportplaintext">Export as Plain Text</button>
+			<!-- <button class="btn" id="exportplaintext">Export as Plain Text</button> -->
 			<button class="btn" id="generatewordcloud">Generate WordCloud Subset</button>
 		</div>
 	</div>
@@ -225,6 +227,14 @@ function clickedPaperTitle(element) {
 				functionword = msg.replace(/\s+/g, '');
 				var papers = [];
 				findPaper(authorArray, functionword, 0, papers);
+				$("#realpapertable").tableExport({
+		  			formats: ['txt'],
+		  			bootstrap: false,
+		  			fileName: 'plaintext',
+		  			ignoreCols: [0, 1, 5],
+		  			bootstrap: true
+
+		  		});
 			});
 
 		});
@@ -266,9 +276,8 @@ function clickedPaperTitle(element) {
 
   		});
 
-  		$('#exportplaintext').click(function(){
-  			$('#realpapertable').tableExport({type: 'txt', escape:'false', tableName: 'realpapertable'});
-  		});
+
+  		
 
   	// 	$('.glyphicon-download').click(function(){
   	// 		alert($(this).attr('value'));
@@ -278,6 +287,7 @@ function clickedPaperTitle(element) {
 	<script>
 	function populateList(){
 		authorsSearchedDocsWith("test");
+
 	}
 
 	// function newItem(title, author) {

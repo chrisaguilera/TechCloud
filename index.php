@@ -37,7 +37,7 @@
   			<form id="inputform">
   				<input id="num-input-text" type="number" name="quantity" min="1" max="100">
 			</form>
-			<button id="search-btn" class="search-button btn pull-left" type="search"> Search </button>
+			<button name="search-button" class="search-button btn pull-left" type="search"> Search </button>
 		</div>
 	</div>
 

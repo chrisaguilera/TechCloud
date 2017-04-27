@@ -202,7 +202,7 @@ function printResultsForAuthor(authors, index) {
 		type: "GET",
 		dataType: "JSON"
 	});
-	request.done(function(msg) {	
+	request.done(function(msg) {
 		$.ajax({
 			async: false,
 		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+authors[index]+"&hc="+numResults,
@@ -326,9 +326,10 @@ function findPaper(authors, targetword, index, papers) {
 		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
 		    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
 						text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
-							if (checkWord(text, targetword)) {
+						var wordcount = checkWord(text, targetword);
+							if (wordcount > 0) {
 								var tital = response.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
-								console.log(tital);
+								//console.log(tital);
 								var crap = [];
 								crap[0] = tital;
 								paperauthor = response.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
@@ -344,6 +345,8 @@ function findPaper(authors, targetword, index, papers) {
 								var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
 								crap[4] = doi;
 
+								crap[5] = wordcount;
+								console.log(tital + "    " + wordcount);
 
 
 								if (!papers.includes(crap)) {
@@ -360,7 +363,8 @@ function findPaper(authors, targetword, index, papers) {
 				findPaper(authors, targetword, index, papers);
 			}
 			else {
-				console.log(papers[0][4]);
+				//console.log(papers[0][4]);
+				papers.sort(sortFunction);
 				populatetargetlist(papers);
 			}
 			//console.log(papers[0])
@@ -370,6 +374,15 @@ function findPaper(authors, targetword, index, papers) {
 		}
 	});
 
+}
+
+function sortFunction(a, b) {
+    if (a[5] === b[5]) {
+        return 0;
+    }
+    else {
+        return (a[5] > b[5]) ? -1 : 1;
+    }
 }
 
 function populatetargetlist(papers) {
@@ -484,10 +497,7 @@ function checkWord(text, targetword) {
 			count++;
 		}
 	}
-	if (count > 0) {
-		return true;
-	}
-	return false;
+	return count;
 }
 
 function publishtext(arr) {
@@ -506,6 +516,8 @@ function publishtext(arr) {
 		var t = document.createTextNode(arr[count][0] + " "); //creating the text node
 
 		var span = document.createElement('span');//creating a span
+		span.id = arr[count][0];
+
 
 		var calc = freq/big_freq;
 		if (calc == 1) {
