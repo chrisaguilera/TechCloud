@@ -203,6 +203,9 @@ function printResultsForAuthor(authors, index) {
 		dataType: "JSON"
 	});
 	request.done(function(msg) {
+		if(msg != ""){
+			numResults = msg;
+		}
 		$.ajax({
 			async: false,
 		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+authors[index]+"&hc="+numResults,
@@ -210,10 +213,8 @@ function printResultsForAuthor(authors, index) {
 		    success: function(response) {
 
 		    	var numPapers = response.getElementsByTagName("document").length;
-		    	if(numResults < numPapers ){
-		    		numPapers = numResults;
-		    	}
-		    	for (var i = 0; i < numResults; i++) {
+		    	
+		    	for (var i = 0; i < numPapers; i++) {
 			    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
 			    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
 							text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
@@ -314,75 +315,91 @@ function frequency (text, dict) {
 function findPaper(authors, targetword, index, papers, type) {
 	//console.log(authors);
 	//var papers = [];
-	$.ajax({
-		async: false,
-	    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au=" + authors[index],
-	    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
-	    dataType: "xml",
-	    success: function(response) {
+
+	var numResults = 10;
+
+	var request = $.ajax({
+				url: "GetNumResults.php",
+				type: "GET",
+				dataType: "JSON"
+			});
+	request.done(function(msg) {
+		if(msg != ""){
+			numResults = msg;
+		}
+
+		$.ajax({
+			async: false,
+		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au=" + authors[index]+"&hc="+numResults,
+		    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
+		    dataType: "xml",
+		    success: function(response) {	    	
 				var indx = 0;
-				//console.log(authors[index]);
-	    	for (var i = 0; i < 5; i++) { // TODO change 5 to numResults
-		    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
-		    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
-						text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
-						var wordcount = checkWord(text, targetword);
-							if (wordcount > 0) {
-								var tital = response.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
-								//console.log(tital);
-								var crap = [];
-								crap[0] = tital;
-								paperauthor = response.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
-								//console.log(papers[indx][0]);
-								crap[1] = paperauthor;
-								//console.log(crap[1]);
-								var conference = response.getElementsByTagName("document")[i].getElementsByTagName("pubtitle")[0]["textContent"];
-								crap[2] = conference;
+		    	var numPapers = response.getElementsByTagName("document").length;
+		    	for (var i = 0; i < numPapers; i++) {
+			    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
+			    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
+							text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+							var wordcount = checkWord(text, targetword);
+								if (wordcount > 0) {
+									var tital = response.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
+									//console.log(tital);
+									var crap = [];
+									crap[0] = tital;
+									paperauthor = response.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
+									//console.log(papers[indx][0]);
+									crap[1] = paperauthor;
+									//console.log(crap[1]);
+									var conference = response.getElementsByTagName("document")[i].getElementsByTagName("pubtitle")[0]["textContent"];
+									crap[2] = conference;
 
-								var download = response.getElementsByTagName("document")[i].getElementsByTagName("pdf")[0]["textContent"];
-								crap[3] = download;
+									var download = response.getElementsByTagName("document")[i].getElementsByTagName("pdf")[0]["textContent"];
+									crap[3] = download;
 
-								var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
-								crap[4] = doi;
+									var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
+									crap[4] = doi;
 
-								crap[5] = wordcount;
-								console.log(tital + "    " + wordcount);
+									crap[5] = wordcount;
+									console.log(tital + "    " + wordcount);
 
 
-								if (!papers.includes(crap)) {
-									papers.push(crap);
-									//console.log(papers[0][0]);
+									if (!papers.includes(crap)) {
+										papers.push(crap);
+										//console.log(papers[0][0]);
+									}
+									indx++;
 								}
-								indx++;
-							}
+						}
 					}
 				}
+				index++;
+				if (authors.length > index ) {
+					findPaper(authors, targetword, index, papers);
+				}
+				else {
+					//console.log(papers[0][4]);
+					if (type === 0) {
+						papers.sort(sortFunctionFreq);
+					}
+					else if (type === 1) {
+						papers.sort(sortFunctionName);
+					}
+					else if (type === 2) {
+						papers.sort(sortFunctionAuth);
+					}
+					else if (type === 3) {
+						papers.sort(sortFunctionConf);
+					}
+					populatetargetlist(papers);
+				}
+				//console.log(papers[0])
+				//populatetargetlist(papers);
+				//console.log(papers[0][0]);
+				//console.log(papers[0][1]);
+			
 			}
-			index++;
-			if (authors.length > index ) {
-				findPaper(authors, targetword, index, papers);
-			}
-			else {
-				//console.log(papers[0][4]);
-				if (type === 0) {
-					papers.sort(sortFunctionFreq);
-				}
-				else if (type === 1) {
-					papers.sort(sortFunctionName);
-				}
-				else if (type === 2) {
-					papers.sort(sortFunctionAuth);
-				}
-				else if (type === 3) {
-					papers.sort(sortFunctionConf);
-				}
-				populatetargetlist(papers);
-			}
-			//console.log(papers[0])
-			//populatetargetlist(papers);
-			//console.log(papers[0][0]);
-			//console.log(papers[0][1]);
-		}
+		});
+
 	});
 
 }
@@ -694,24 +711,36 @@ function authorsSearchedDocsWith(word){
 		dataType:"json",
 		success: function (response) {
 			console.log(response);
-			var i;
-			for (i in response) {
-				if(response[i] != ""){
-					console.log("http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+response[i]+"&querytext="+word);
-					$.ajax({
-						url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+response[i]+"&querytext="+word,
-						dataType: "xml",
-						success: function (data){
-							console.log(data);
-							for(var i = 0; i < 5; i++){ // TODO: change 5 to numResults
-								var title = data.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
-								var author = data.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
-								newItem(title, author)
+
+			var numResults = 10;
+
+			var request = $.ajax({
+				url: "GetNumResults.php",
+				type: "GET",
+				dataType: "JSON"
+			});
+			request.done(function(msg) {
+				var i;
+				for (i in response) {
+					if(response[i] != ""){
+						$.ajax({
+							url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+response[i]+"&querytext="+word+"&hc="+numResults,
+							dataType: "xml",
+							success: function (data){
+								// console.log(data);
+
+								var numPapers = data.getElementsByTagName("document").length;
+
+								for(var i = 0; i < numPapers; i++){ 
+									var title = data.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
+									var author = data.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
+									newItem(title, author)
+								}
 							}
-						}
-					});
+						});
+					}
 				}
-			}
+			});
 		}
 	});
 }
