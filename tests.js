@@ -287,7 +287,7 @@ $(document).ready(function () {
           type: "GET",
           dataType: "JSON",
           success: function(response){
-            console.log(response);
+            // console.log(response);
           }
         });        
       });
