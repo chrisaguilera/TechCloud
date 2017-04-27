@@ -311,7 +311,7 @@ function frequency (text, dict) {
 	return dict;
 }
 
-function findPaper(authors, targetword, index, papers) {
+function findPaper(authors, targetword, index, papers, type) {
 	//console.log(authors);
 	//var papers = [];
 	$.ajax({
@@ -364,7 +364,18 @@ function findPaper(authors, targetword, index, papers) {
 			}
 			else {
 				//console.log(papers[0][4]);
-				papers.sort(sortFunction);
+				if (type === 0) {
+					papers.sort(sortFunctionFreq);
+				}
+				else if (type === 1) {
+					papers.sort(sortFunctionName);
+				}
+				else if (type === 2) {
+					papers.sort(sortFunctionAuth);
+				}
+				else if (type === 3) {
+					papers.sort(sortFunctionConf);
+				}
 				populatetargetlist(papers);
 			}
 			//console.log(papers[0])
@@ -376,12 +387,36 @@ function findPaper(authors, targetword, index, papers) {
 
 }
 
-function sortFunction(a, b) {
+function sortFunctionFreq(a, b) {
     if (a[5] === b[5]) {
         return 0;
     }
     else {
         return (a[5] > b[5]) ? -1 : 1;
+    }
+}
+function sortFunctionName(a, b) {
+    if (a[0] === b[0]) {
+        return 0;
+    }
+    else {
+        return (a[0] < b[0]) ? -1 : 1;
+    }
+}
+function sortFunctionAuth(a, b) {
+    if (a[1] === b[1]) {
+        return 0;
+    }
+    else {
+        return (a[1] < b[1]) ? -1 : 1;
+    }
+}
+function sortFunctionConf(a, b) {
+    if (a[2] === b[2]) {
+        return 0;
+    }
+    else {
+        return (a[2] < b[2]) ? -1 : 1;
     }
 }
 

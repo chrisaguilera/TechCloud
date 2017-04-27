@@ -34,7 +34,7 @@
 			</form>
 		</div>
   		<div>
-  			<form>
+  			<form id="inputform">
   				<input id="num-input-text" type="number" name="quantity" min="1" max="100">
 			</form>
 			<button name="search-button" class="search-button btn pull-left" type="search"> Search </button>
@@ -84,9 +84,12 @@
 
 			populatePreviousSearches();
 
+			var numInputField = document.getElementById("num-input-text");
+			numInputField.value = "10";
+
 			$(".search-button").click(function() {
 
-				var numInputField = document.getElementById("num-input-text");
+				
 				$.ajax({
 					url: "StoreNumResults.php",
 					type: "POST",
