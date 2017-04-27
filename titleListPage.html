@@ -32,9 +32,9 @@
 				<thead>
 					<tr>
 						<th>WordCloud Subset</th>
-						<th>Paper Title</th>
-						<th>Author(s)</th>
-						<th>Conference</th>
+						<th onclick="sortTitle()">Paper Title</th>
+						<th onclick="sortAuth()">Author(s)</th>
+						<th onclick= "sortConf()">Conference</th>
 						<th>Download</th>
 						<th>BibText</th>
 					</tr>
@@ -76,7 +76,7 @@
 	</div>
   </div>
 
-  
+
 <!--   <script src="https://cdn.jsdelivr.net/bootstrap.listgroup/1.1.2/listgroup.min.js"></script>
  -->
   <script>
@@ -116,12 +116,12 @@
   	}
 
 
-  	
+
 
   	function buildRow(title, author, conference){
   		return {
-  			title: title, 
-  			author: author, 
+  			title: title,
+  			author: author,
   			conference: conference
   		};
   	}
@@ -182,7 +182,7 @@
 
   	pdfMake.createPdf(dd).download('listofpapers.pdf');
   });
-  	
+
 
 
 function clickedPaperTitle(element) {
@@ -201,6 +201,232 @@ function clickedPaperTitle(element) {
 			window.location.href = "abstractPage.html";
 		});
   }
+
+ function sortTitle() {
+	 var word;
+
+ var request0 = $.ajax({
+	 url: "GetCurrentWord.php",
+	 type: "GET",
+	 dataType: "text"
+ });
+ request0.done(function(msg) {
+	 var request = $.ajax({
+		 url: "GetAuthors.php",
+		 type: "GET",
+		 dataType: "JSON"
+	 });
+	 request.done(function(msg2) {
+		 authorArray = msg2;
+		 console.log("ms2 "  + authorArray);
+		 //abstractTest(authorArray);
+		 //console.log(msg2);
+		 //console.log("Word: " + msg);
+		 word = msg;
+		 document.getElementById("title").innerHTML = word.toUpperCase();
+		 functionword = msg.replace(/\s+/g, '');
+		 var papers = [];
+		 findPaper(authorArray, functionword, 0, papers, 1);
+		 $("#realpapertable").tableExport({
+				 formats: ['txt'],
+				 bootstrap: false,
+				 fileName: 'plaintext',
+				 ignoreCols: [0, 1, 5],
+				 bootstrap: true
+
+			 });
+	 });
+
+ });
+
+	 //populateList();
+
+
+	 //if user searching by author, call getListoftitlesForWord function and pass in author and selected word from wordcloud
+	 //if user searching by keyphrase, call getListofTitlesForWord function and pass in ONLY selected word from wordcloud
+	 getListOfTitlesForWord("web");
+
+
+	 $('.papertitle').click(function(){
+
+		 var paperTitle = $(this).attr('value');
+
+		 var request = $.ajax({
+		 url: "StoreCurrentTitle.php",
+		 type: "POST",
+		 data: {title : paperTitle},
+		 dataType: "text"
+	 });
+	 request.done(function(msg) {
+		 window.location.href = "abstractPage.html";
+	 });
+
+		 // $.ajax({
+		 //   url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
+		 //   dataType: "xml",
+		 //   success: function( response ) {
+		 //     abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+		 //     alert(abstract);
+
+		 //   },
+		 //   error: function(xhr, error){
+		 //   	alert(error + xhr);
+		 //   }
+		 // });
+
+	 });
+ }
+
+ function sortAuth() {
+ 	var word;
+
+ var request0 = $.ajax({
+ 	url: "GetCurrentWord.php",
+ 	type: "GET",
+ 	dataType: "text"
+ });
+ request0.done(function(msg) {
+ 	var request = $.ajax({
+ 		url: "GetAuthors.php",
+ 		type: "GET",
+ 		dataType: "JSON"
+ 	});
+ 	request.done(function(msg2) {
+ 		authorArray = msg2;
+ 		console.log("ms2 "  + authorArray);
+ 		//abstractTest(authorArray);
+ 		//console.log(msg2);
+ 		//console.log("Word: " + msg);
+ 		word = msg;
+ 		document.getElementById("title").innerHTML = word.toUpperCase();
+ 		functionword = msg.replace(/\s+/g, '');
+ 		var papers = [];
+ 		findPaper(authorArray, functionword, 0, papers, 2);
+ 		$("#realpapertable").tableExport({
+ 				formats: ['txt'],
+ 				bootstrap: false,
+ 				fileName: 'plaintext',
+ 				ignoreCols: [0, 1, 5],
+ 				bootstrap: true
+
+ 			});
+ 	});
+
+ });
+
+ 	//populateList();
+
+
+ 	//if user searching by author, call getListoftitlesForWord function and pass in author and selected word from wordcloud
+ 	//if user searching by keyphrase, call getListofTitlesForWord function and pass in ONLY selected word from wordcloud
+ 	getListOfTitlesForWord("web");
+
+
+ 	$('.papertitle').click(function(){
+
+ 		var paperTitle = $(this).attr('value');
+
+ 		var request = $.ajax({
+ 		url: "StoreCurrentTitle.php",
+ 		type: "POST",
+ 		data: {title : paperTitle},
+ 		dataType: "text"
+ 	});
+ 	request.done(function(msg) {
+ 		window.location.href = "abstractPage.html";
+ 	});
+
+ 		// $.ajax({
+ 		//   url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
+ 		//   dataType: "xml",
+ 		//   success: function( response ) {
+ 		//     abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+ 		//     alert(abstract);
+
+ 		//   },
+ 		//   error: function(xhr, error){
+ 		//   	alert(error + xhr);
+ 		//   }
+ 		// });
+
+ 	});
+ }
+
+ function sortConf() {
+ 	var word;
+
+ var request0 = $.ajax({
+ 	url: "GetCurrentWord.php",
+ 	type: "GET",
+ 	dataType: "text"
+ });
+ request0.done(function(msg) {
+ 	var request = $.ajax({
+ 		url: "GetAuthors.php",
+ 		type: "GET",
+ 		dataType: "JSON"
+ 	});
+ 	request.done(function(msg2) {
+ 		authorArray = msg2;
+ 		console.log("ms2 "  + authorArray);
+ 		//abstractTest(authorArray);
+ 		//console.log(msg2);
+ 		//console.log("Word: " + msg);
+ 		word = msg;
+ 		document.getElementById("title").innerHTML = word.toUpperCase();
+ 		functionword = msg.replace(/\s+/g, '');
+ 		var papers = [];
+ 		findPaper(authorArray, functionword, 0, papers, 3);
+ 		$("#realpapertable").tableExport({
+ 				formats: ['txt'],
+ 				bootstrap: false,
+ 				fileName: 'plaintext',
+ 				ignoreCols: [0, 1, 5],
+ 				bootstrap: true
+
+ 			});
+ 	});
+
+ });
+
+ 	//populateList();
+
+
+ 	//if user searching by author, call getListoftitlesForWord function and pass in author and selected word from wordcloud
+ 	//if user searching by keyphrase, call getListofTitlesForWord function and pass in ONLY selected word from wordcloud
+ 	getListOfTitlesForWord("web");
+
+
+ 	$('.papertitle').click(function(){
+
+ 		var paperTitle = $(this).attr('value');
+
+ 		var request = $.ajax({
+ 		url: "StoreCurrentTitle.php",
+ 		type: "POST",
+ 		data: {title : paperTitle},
+ 		dataType: "text"
+ 	});
+ 	request.done(function(msg) {
+ 		window.location.href = "abstractPage.html";
+ 	});
+
+ 		// $.ajax({
+ 		//   url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+title,
+ 		//   dataType: "xml",
+ 		//   success: function( response ) {
+ 		//     abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+ 		//     alert(abstract);
+
+ 		//   },
+ 		//   error: function(xhr, error){
+ 		//   	alert(error + xhr);
+ 		//   }
+ 		// });
+
+ 	});
+ }
+
 
   $(document).ready(function(){
   		var word;
@@ -226,7 +452,7 @@ function clickedPaperTitle(element) {
 				document.getElementById("title").innerHTML = word.toUpperCase();
 				functionword = msg.replace(/\s+/g, '');
 				var papers = [];
-				findPaper(authorArray, functionword, 0, papers);
+				findPaper(authorArray, functionword, 0, papers, 0);
 				$("#realpapertable").tableExport({
 		  			formats: ['txt'],
 		  			bootstrap: false,
@@ -277,12 +503,13 @@ function clickedPaperTitle(element) {
   		});
 
 
-  		
+
 
   	// 	$('.glyphicon-download').click(function(){
   	// 		alert($(this).attr('value'));
   	// 	});
   	});
+
   </script>
 	<script>
 	function populateList(){
