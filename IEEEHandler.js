@@ -241,7 +241,7 @@ function printResultsForAuthor(authors, index) {
 	});
 }
 
-function conferencesearch(conference) {
+function conferencesearch(conference, type) {
 	//var pdfURL;
 
 	//show_overlay();
@@ -281,9 +281,14 @@ function conferencesearch(conference) {
 					}
 			///index++;
 		}
+		if (type === 0) {
+			papers.sort(sortFunctionName);
+		}
+		else if (type === 1) {
+			papers.sort(sortFunctionAuth);
+		}
 
-
-				populatetargetlist(papers);
+				populatetargetlist(papers, conference, true);
 			}
 
 
@@ -392,11 +397,8 @@ function findPaper(authors, targetword, index, papers, type) {
 					}
 					populatetargetlist(papers);
 				}
-				//console.log(papers[0])
-				//populatetargetlist(papers);
-				//console.log(papers[0][0]);
-				//console.log(papers[0][1]);
-			
+
+				populatetargetlist(papers, targetword, false);
 			}
 		});
 
@@ -437,7 +439,17 @@ function sortFunctionConf(a, b) {
     }
 }
 
-function populatetargetlist(papers) {
+function populatetargetlist(papers, word, conference) {
+
+	identifier = document.getElementById("identifier");
+	htmltitle= document.getElementById("title");
+	if (conference === true) {
+		identifier.innerHTML = "Conference: ";
+	}
+	else {
+		identifier.innerHTML = "Word: ";
+	}
+		htmltitle.innerHTML = word;
 	var list = document.getElementById("listitems");
 	list.innerHTML = "";
 	for (var i = 0; i < papers.length; i++) {
@@ -452,6 +464,7 @@ function populatetargetlist(papers) {
 
 		//title clickable
 		var td1 = document.createElement('td');
+		td1.id = papers[i][0];
 		var t1 = document.createTextNode(papers[i][0]);
 		td1.onclick = function() {
 			clickedPaperTitle(this.innerHTML);
@@ -472,7 +485,7 @@ function populatetargetlist(papers) {
 			var link = document.createTextNode(arrayy[j]);
 			var span = document.createElement('span');
 			span.onclick = function () {
-				console.log(this);
+				//console.log(this);
 				newauthor(this.innerHTML);
 			}
 			span.appendChild(link);
@@ -487,7 +500,7 @@ function populatetargetlist(papers) {
 		conferencespan.appendChild(conference);
 		conferencespan.onclick = function() {
 
-			conferencesearch(this.innerHTML);
+			conferencesearch(this.innerHTML, 0);
 		}
 		td3.appendChild(conferencespan);
 		tr.appendChild(td3);

@@ -1,7 +1,7 @@
 var conf = require('../../nightwatch.conf.js');
 
 module.exports = {
-  'Feature 4 Test': function (browser) {
+  'Feature 11 Test': function (browser) {
     browser
       .url('http://localhost:8880/index.php')
       .waitForElementVisible('body')
@@ -9,12 +9,14 @@ module.exports = {
       .click('input[id="nameRadio"]')
       .click('button[type="search"]')
       .waitForElementVisible('p[id="wordcloudparagraph"]')
-      .click('span[id="web"]')
-      .waitForElementVisible('div[class="paperTable"]')
-      .click('a[href="http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6405359"]');
+      .setValue('input[id="input-text"]', 'Boehm')
+      .click('input[id="nameRadio"]')
+      .click('button[type="add"]')
+      .waitForElementVisible('p[id="wordcloudparagraph"]');
 
     browser
-      .assert.title('IEEE Xplore Full-Text PDF:')
+      .assert.elementPresent('option[value="Halfond"]')
+      .assert.elementPresent('option[value="Boehm"]')
       .end();
   }
 };
