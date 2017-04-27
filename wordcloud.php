@@ -56,8 +56,8 @@
 			</form>
 		</div>
 	  	<div id="buttonclass">
-	  		<button class="add-button btn">Add</button>
-	  		<button class="search-button btn">Search</button>
+	  		<button class="add-button btn" type="add">Add</button>
+	  		<button name="search-button" class="search-button btn">Search</button>
 	  		<button class="btn" onclick="downloadImage();">Download Image</button>
 				<button onclick="shit()">click me</button>
 	  	</div>

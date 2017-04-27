@@ -287,7 +287,7 @@ $(document).ready(function () {
           type: "GET",
           dataType: "JSON",
           success: function(response){
-            console.log(response);
+            // console.log(response);
           }
         });        
       });
@@ -303,6 +303,7 @@ $(document).ready(function () {
     
   });
 
+  
 
   QUnit.test("Test access to paper's Bibtex [Feature ID: 5]", function(assert){
     assert.expect(1);
