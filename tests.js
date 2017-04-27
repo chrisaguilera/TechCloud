@@ -237,7 +237,6 @@ $(document).ready(function () {
           testWidth = width;
       }
       // testWidth = width;
-      console.log("width: "+width);
     }
 
     
