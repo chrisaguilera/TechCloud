@@ -753,6 +753,8 @@ function showBibTeX(doi) {
       "Content-Type": "application/x-bibtex; charset=utf-8"
     },
     success : function(result){
+    	console.log(result);
+    	console.log(typeof result);
         alert(result);
     }
   });
