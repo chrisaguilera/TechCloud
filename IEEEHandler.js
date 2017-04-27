@@ -457,6 +457,8 @@ function populatetargetlist(papers) {
 		tr.appendChild(td);
 
 		var bibtexTD = document.createElement('td');
+		bibtexTD.id = papers[0][4];
+
 		var bibtexText = document.createTextNode(papers[i][4]);
 		bibtexTD.onclick = function() {
 
