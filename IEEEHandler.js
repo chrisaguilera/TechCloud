@@ -240,7 +240,7 @@ function printResultsForAuthor(authors, index) {
 	});
 }
 
-function conferencesearch(conference) {
+function conferencesearch(conference, type) {
 	//var pdfURL;
 
 	//show_overlay();
@@ -280,9 +280,14 @@ function conferencesearch(conference) {
 					}
 			///index++;
 		}
+		if (type === 0) {
+			papers.sort(sortFunctionName);
+		}
+		else if (type === 1) {
+			papers.sort(sortFunctionAuth);
+		}
 
-
-				populatetargetlist(papers, conference);
+				populatetargetlist(papers, conference, true);
 			}
 
 
@@ -376,7 +381,7 @@ function findPaper(authors, targetword, index, papers, type) {
 				else if (type === 3) {
 					papers.sort(sortFunctionConf);
 				}
-				populatetargetlist(papers, targetword);
+				populatetargetlist(papers, targetword, false);
 			}
 			//console.log(papers[0])
 			//populatetargetlist(papers);
@@ -420,10 +425,17 @@ function sortFunctionConf(a, b) {
     }
 }
 
-function populatetargetlist(papers, word) {
+function populatetargetlist(papers, word, conference) {
 
+	identifier = document.getElementById("identifier");
 	htmltitle= document.getElementById("title");
-	htmltitle.innerHTML = word;
+	if (conference === true) {
+		identifier.innerHTML = "Conference: ";
+	}
+	else {
+		identifier.innerHTML = "Word: ";
+	}
+		htmltitle.innerHTML = word;
 	var list = document.getElementById("listitems");
 	list.innerHTML = "";
 	for (var i = 0; i < papers.length; i++) {
@@ -459,7 +471,7 @@ function populatetargetlist(papers, word) {
 			var link = document.createTextNode(arrayy[j]);
 			var span = document.createElement('span');
 			span.onclick = function () {
-				console.log(this);
+				//console.log(this);
 				newauthor(this.innerHTML);
 			}
 			span.appendChild(link);
@@ -474,7 +486,7 @@ function populatetargetlist(papers, word) {
 		conferencespan.appendChild(conference);
 		conferencespan.onclick = function() {
 
-			conferencesearch(this.innerHTML);
+			conferencesearch(this.innerHTML, 0);
 		}
 		td3.appendChild(conferencespan);
 		tr.appendChild(td3);

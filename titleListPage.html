@@ -20,7 +20,7 @@
 <body>
   <div class="container-fluid">
   	<div class="header" id="headerDiv">
-	  	<h1 id="title"></h1>
+	  	<h1 id="identifier"></h1><h1 id="title"></h1>
 
 	  	<h3> Associated Papers: </h3>
 	</div>
@@ -203,6 +203,13 @@ function clickedPaperTitle(element) {
   }
 
  function sortTitle() {
+	 identifier = document.getElementById("identifier");
+	 if (identifier.innerHTML === "Conference: ") {
+		 title = document.getElementById("title");
+		 conferencesearch(title.innerHTML, 0);
+
+	 }
+	 else {
 	 var word;
 
  var request0 = $.ajax({
@@ -276,9 +283,17 @@ function clickedPaperTitle(element) {
 
 	 });
  }
+ }
 
  function sortAuth() {
- 	var word;
+	 identifier = document.getElementById("identifier");
+	 if (identifier.innerHTML === "Conference: ") {
+		 title = document.getElementById("title");
+		 conferencesearch(title.innerHTML, 1);
+
+	 }
+	 else {
+	var word;
 
  var request0 = $.ajax({
  	url: "GetCurrentWord.php",
@@ -350,10 +365,14 @@ function clickedPaperTitle(element) {
  		// });
 
  	});
+}
  }
 
  function sortConf() {
- 	var word;
+	 identifier = document.getElementById("identifier");
+	 if (identifier.innerHTML === "Word: ") {
+
+	var word;
 
  var request0 = $.ajax({
  	url: "GetCurrentWord.php",
@@ -425,6 +444,7 @@ function clickedPaperTitle(element) {
  		// });
 
  	});
+ }
  }
 
 
@@ -510,7 +530,9 @@ function clickedPaperTitle(element) {
   	// 	});
   	});
 
+
   </script>
+
 	<script>
 	function populateList(){
 		authorsSearchedDocsWith("test");
