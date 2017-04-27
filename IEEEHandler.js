@@ -400,6 +400,7 @@ function populatetargetlist(papers) {
 
 		//title clickable
 		var td1 = document.createElement('td');
+		td1.id = papers[i][0];
 		var t1 = document.createTextNode(papers[i][0]);
 		td1.onclick = function() {
 			clickedPaperTitle(this.innerHTML);
