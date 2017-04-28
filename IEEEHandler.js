@@ -441,7 +441,7 @@ function findPaper(authors, targetword, index, papers, type) {
 					else if (type === 3) {
 						papers.sort(sortFunctionConf);
 					}
-					populatetargetlist(papers);
+					//populatetargetlist(papers);
 				}
 
 				populatetargetlist(papers, targetword, false);
