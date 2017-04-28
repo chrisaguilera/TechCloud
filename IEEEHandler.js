@@ -501,6 +501,9 @@ function ACM2(url, targetword, type, papers, callback) { //0-3
 			for (var i = 0; i < this.responseXML.getElementsByClassName("title").length; i++) {
 				var info = [];
 				//0 tital, 1 author, 2 conference, 3 download, 4 doi, 5 wordcount
+				if (typeof this.responseXML.getElementsByClassName("abstract")[i] == 'undefined'){
+					continue;
+				}
 				var wordcount = checkWord(this.responseXML.getElementsByClassName("abstract")[i].innerHTML, targetword);
 				if (wordcount > 0) {
 					info[0] = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML;
@@ -656,12 +659,7 @@ function populatetargetlist(papers, word, conference) {
 
 		list.appendChild(tr);
 	}
-	$("#realpapertable").tableExport({
-		 	formats: ['txt'],
-		 	bootstrap: true,
-		 	fileName: 'plaintext',
-		 	ignoreCols: [0, 1, 5],
-		 });
+
 }
 
 function newauthor(authorvalue) {

@@ -26,7 +26,7 @@
 	</div>
 	<script type="text/javascript">
 
-		
+
 
 		$(document).ready(function(){
 
@@ -61,22 +61,52 @@
 			      url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+ title,
 			      dataType: "xml",
 			      success: function( response ) {
-			        var abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
-			        console.log("abstract is: " + abstract);
+							if (typeof response.getElementsByTagName("document")[0] == 'undefined') {
+								var url = "http://dl.acm.org/results.cfm?query=acmdlTitle:("+title+")";
+								ACM(url, wordd);
+							} else {
+				        var abstract = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+				        console.log("abstract is: " + abstract);
+								abstract = abstract.toLowerCase();
+								//globaltext = abstract.split(wordd);
+								//console.log(abstract.split(wordd));
+								var regtexthtml = '<span class="regtext">';
+								regtexthtml += abstract;
+				        var newAbstract = regtexthtml.split(wordd).join('</span><span class="highlight">' + wordd + '</span><span class="regtext">');
+
+				        document.getElementById('abstractContent').innerHTML = newAbstract;
+
+				      },
+				      error: function(xhr, error){
+				      	// alert(error + xhr);
+				      }
+						}
+		    	});
+			}
+			function ACM(url, word) {
+				// Feature detection
+				if ( !window.XMLHttpRequest ) return;
+
+				// Create new request
+				var xhr = new XMLHttpRequest();
+
+				// Setup callback
+				xhr.onload = function() {
+					var abstract = this.responseXML.getElementsByClassName("abstract")[i].innerHTML;
 					abstract = abstract.toLowerCase();
 					//globaltext = abstract.split(wordd);
 					//console.log(abstract.split(wordd));
 					var regtexthtml = '<span class="regtext">';
 					regtexthtml += abstract;
-			        var newAbstract = regtexthtml.split(wordd).join('</span><span class="highlight">' + wordd + '</span><span class="regtext">');
+					var newAbstract = regtexthtml.split(wordd).join('</span><span class="highlight">' + wordd + '</span><span class="regtext">');
 
-			        document.getElementById('abstractContent').innerHTML = newAbstract;
+					document.getElementById('abstractContent').innerHTML = newAbstract;
+				}
 
-			      },
-			      error: function(xhr, error){
-			      	// alert(error + xhr);
-			      }
-		    	});
+				// Get the HTML
+				xhr.open( 'GET', url );
+				xhr.responseType = 'document';
+				xhr.send();
 			}
 
 			$('#buttondownload').click(function(){
@@ -115,7 +145,7 @@
 					}
 
 				}
-				
+
 
 				// for (var i = 0; i < highlights.length; i++){
 
@@ -144,7 +174,7 @@
 
 			function createHighlightObject(input){
 				return {
-					text: input, 
+					text: input,
 					bold: true
 				};
 			}
