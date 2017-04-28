@@ -305,4 +305,38 @@ $(document).ready(function () {
 
   
 
+  QUnit.test("Test access to paper's Bibtex [Feature ID: 5]", function(assert){
+    assert.expect(1);
+    var correctBibTex = "@inproceedings{Halfond_2012,\n\tdoi = {10.1109/issre.2012.37},\n\turl = {https://doi.org/10.1109%2Fissre.2012.37},\n\tyear = 2012,\n\tmonth = {nov},\n\tpublisher = {{IEEE}},\n\tauthor = {William G.J. Halfond},\n\ttitle = {Automated Checking of Web Application Invocations},\n\tbooktitle = {2012 {IEEE} 23rd International Symposium on Software Reliability Engineering}\n}";
+    var bibtexresult;
+
+    function showBibTeX(doi) {
+      $.ajax({
+        url : "http://dx.doi.org/"+doi,
+        headers: {
+          Accept: "application/x-bibtex; charset=utf-8",
+          "Content-Type": "application/x-bibtex; charset=utf-8"
+        },
+        success : function(result){
+          // console.log(result);
+          // console.log(typeof result);
+          // alert(result);
+          bibtexresult = result;
+        }
+      });
+    }
+
+    var input ="10.1109/issre.2012.37";
+    showBibTeX(input);
+
+    var done = assert.async();
+    setTimeout(function(){
+      assert.deepEqual(bibtexresult, correctBibTex);
+      done();
+    }, 4000)
+
+
+  });
+
+
 })

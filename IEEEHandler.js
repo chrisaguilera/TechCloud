@@ -213,19 +213,63 @@ function printResultsForAuthor(authors, index) {
 		    success: function(response) {
 
 		    	var numPapers = response.getElementsByTagName("document").length;
-		    	
+
 		    	for (var i = 0; i < numPapers; i++) {
 			    	if(typeof response.getElementsByTagName("document")[i] != "undefined"){
 			    		if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0] != "undefined") {
-							text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+								text = response.getElementsByTagName("document")[i].getElementsByTagName("abstract")[0]["textContent"];
+								dict = frequency(text, dict);
+							}
+						}
+					}
+					index++;
+					if (index < authors.length) {
+						printResultsForAuthor(authors, index);
+					} else if (index == authors.length) {
+						items = Object.keys(dict).map(function(key) {
+			    			return [key, dict[key]];
+			    		});
+			    		items.sort(function(first, second) {
+							return second[1] - first[1];
+						});
+						items = items.slice(0, 250);
+						publishtext(items);
+					}
+				}
+
+		});
+	});
+}
+
+function printResultsForTitle(titles, index) {
+	var pdfURL;
+
+	var count = 0;
+
+	//var numResults = 10;
+
+
+		$.ajax({
+			async: false,
+		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?ti="+titles[index],
+		    dataType: "xml",
+		    success: function(response) {
+
+		    	//var numPapers = response.getElementsByTagName("document").length;
+
+		    	//for (var i = 0; i < numPapers; i++) {
+			    	if(typeof response.getElementsByTagName("document")[0] != "undefined"){
+			    		if (typeof response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0] != "undefined") {
+							text = response.getElementsByTagName("document")[0].getElementsByTagName("abstract")[0]["textContent"];
+							console.log(text);
 							dict = frequency(text, dict);
 						}
 					}
-				}
+				//}
 				index++;
-				if (index < authors.length) {
-					printResultsForAuthor(authors, index);
-				} else if (index == authors.length) {
+				if (index < titles.length) {
+					printResultsForTitle(titles, index);
+				} else if (index == titles.length) {
 					items = Object.keys(dict).map(function(key) {
 		    			return [key, dict[key]];
 		    		});
@@ -238,8 +282,10 @@ function printResultsForAuthor(authors, index) {
 			}
 
 		});
-	});
-}
+	}
+
+
+
 
 function conferencesearch(conference, type) {
 	//var pdfURL;
@@ -338,7 +384,7 @@ function findPaper(authors, targetword, index, papers, type) {
 		    url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au=" + authors[index]+"&hc="+numResults,
 		    // url: "http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=7515472",
 		    dataType: "xml",
-		    success: function(response) {	    	
+		    success: function(response) {
 				var indx = 0;
 		    	var numPapers = response.getElementsByTagName("document").length;
 		    	for (var i = 0; i < numPapers; i++) {
@@ -395,7 +441,7 @@ function findPaper(authors, targetword, index, papers, type) {
 					else if (type === 3) {
 						papers.sort(sortFunctionConf);
 					}
-					populatetargetlist(papers);
+					//populatetargetlist(papers);
 				}
 
 				populatetargetlist(papers, targetword, false);
@@ -486,6 +532,12 @@ function populatetargetlist(papers, word, conference) {
 			var span = document.createElement('span');
 			span.onclick = function () {
 				//console.log(this);
+				$.ajax({
+					url: "StoreSubsetBool.php",
+					type: "POST",
+					data: {bool : "false"},
+					dataType: "text"
+				});
 				newauthor(this.innerHTML);
 			}
 			span.appendChild(link);
@@ -685,20 +737,6 @@ function getAbstractForDocTitle(title){ // we don't need this, its here just for
     });
 }
 
-// function getListOfTitlesForAuthor(author){ // we don't need this, its here just for reference. Can delete it.
-//     $.ajax({
-//       url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?au="+author,
-//       dataType: "xml",
-//       success: function( response ) {
-//       	for(var i = 0; i < 5; i++){
-//       		abstract = response.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
-//         	console.log(abstract);
-//       	}
-
-//       }
-//     });
-// }
-
 function newItem(title, author) {
 		var li = document.createElement("li");
 		li.className = "list-group-item";
@@ -747,7 +785,7 @@ function authorsSearchedDocsWith(word){
 
 								var numPapers = data.getElementsByTagName("document").length;
 
-								for(var i = 0; i < numPapers; i++){ 
+								for(var i = 0; i < numPapers; i++){
 									var title = data.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
 									var author = data.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
 									newItem(title, author)
@@ -794,7 +832,34 @@ function showBibTeX(doi) {
       "Content-Type": "application/x-bibtex; charset=utf-8"
     },
     success : function(result){
+    	console.log(result);
+    	console.log(typeof result);
         alert(result);
     }
   });
 }
+
+function getACMStuff(url) {
+
+    // Feature detection
+    if ( !window.XMLHttpRequest ) return;
+
+    // Create new request
+    var xhr = new XMLHttpRequest();
+
+    // Setup callback
+    xhr.onload = function() {
+      for (var i = 0; i < 20; i++) {
+        console.log(this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML);
+        console.log(this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML);
+        console.log(this.responseXML.getElementsByClassName("abstract")[0].innerHTML);
+        console.log(this.responseXML.getElementsByName("FullTextPDF")[i].href);
+      }
+    }
+
+    // Get the HTML
+    xhr.open( 'GET', url );
+    xhr.responseType = 'document';
+    xhr.send();
+
+};

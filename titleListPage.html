@@ -71,7 +71,7 @@
 		<div id="exportButtons">
 			<button class="btn" id="exportpdf">Export as PDF</button>
 			<!-- <button class="btn" id="exportplaintext">Export as Plain Text</button> -->
-			<button class="btn" id="generatewordcloud">Generate WordCloud Subset</button>
+			<button class="btn" id="generatewordcloud" onclick="subset()">Generate WordCloud Subset</button>
 		</div>
 	</div>
   </div>
@@ -584,6 +584,38 @@ function clickedPaperTitle(element) {
 	      	// alert(error + xhr);
 	      }
     	});
+	}
+
+	function subset() {
+		$.ajax({
+			url: "ClearSubset.php",
+			type: "GET",
+			dataType: "JSON"
+		});
+		$.ajax({
+			url: "StoreSubsetBool.php",
+			type: "POST",
+			data: {bool : "true"},
+			dataType: "text"
+		});
+		checkboxes = document.getElementsByTagName("input");
+
+    for (var i = 0; i < checkboxes.length; i++) {
+        var checkbox = checkboxes[i];
+        if (checkbox.checked) {
+            var currentRow = checkbox.parentNode.parentNode;
+            var secondColumn = currentRow.getElementsByTagName("td")[1];
+
+            //alert("My text is: " + secondColumn.textContent );
+						var request = $.ajax({
+							url: "StoreSubset.php",
+							type: "POST",
+							data: {subset : secondColumn.textContent},
+							dataType: "text"
+						});
+        }
+    }
+		window.location.href = "wordcloud.php";
 	}
 
 	function getListOfTitlesForWord(word){ // we don't need this, its here just for reference. Can delete it.
