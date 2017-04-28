@@ -588,6 +588,11 @@ function clickedPaperTitle(element) {
 
 	function subset() {
 		$.ajax({
+			url: "ClearSubset.php",
+			type: "GET",
+			dataType: "JSON"
+		});
+		$.ajax({
 			url: "StoreSubsetBool.php",
 			type: "POST",
 			data: {bool : "true"},
