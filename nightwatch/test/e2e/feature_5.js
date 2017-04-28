@@ -1,4 +1,4 @@
-var conf = require('../../nightwatch.conf.js');
+  var conf = require('../../nightwatch.conf.js');
 
 module.exports = {
   'Feature 5 Test': function (browser) {
