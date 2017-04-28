@@ -88,6 +88,14 @@
 			numInputField.value = "10";
 
 			$(".search-button").click(function() {
+
+				var request0 = $.ajax({
+					url: "NewSearch.php",
+				});
+				request0.done(function(msg) {
+					populatePreviousSearches();
+				});
+
 				$.ajax({
 					url: "StoreSubsetBool.php",
 					type: "POST",
