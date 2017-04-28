@@ -8,10 +8,10 @@ module.exports = {
       .setValue('input[id="input-text"]', 'Halfond')
       .click('input[id="nameRadio"]')
       .click('button[type="search"]')
-      .waitForElementVisible('body');
+      .waitForElementVisible('p[id="wordcloudparagraph"]');
 
     browser
-      .assert.title('Word Cloud')
+      .assert.title('Halfond')
       .end();
   }
 };

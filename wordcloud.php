@@ -132,7 +132,7 @@ function subsetWordcloud(array) {
     	document.body.appendChild(link);
     	link.click();
 	}
-	
+
 	function getRandomColor() {
 	    var letters = '0123456789ABCDEF';
 	    var color = '#';
@@ -189,6 +189,7 @@ function subsetWordcloud(array) {
 
 		// Stuff for word cloud
 		var subsetArray;
+
 		var request = $.ajax({
 			url: "GetSubsetBool.php",
 			type: "GET",
@@ -208,7 +209,17 @@ function subsetWordcloud(array) {
 				request.done(function(something2) {
 					subsetArray = something2;
 					//console.log(subsetArray);
+					var docTitle = "";
+					for (i = 0; i < subsetArray.length; i++) {
+						if (i != authorArray.length - 1) {
+							docTitle += subsetArray[i] + ", ";
+						} else {
+							docTitle += subsetArray[i] + "";
+						}
+					}
+					document.title = docTitle;
 					subsetWordcloud(subsetArray);
+
 				});
 			}
 			else {
@@ -220,6 +231,15 @@ function subsetWordcloud(array) {
 				});
 				request.done(function(msg) {
 					authorArray = msg;
+					var docTitle = "";
+					for (i = 0; i < authorArray.length; i++) {
+						if (i != authorArray.length - 1) {
+							docTitle += authorArray[i] + ", ";
+						} else {
+							docTitle += authorArray[i] + "";
+						}
+					}
+					document.title = docTitle;
 					abstractTest(authorArray);
 					console.log(msg);
 				});
