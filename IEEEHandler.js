@@ -586,8 +586,16 @@ function populatetargetlist(papers, word, conference) {
 		tr.appendChild(bibtexTD);
 
 		list.appendChild(tr);
-	}
 
+
+	}
+	$("#realpapertable").tableExport({
+			formats: ['txt'],
+			bootstrap: true,
+			fileName: 'plaintext',
+			ignoreCols: [0, 4, 5],
+
+		});
 }
 
 function newauthor(authorvalue) {

@@ -234,14 +234,7 @@ function clickedPaperTitle(element) {
 		 functionword = msg.replace(/\s+/g, '');
 		 var papers = [];
 		 findPaper(authorArray, functionword, 0, papers, 1);
-		 // $("#realpapertable").tableExport({
-			// 	 formats: ['txt'],
-			// 	 bootstrap: false,
-			// 	 fileName: 'plaintext',
-			// 	 ignoreCols: [0, 1, 5],
-			// 	 bootstrap: true
 
-			//  });
 	 });
 
  });
@@ -317,12 +310,7 @@ function clickedPaperTitle(element) {
  		functionword = msg.replace(/\s+/g, '');
  		var papers = [];
  		findPaper(authorArray, functionword, 0, papers, 2);
- 		// $("#realpapertable").tableExport({
-			// formats: ['txt'],
-			// fileName: 'plaintext',
-			// ignoreCols: [0, 1, 5],
-			// bootstrap: true
- 		// });
+
  	});
 
  });
@@ -404,13 +392,8 @@ function clickedPaperTitle(element) {
 
  });
 
- 	$("#realpapertable").tableExport({
-		formats: ['txt'],
-		bootstrap: true,
-		fileName: 'plaintext',
-		ignoreCols: [0, 1, 5],
-	});	
- 	
+
+
 
  	//populateList();
 
@@ -486,7 +469,9 @@ function clickedPaperTitle(element) {
 	  // 		});
 		});
 
-		});
+	});
+	//console.log("this one")
+
 
   		//populateList();
 
