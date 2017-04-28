@@ -10,13 +10,12 @@ module.exports = {
       .waitForElementVisible ('button[type="search"]')
       .click('button[type="search"]')
       .waitForElementVisible('p[id="wordcloudparagraph"]')
-      .waitForElementVisible ('btn[id="download"]')
-      .click('btn[id="download"]')
-      .saveScreenshot('http://localhost:8888/wordcloud.php');
-
+      .waitForElementVisible ('button[id="download"]')
+      // .click('button[id="download"]')
+      .saveScreenshot('/Users/chrisaguilera/Desktop/WordCloud.png');
 
     browser
-      .assert.title('Word Cloud')
+      .assert.title('Halfond')
       .end();
   }
 };

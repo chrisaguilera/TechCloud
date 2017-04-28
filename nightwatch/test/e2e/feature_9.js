@@ -13,11 +13,13 @@ module.exports = {
       .waitForElementVisible ('div[class="paperTable"]')
       .waitForElementVisible ('td[id="Automated Checking of Web Application Invocations"]')
       .click ('td[id="Automated Checking of Web Application Invocations"]')
-      .waitForElementVisible ('div[class="content"]');
+      .waitForElementVisible ('div[class="content"]')
+      .waitForElementVisible ('span[class="highlight"]');
+
 
 
     browser
-      .assert.title('Abstract Page')
+      .assert.title('Abstract: Automated Checking of Web Application Invocations')
       .assert.elementPresent ('span[class="highlight"]')
       .end();
   }
