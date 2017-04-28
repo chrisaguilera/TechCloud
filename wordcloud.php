@@ -289,7 +289,12 @@ function subsetWordcloud(array) {
 
 
 		$(".search-button").click(function() {
-
+			$.ajax({
+				url: "StoreSubsetBool.php",
+				type: "POST",
+				data: {bool : "false"},
+				dataType: "text"
+			});
 			var inputField = document.getElementById("input-text");
 
 			var request0 = $.ajax({
@@ -329,6 +334,12 @@ function subsetWordcloud(array) {
 		})
 
 		$(".add-button").click(function() {
+			$.ajax({
+				url: "StoreSubsetBool.php",
+				type: "POST",
+				data: {bool : "false"},
+				dataType: "text"
+			});
 			var inputField = document.getElementById("input-text");
 
 			if (document.getElementById('nameRadio').checked){
