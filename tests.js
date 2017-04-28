@@ -422,26 +422,26 @@ $(document).ready(function () {
 
   }); 
 
-  // QUnit.test("Test Export List to PDF and Text [Feature ID: 10]", function(assert){
-  //   assert.expect(3);
+  QUnit.test("Test Export List to PDF and Text [Feature ID: 10]", function(assert){
+    assert.expect(3);
 
-  //   function buildRow(title, author, conference){
-  //     return {
-  //       title: title,
-  //       author: author,
-  //       conference: conference
-  //     };
-  //   }
+    function buildRow(title, author, conference){
+      return {
+        title: title,
+        author: author,
+        conference: conference
+      };
+    }
 
-  //   var title = "The Title";
-  //   var author = "Halfond";
-  //   var conference = "IEEE Testing Is Fun Conference";
-  //   var row = buildRow(title, author, conference);
+    var title = "The Title";
+    var author = "Halfond";
+    var conference = "IEEE Testing Is Fun Conference";
+    var row = buildRow(title, author, conference);
 
-  //   assert.deepEqual(row.title,title);
-  //   assert.deepEqual(row.author,author);
-  //   assert.deepEqual(row.conference,conference);
-  // });
+    assert.deepEqual(row.title,title);
+    assert.deepEqual(row.author,author);
+    assert.deepEqual(row.conference,conference);
+  });
 
   // QUnit.test("Test Paper List Subset [Feature ID: 12]", function(assert){
   //   assert.expect(1);
