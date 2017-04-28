@@ -110,8 +110,17 @@ function move(num, start) {
 }
 
 function subsetWordcloud(array) {
-	console.log(array);
-	printResultsForTitle(array,0);
+	//console.log(array);
+	move(50,1);
+
+
+	setTimeout(function(){printResultsForTitle(array,0);
+		move(100,50);
+	setTimeout(function(){link.style.display = 'none'; }, 900);
+	}, 900);
+
+	var link = document.getElementById('myProgress');
+
 }
 
 	function downloadImage() {
