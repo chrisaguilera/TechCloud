@@ -259,10 +259,8 @@ function ACM1(url, callback) { //0-3
       for (var i = 0; i < this.responseXML.getElementsByClassName("abstract").length; i++) {
 				text = this.responseXML.getElementsByClassName("abstract")[i].innerHTML;
 				dict = frequency(text, dict);
-
-				callback();
       }
-
+			callback();
     }
 
     // Get the HTML
