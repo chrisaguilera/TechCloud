@@ -521,7 +521,9 @@ function ACM2(url, targetword, type, papers, callback) { //0-3
 			callback(papers, type, targetword);
 		}
 
-		// Get the HTML
+		// Get the HTML all the html
+		//get response type
+		//send it
 		xhr.open( 'GET', url );
 		xhr.responseType = 'document';
 		xhr.send();
