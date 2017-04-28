@@ -616,6 +616,7 @@ function populatetargetlist(papers, word, conference) {
 			}
 			var link = document.createTextNode(arrayy[j]);
 			var span = document.createElement('span');
+			span.id = arrayy[j];
 			span.onclick = function () {
 				//console.log(this);
 				$.ajax({
