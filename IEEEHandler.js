@@ -507,7 +507,15 @@ function ACM2(url, targetword, type, papers, callback) { //0-3
 				var wordcount = checkWord(this.responseXML.getElementsByClassName("abstract")[i].innerHTML, targetword);
 				if (wordcount > 0) {
 					info[0] = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML;
-					info[1] = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+					//info[1] = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+					var authors = "";
+					for (var j = 0; j < this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a").length; j++) {
+						if (j != 0) {
+							authors += " ; ";
+						}
+						authors += this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[j].innerHTML;
+					}
+					info[1] = authors;
 					info[2] = this.responseXML.getElementsByClassName("source")[0].getElementsByTagName("span")[1].innerHTML;
 					info[3] = this.responseXML.getElementsByName("FullTextPDF")[i].href;
 					info[4] = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].href;;
@@ -894,7 +902,15 @@ function ACM3(url, targetword, type, papers, callback) { //0-3
 		xhr.onload = function() {
 			for (var i = 0; i < this.responseXML.getElementsByClassName("title").length; i++) {
 				var title = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML;
-				var author = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+				//var author = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+				var authors = "";
+				for (var j = 0; j < this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a").length; j++) {
+					if (j != 0) {
+						authors += " ; ";
+					}
+					authors += this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[j].innerHTML;
+				}
+				info[1] = authors;
 				newItem(title, author);
 			}
 		}
