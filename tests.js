@@ -474,19 +474,19 @@ $(document).ready(function () {
       }
     });
 
-  //   var done = assert.async();
-  //   setTimeout(function(){
-  //     assert.deepEqual("false", testBool);
-  //     $.ajax({
-  //       url: "StoreSubsetBool.php",
-  //       type: "POST",
-  //       data: {bool: originalBool},
-  //       datatype: "text",
-  //       success: function (resp) {
-  //       }
-  //     });
-  //     done();
-  //   }, 1500);
-  // });   
+    var done = assert.async();
+    setTimeout(function(){
+      assert.deepEqual("false", testBool);
+      $.ajax({
+        url: "StoreSubsetBool.php",
+        type: "POST",
+        data: {bool: originalBool},
+        datatype: "text",
+        success: function (resp) {
+        }
+      });
+      done();
+    }, 1500);
+  });   
 
 })
