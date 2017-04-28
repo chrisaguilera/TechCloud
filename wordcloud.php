@@ -211,7 +211,7 @@ function subsetWordcloud(array) {
 					//console.log(subsetArray);
 					var docTitle = "";
 					for (i = 0; i < subsetArray.length; i++) {
-						if (i != authorArray.length - 1) {
+						if (i != subsetArray.length - 1) {
 							docTitle += subsetArray[i] + ", ";
 						} else {
 							docTitle += subsetArray[i] + "";

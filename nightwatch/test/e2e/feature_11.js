@@ -12,7 +12,7 @@ module.exports = {
       .setValue('input[id="input-text"]', 'Boehm')
       .click('input[id="nameRadio"]')
       .click('button[type="add"]')
-      .waitForElementVisible('p[id="wordcloudparagraph"]');
+      .waitForElementVisible('span[id="web"]');
 
     browser
       .assert.elementPresent('option[value="Halfond"]')
