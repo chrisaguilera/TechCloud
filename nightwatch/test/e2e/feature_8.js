@@ -11,6 +11,7 @@ module.exports = {
       .waitForElementVisible('p[id="wordcloudparagraph"]')
       .click('span[id="web"]')
       .waitForElementVisible ('div[class="paperTable"]')
+      .waitForElementVisible ('span[id="2012 IEEE 23rd International Symposium on Software Reliability Engineering"]')
       .click ('span[id="2012 IEEE 23rd International Symposium on Software Reliability Engineering"]')
       .waitForElementVisible ('div[class="paperTable"]')
 

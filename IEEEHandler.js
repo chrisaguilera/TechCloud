@@ -579,6 +579,7 @@ function populatetargetlist(papers, word, conference) {
 		var checkboxtd = document.createElement('td');
 		var checkbox = document.createElement('input');
 		checkbox.type = "checkbox";
+		checkbox.id = papers[i][0];
 		checkboxtd.appendChild(checkbox);
 		tr.appendChild(checkboxtd);
 
@@ -623,6 +624,7 @@ function populatetargetlist(papers, word, conference) {
 		var td3 = document.createElement('td');
 		var conference = document.createTextNode(papers[i][2]);
 		var conferencespan = document.createElement('span');
+		conferencespan.id = papers[i][2];
 		conferencespan.appendChild(conference);
 		conferencespan.onclick = function() {
 
@@ -654,6 +656,7 @@ function populatetargetlist(papers, word, conference) {
 			showBibTeX(this.innerHTML);
 		}
 		bibtexTD.appendChild(bibtexText);
+		bibtexTD.id = papers[i][4];
 		tr.appendChild(bibtexTD);
 
 		list.appendChild(tr);
@@ -818,6 +821,7 @@ function newItem(title, author) {
 		li.className = "list-group-item";
 		var input = document.createElement("input");
 		input.type= "checkbox";
+		input.id = title;
 
 		li.appendChild(input);
 

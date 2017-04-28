@@ -11,6 +11,7 @@ module.exports = {
       .waitForElementVisible('p[id="wordcloudparagraph"]')
       .click('span[id="web"]')
       .waitForElementVisible ('div[class="paperTable"]')
+      .waitForElementVisible ('td[id="Automated Checking of Web Application Invocations"]')
       .click ('td[id="Automated Checking of Web Application Invocations"]')
       .waitForElementVisible ('div[class="content"]');
 
