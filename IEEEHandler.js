@@ -260,7 +260,7 @@ function ACM1(url, callback) { //0-3
 				text = this.responseXML.getElementsByClassName("abstract")[i].innerHTML;
 				dict = frequency(text, dict);
 
-				calback();
+				callback();
       }
 
     }
