@@ -422,71 +422,71 @@ $(document).ready(function () {
 
   }); 
 
-  // QUnit.test("Test Export List to PDF and Text [Feature ID: 10]", function(assert){
-  //   assert.expect(3);
+  QUnit.test("Test Export List to PDF and Text [Feature ID: 10]", function(assert){
+    assert.expect(3);
 
-  //   function buildRow(title, author, conference){
-  //     return {
-  //       title: title,
-  //       author: author,
-  //       conference: conference
-  //     };
-  //   }
+    function buildRow(title, author, conference){
+      return {
+        title: title,
+        author: author,
+        conference: conference
+      };
+    }
 
-  //   var title = "The Title";
-  //   var author = "Halfond";
-  //   var conference = "IEEE Testing Is Fun Conference";
-  //   var row = buildRow(title, author, conference);
+    var title = "The Title";
+    var author = "Halfond";
+    var conference = "IEEE Testing Is Fun Conference";
+    var row = buildRow(title, author, conference);
 
-  //   assert.deepEqual(row.title,title);
-  //   assert.deepEqual(row.author,author);
-  //   assert.deepEqual(row.conference,conference);
-  // });
+    assert.deepEqual(row.title,title);
+    assert.deepEqual(row.author,author);
+    assert.deepEqual(row.conference,conference);
+  });
 
-  // QUnit.test("Test Paper List Subset [Feature ID: 12]", function(assert){
-  //   assert.expect(1);
+  QUnit.test("Test Paper List Subset [Feature ID: 12]", function(assert){
+    assert.expect(1);
 
-  //   var originalBool;
-  //   var testBool;
+    var originalBool;
+    var testBool;
 
-  //   $.ajax({
-  //     url: "GetSubsetBool.php",
-  //     type: "GET",
-  //     dataType: "text",
-  //     success: function(response){
-  //       originalBool = response;
-  //       $.ajax({
-  //         url: "StoreSubsetBool.php",
-  //         type: "POST",
-  //         data: {bool: "false"},
-  //         dataType: "text",
-  //         success: function(response1){
-  //           $.ajax({
-  //             url: "GetSubsetBool.php",
-  //             type: "GET",
-  //             dataType: "text",
-  //             success: function(response2){
-  //               testBool = response2;
-  //             }
-  //           });
-  //         }
-  //       });
-  //     }
-  //   });
+    $.ajax({
+      url: "GetSubsetBool.php",
+      type: "GET",
+      dataType: "text",
+      success: function(response){
+        originalBool = response;
+        $.ajax({
+          url: "StoreSubsetBool.php",
+          type: "POST",
+          data: {bool: "false"},
+          dataType: "text",
+          success: function(response1){
+            $.ajax({
+              url: "GetSubsetBool.php",
+              type: "GET",
+              dataType: "text",
+              success: function(response2){
+                testBool = response2;
+              }
+            });
+          }
+        });
+      }
+    });
 
-  //   var done = assert.async();
-  //   setTimeout(function(){
-  //     assert.deepEqual("false", testBool);
-  //     $.ajax({
-  //       url: "StoreSubsetBool.php",
-  //       type: "POST",
-  //       data: {bool: originalBool},
-  //       datatype: "text",
-  //       success: function (resp) {
-  //       }
-  //     });
-  //     done();
-  //   }, 1500);
-  // });   
+    var done = assert.async();
+    setTimeout(function(){
+      assert.deepEqual("false", testBool);
+      $.ajax({
+        url: "StoreSubsetBool.php",
+        type: "POST",
+        data: {bool: originalBool},
+        datatype: "text",
+        success: function (resp) {
+        }
+      });
+      done();
+    }, 1500);
+  });   
 
 })
