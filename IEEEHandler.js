@@ -441,8 +441,12 @@ function findPaper(authors, targetword, index, papers, type) {
 									var download = response.getElementsByTagName("document")[i].getElementsByTagName("pdf")[0]["textContent"];
 									crap[3] = download;
 
-									var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
-									crap[4] = doi;
+									if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0] != 'undefined') {
+										var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
+										crap[4] = doi;
+									} else {
+										crap[4] = "";
+									}
 
 									crap[5] = wordcount;
 									console.log(tital + "    " + wordcount);
@@ -675,12 +679,7 @@ function populatetargetlist(papers, word, conference) {
 
 		list.appendChild(tr);
 	}
-	$("#realpapertable").tableExport({
-		 	formats: ['txt'],
-		 	bootstrap: true,
-		 	fileName: 'plaintext',
-		 	ignoreCols: [0, 1, 5],
-		 });
+
 }
 
 function newauthor(authorvalue) {
