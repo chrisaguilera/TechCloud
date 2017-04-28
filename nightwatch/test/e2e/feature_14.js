@@ -11,7 +11,7 @@ module.exports = {
       .waitForElementVisible('p[id="wordcloudparagraph"]')
 
     browser
-      .assert.title('Abstract Page')
+      .assert.title('wang')
       .assert.elementPresent ('p[id="wordcloudparagraph"]')
       .end();
   }
