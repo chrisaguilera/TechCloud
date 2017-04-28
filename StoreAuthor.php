@@ -21,6 +21,6 @@ if(!in_array($raw_author, $_SESSION['prevSearches'])) {
 	$_SESSION['prevSearches'][] = $raw_author;
 }
 
-echo json_encode($_SESSION['prevSearches']);
+echo json_encode($_SESSION['authors']);
 
 ?>

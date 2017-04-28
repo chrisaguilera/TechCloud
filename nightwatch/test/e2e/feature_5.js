@@ -11,6 +11,7 @@ module.exports = {
       .waitForElementVisible('p[id="wordcloudparagraph"]')
       .click('span[id="web"]')
       .waitForElementVisible ('div[class="paperTable"]')
+      .waitForElementVisible ('td[id="10.1109/ISSRE.2012.37"]')
       .click ('td[id="10.1109/ISSRE.2012.37"]');
 
     browser

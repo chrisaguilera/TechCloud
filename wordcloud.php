@@ -251,7 +251,8 @@ function subsetWordcloud(array) {
 					}
 					document.title = docTitle;
 					abstractTest(authorArray);
-					console.log(msg);
+					console.log("authorsarray: "+ authorArray);
+					console.log("after abstract test: " +msg);
 				});
 			}
 		});
