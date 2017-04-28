@@ -147,6 +147,24 @@
 						}
 					});
 					$.ajax({
+						url: "StoreAuthor.php",
+						type: "POST",
+						data: {author: "andrev"},
+						dataType: "text",
+						success: function(response){
+							console.log(response);
+						}
+					});
+					$.ajax({
+						url: "StoreAuthor.php",
+						type: "POST",
+						data: {author: "waseem ahmed"},
+						dataType: "text",
+						success: function(response){
+							console.log(response);
+						}
+					});
+					$.ajax({
 						url: "StoreSearch.php",
 						type: "POST",
 						data: {search: inputField.value},
