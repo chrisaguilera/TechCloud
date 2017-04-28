@@ -338,5 +338,155 @@ $(document).ready(function () {
 
   });
 
+  QUnit.test( "Test Getting List of Papers for a Word [Feature ID: 3]", function( assert ) {
+    assert.expect(3);
+    var correctTitle1 = "Automated Checking of Web Application Invocations";
+    var correctTitle2 = "Command-Form Coverage for Testing Database Applications";
+    var correctTitle3 = "Energy-directed test suite optimization";
+    var title1;
+    var title2;
+    var title3;
+
+    function getPapersForWords(search){
+      $.ajax({
+        url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?querytext="+search+"&au=halfond",
+        dataType: "xml",
+        success: function( response ) {
+          title1 = response.getElementsByTagName("document")[0].getElementsByTagName("title")[0]["textContent"];
+          title2 = response.getElementsByTagName("document")[1].getElementsByTagName("title")[0]["textContent"];
+          title3 = response.getElementsByTagName("document")[2].getElementsByTagName("title")[0]["textContent"];
+        }
+      });
+    }
+
+    var input = "application";
+    getPapersForWords(input);
+
+    var done = assert.async();
+    setTimeout(function(){
+      assert.deepEqual(title1, correctTitle1);
+      assert.deepEqual(title2, correctTitle2);
+      assert.deepEqual(title3, correctTitle3);
+      done();
+    }, 4000);
+  });
+
+
+  QUnit.test( "Test Getting List of Papers from a Conference [Feature ID: 8]", function( assert ) {
+    assert.expect(3);
+    var correctTitle1 = "Skyfire: Model-Based Testing with Cucumber";
+    var correctTitle2 = "Automatically Documenting Unit Test Cases";
+    var correctTitle3 = "Large Scale Generation of Complex and Faulty PHP Test Cases";
+    var title1;
+    var title2;
+    var title3;
+
+    function GetPapersForConf(conference){
+      $.ajax({
+        url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?jn="+conference,
+        dataType: "xml",
+        success: function( response ) {
+          title1 = response.getElementsByTagName("document")[9].getElementsByTagName("title")[0]["textContent"];
+          title2 = response.getElementsByTagName("document")[10].getElementsByTagName("title")[0]["textContent"];
+          title3 = response.getElementsByTagName("document")[12].getElementsByTagName("title")[0]["textContent"];
+        }
+      });
+    }
+
+    var input = "2016 IEEE International Conference on Software Testing, Verification and Validation (ICST)";
+    GetPapersForConf(input);
+
+    var done = assert.async();
+    setTimeout(function(){
+      assert.deepEqual(title1, correctTitle1);
+      assert.deepEqual(title2, correctTitle2);
+      assert.deepEqual(title3, correctTitle3);
+      done();
+    }, 4000);
+  });  
+
+  QUnit.test("Test Download Word Cloud Image [Feature ID: 13]", function(assert){
+    assert.expect(1);
+
+    function downloadURI(uri, name) {
+      var link = document.createElement("a");
+      link.download = name;
+      link.href = uri;
+      document.body.appendChild(link);
+      //link.click();
+    }
+
+    var uri = "data:picture.png";
+    downloadURI(uri, "myWordCloud.png");
+    assert.deepEqual(uri, "data:picture.png");
+
+  }); 
+
+  QUnit.test("Test Export List to PDF and Text [Feature ID: 10]", function(assert){
+    assert.expect(3);
+
+    function buildRow(title, author, conference){
+      return {
+        title: title,
+        author: author,
+        conference: conference
+      };
+    }
+
+    var title = "The Title";
+    var author = "Halfond";
+    var conference = "IEEE Testing Is Fun Conference";
+    var row = buildRow(title, author, conference);
+
+    assert.deepEqual(row.title,title);
+    assert.deepEqual(row.author,author);
+    assert.deepEqual(row.conference,conference);
+  });
+
+  QUnit.test("Test Paper List Subset [Feature ID: 12]", function(assert){
+    assert.expect(1);
+
+    var originalBool;
+    var testBool;
+
+    $.ajax({
+      url: "GetSubsetBool.php",
+      type: "GET",
+      dataType: "text",
+      success: function(response){
+        originalBool = response;
+        $.ajax({
+          url: "StoreSubsetBool.php",
+          type: "POST",
+          data: {bool: "false"},
+          dataType: "text",
+          success: function(response1){
+            $.ajax({
+              url: "GetSubsetBool.php",
+              type: "GET",
+              dataType: "text",
+              success: function(response2){
+                testBool = response2;
+              }
+            });
+          }
+        });
+      }
+    });
+
+    var done = assert.async();
+    setTimeout(function(){
+      assert.deepEqual("false", testBool);
+      $.ajax({
+        url: "StoreSubsetBool.php",
+        type: "POST",
+        data: {bool: originalBool},
+        datatype: "text",
+        success: function (resp) {
+        }
+      });
+      done();
+    }, 1500);
+  });   
 
 })

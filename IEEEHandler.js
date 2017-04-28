@@ -226,20 +226,50 @@ function printResultsForAuthor(authors, index) {
 					if (index < authors.length) {
 						printResultsForAuthor(authors, index);
 					} else if (index == authors.length) {
-						items = Object.keys(dict).map(function(key) {
-			    			return [key, dict[key]];
-			    		});
-			    		items.sort(function(first, second) {
-							return second[1] - first[1];
-						});
-						items = items.slice(0, 250);
-						publishtext(items);
+						//CALL ACM SOMEWHERE IN HERE
+						var url = "http://dl.acm.org/results.cfm?query=persons.authors.personName:("+authors[0]+")";
+						var callback = function() {
+							items = Object.keys(dict).map(function(key) {
+				    			return [key, dict[key]];
+				    		});
+				    		items.sort(function(first, second) {
+								return second[1] - first[1];
+							});
+							items = items.slice(0, 250);
+							publishtext(items);
+						}
+						acm(url, callback);
 					}
 				}
 
 		});
 	});
 }
+
+function ACM1(url, callback) { //0-3
+
+    // Feature detection
+    if ( !window.XMLHttpRequest ) return;
+
+    // Create new request
+    var xhr = new XMLHttpRequest();
+
+    // Setup callback
+    xhr.onload = function() {
+      for (var i = 0; i < this.responseXML.getElementsByClassName("abstract").length; i++) {
+				text = this.responseXML.getElementsByClassName("abstract")[i].innerHTML;
+				dict = frequency(text, dict);
+
+				calback();
+      }
+
+    }
+
+    // Get the HTML
+    xhr.open( 'GET', url );
+    xhr.responseType = 'document';
+    xhr.send();
+};
 
 function printResultsForTitle(titles, index) {
 	var pdfURL;
@@ -270,14 +300,19 @@ function printResultsForTitle(titles, index) {
 				if (index < titles.length) {
 					printResultsForTitle(titles, index);
 				} else if (index == titles.length) {
-					items = Object.keys(dict).map(function(key) {
-		    			return [key, dict[key]];
-		    		});
-		    		items.sort(function(first, second) {
-						return second[1] - first[1];
-					});
-					items = items.slice(0, 250);
-					publishtext(items);
+					//CALL ACM SOMWHERE IN HERE
+					var url = "http://dl.acm.org/results.cfm?query=acmdlTitle:("+titles[0]+")";
+					var callback = function() {
+						items = Object.keys(dict).map(function(key) {
+			    			return [key, dict[key]];
+			    		});
+			    		items.sort(function(first, second) {
+							return second[1] - first[1];
+						});
+						items = items.slice(0, 250);
+						publishtext(items);
+					}
+					acm1(url, callback);
 				}
 			}
 
@@ -327,6 +362,7 @@ function conferencesearch(conference, type) {
 					}
 			///index++;
 		}
+		//CALL ACM HERE
 		if (type === 0) {
 			papers.sort(sortFunctionName);
 		}
@@ -428,29 +464,67 @@ function findPaper(authors, targetword, index, papers, type) {
 					findPaper(authors, targetword, index, papers);
 				}
 				else {
+					var url = "http://dl.acm.org/results.cfm?query=persons.authors.personName:("+authors[0]+")";
 					//console.log(papers[0][4]);
-					if (type === 0) {
-						papers.sort(sortFunctionFreq);
+					var callback = function(papers, type, targetword) {
+						if (type === 0) {
+							papers.sort(sortFunctionFreq);
+						}
+						else if (type === 1) {
+							papers.sort(sortFunctionName);
+						}
+						else if (type === 2) {
+							papers.sort(sortFunctionAuth);
+						}
+						else if (type === 3) {
+							papers.sort(sortFunctionConf);
+						}
+						populatetargetlist(papers, targetword, false);
 					}
-					else if (type === 1) {
-						papers.sort(sortFunctionName);
-					}
-					else if (type === 2) {
-						papers.sort(sortFunctionAuth);
-					}
-					else if (type === 3) {
-						papers.sort(sortFunctionConf);
-					}
-					//populatetargetlist(papers);
+					ACM2(url, targetword, type, papers, callback);
 				}
-
-				populatetargetlist(papers, targetword, false);
 			}
 		});
 
 	});
 
 }
+
+function ACM2(url, targetword, type, papers, callback) { //0-3
+
+		// Feature detection
+		if ( !window.XMLHttpRequest ) return;
+
+		// Create new request
+		var xhr = new XMLHttpRequest();
+
+		// Setup callback
+		xhr.onload = function() {
+			for (var i = 0; i < this.responseXML.getElementsByClassName("title").length; i++) {
+				var info = [];
+				//0 tital, 1 author, 2 conference, 3 download, 4 doi, 5 wordcount
+				var wordcount = checkWord(this.responseXML.getElementsByClassName("abstract")[i].innerHTML, targetword);
+				if (wordcount > 0) {
+					info[0] = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML;
+					info[1] = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+					info[2] = this.responseXML.getElementsByClassName("source")[0].getElementsByTagName("span")[1].innerHTML;
+					info[3] = this.responseXML.getElementsByName("FullTextPDF")[i].href;
+					info[4] = "";
+					info[5] = wordcount;
+
+					if (!papers.includes(info)) {
+						papers.push(info);
+					}
+				}
+			}
+			callback(papers, type, targetword);
+		}
+
+		// Get the HTML
+		xhr.open( 'GET', url );
+		xhr.responseType = 'document';
+		xhr.send();
+};
 
 function sortFunctionFreq(a, b) {
     if (a[5] === b[5]) {
@@ -586,8 +660,16 @@ function populatetargetlist(papers, word, conference) {
 		tr.appendChild(bibtexTD);
 
 		list.appendChild(tr);
-	}
 
+
+	}
+	$("#realpapertable").tableExport({
+			formats: ['txt'],
+			bootstrap: true,
+			fileName: 'plaintext',
+			ignoreCols: [0, 4, 5],
+
+		});
 }
 
 function newauthor(authorvalue) {
@@ -788,7 +870,11 @@ function authorsSearchedDocsWith(word){
 								for(var i = 0; i < numPapers; i++){
 									var title = data.getElementsByTagName("document")[i].getElementsByTagName("title")[0]["textContent"];
 									var author = data.getElementsByTagName("document")[i].getElementsByTagName("authors")[0]["textContent"];
-									newItem(title, author)
+									newItem(title, author);
+									if (i == numPapers-1) {
+										var url = "http://dl.acm.org/results.cfm?query=persons.authors.personName:("+response[0]+")%20%20AND%20content.ftsec:(%252B"+word+")";
+										ACM3(url);
+									}
 								}
 							}
 						});
@@ -798,6 +884,29 @@ function authorsSearchedDocsWith(word){
 		}
 	});
 }
+
+function ACM3(url, targetword, type, papers, callback) { //0-3
+
+		// Feature detection
+		if ( !window.XMLHttpRequest ) return;
+
+		// Create new request
+		var xhr = new XMLHttpRequest();
+
+		// Setup callback
+		xhr.onload = function() {
+			for (var i = 0; i < this.responseXML.getElementsByClassName("title").length; i++) {
+				var title = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML;
+				var author = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+				newItem(title, author);
+			}
+		}
+
+		// Get the HTML
+		xhr.open( 'GET', url );
+		xhr.responseType = 'document';
+		xhr.send();
+};
 
 function keyTermsSearchedDocsWith(word){
 	$.ajax({
@@ -839,7 +948,7 @@ function showBibTeX(doi) {
   });
 }
 
-function getACMStuff(url) {
+function ACMconf(url, arr) { //0-3
 
     // Feature detection
     if ( !window.XMLHttpRequest ) return;
@@ -850,16 +959,24 @@ function getACMStuff(url) {
     // Setup callback
     xhr.onload = function() {
       for (var i = 0; i < 20; i++) {
-        console.log(this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML);
-        console.log(this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML);
-        console.log(this.responseXML.getElementsByClassName("abstract")[0].innerHTML);
-        console.log(this.responseXML.getElementsByName("FullTextPDF")[i].href);
+				var info = [];
+				//0 tital, 1 author, 2 conference, 3 download, 4 doi, 5 wordcount
+        info[0] = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML;
+        info[1] = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+        info[2] = this.responseXML.getElementsByClassName("source")[0].getElementsByTagName("span")[1].innerHTML;
+        info[3] = this.responseXML.getElementsByName("FullTextPDF")[i].href;
+
+				//this.responseXML.getElementsByClassName("abstract")[i].innerHTML;
+
+				if (!arr.includes(info)) {
+					arr.push(info);
+				}
       }
+
     }
 
     // Get the HTML
     xhr.open( 'GET', url );
     xhr.responseType = 'document';
     xhr.send();
-
 };

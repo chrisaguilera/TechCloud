@@ -57,7 +57,7 @@
 		</div>
 	  	<div id="buttonclass">
 	  		<button class="add-button btn" type="add">Add</button>
-	  		<button name="search-button" class="search-button btn">Search</button>
+	  		<button name="search-button" class="search-button btn" type="search">Search</button>
 	  		<button class="btn" onclick="downloadImage();">Download Image</button>
 				<button onclick="shit()">click me</button>
 	  	</div>
@@ -211,7 +211,7 @@ function subsetWordcloud(array) {
 					//console.log(subsetArray);
 					var docTitle = "";
 					for (i = 0; i < subsetArray.length; i++) {
-						if (i != authorArray.length - 1) {
+						if (i != subsetArray.length - 1) {
 							docTitle += subsetArray[i] + ", ";
 						} else {
 							docTitle += subsetArray[i] + "";
