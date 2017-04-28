@@ -1,23 +1,22 @@
 var conf = require('../../nightwatch.conf.js');
 
 module.exports = {
-  'Feature 9 Test': function (browser) {
+  'Feature 13 Test': function (browser) {
     browser
       .url('http://localhost:8888/index.php')
       .waitForElementVisible('body')
       .setValue('input[id="input-text"]', 'Halfond')
       .click('input[id="nameRadio"]')
+      .waitForElementVisible ('button[type="search"]')
       .click('button[type="search"]')
       .waitForElementVisible('p[id="wordcloudparagraph"]')
-      .click('span[id="web"]')
-      .waitForElementVisible ('div[class="paperTable"]')
-      .click ('td[id="Automated Checking of Web Application Invocations"]')
-      .waitForElementVisible ('div[class="content"]');
+      .waitForElementVisible ('btn[id="download"]')
+      .click('btn[id="download"]')
+      .saveScreenshot('http://localhost:8888/wordcloud.php');
 
 
     browser
-      .assert.title('Abstract Page')
-      .assert.elementPresent ('span[class="highlight"]')
+      .assert.title('Word Cloud')
       .end();
   }
 };

@@ -126,6 +126,7 @@ function subsetWordcloud(array) {
 	function downloadImage() {
 
 		var div = document.getElementById('wordcloudparagraph');
+		//document.getElementById ('http://localhost:8888/wordcloud.php').action('http://localhost:8888/wordcloud.php/download');
 		html2canvas((div), {
 			onrendered: function(canvas){
 				var img = canvas.toDataURL("image/png");
