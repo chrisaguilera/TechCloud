@@ -1,5 +1,5 @@
 <?php
-	
+
 ?>
 
 <!DOCTYPE html>
@@ -88,8 +88,13 @@
 			numInputField.value = "10";
 
 			$(".search-button").click(function() {
+				$.ajax({
+					url: "StoreSubsetBool.php",
+					type: "POST",
+					data: {bool : "false"},
+					dataType: "text"
+				});
 
-				
 				$.ajax({
 					url: "StoreNumResults.php",
 					type: "POST",

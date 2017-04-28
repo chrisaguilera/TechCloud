@@ -587,6 +587,12 @@ function clickedPaperTitle(element) {
 	}
 
 	function subset() {
+		$.ajax({
+			url: "StoreSubsetBool.php",
+			type: "POST",
+			data: {bool : "true"},
+			dataType: "text"
+		});
 		checkboxes = document.getElementsByTagName("input");
 
     for (var i = 0; i < checkboxes.length; i++) {
@@ -595,7 +601,13 @@ function clickedPaperTitle(element) {
             var currentRow = checkbox.parentNode.parentNode;
             var secondColumn = currentRow.getElementsByTagName("td")[1];
 
-            alert("My text is: " + secondColumn.textContent );
+            //alert("My text is: " + secondColumn.textContent );
+						var request = $.ajax({
+							url: "StoreSubset.php",
+							type: "POST",
+							data: {subset : secondColumn.textContent},
+							dataType: "text"
+						});
         }
     }
 	}

@@ -15,7 +15,7 @@ if(!isset($_SESSION['currentTitle'])) {
 	$_SESSION['currentTitle'] = '';
 }
 
-$raw_title = isset($_POST['bool']) ? $_POST['bool'] : '';
+$raw_bool = isset($_POST['bool']) ? $_POST['bool'] : '';
 
 $_SESSION['bools'] = $raw_bool;
 

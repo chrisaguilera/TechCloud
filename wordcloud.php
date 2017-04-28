@@ -109,6 +109,11 @@ function move(num, start) {
 		//wait(5000);
 }
 
+function subsetWordcloud(array) {
+	console.log(array);
+	printResultsForTitle(array,0);
+}
+
 	function downloadImage() {
 
 		var div = document.getElementById('wordcloudparagraph');
@@ -242,18 +247,46 @@ function move(num, start) {
 		populatePreviousSearches();
 
 		// Stuff for word cloud
-		var authorArray;
-
+		var subsetArray;
 		var request = $.ajax({
-			url: "GetAuthors.php",
+			url: "GetSubsetBool.php",
 			type: "GET",
 			dataType: "JSON"
 		});
-		request.done(function(msg) {
-			authorArray = msg;
-			abstractTest(authorArray);
-			console.log(msg);
+		request.done(function(something) {
+			var truth = something;
+			console.log(truth);
+
+			if (truth) {
+				//console.log("here1!!!!");
+				var request = $.ajax({
+					url: "GetSubset.php",
+					type: "GET",
+					dataType: "JSON"
+				});
+				request.done(function(something2) {
+					subsetArray = something2;
+					//console.log(subsetArray);
+					subsetWordcloud(subsetArray);
+				});
+			}
+			else {
+				var authorArray;
+				var request = $.ajax({
+					url: "GetAuthors.php",
+					type: "GET",
+					dataType: "JSON"
+				});
+				request.done(function(msg) {
+					authorArray = msg;
+					abstractTest(authorArray);
+					console.log(msg);
+				});
+			}
 		});
+
+
+
 
 		$(".search-button").click(function() {
 
