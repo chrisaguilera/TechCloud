@@ -372,38 +372,38 @@ $(document).ready(function () {
   });
 
 
-  // QUnit.test( "Test Getting List of Papers from a Conference [Feature ID: 8]", function( assert ) {
-  //   assert.expect(3);
-  //   var correctTitle1 = "Skyfire: Model-Based Testing with Cucumber";
-  //   var correctTitle2 = "Automatically Documenting Unit Test Cases";
-  //   var correctTitle3 = "Large Scale Generation of Complex and Faulty PHP Test Cases";
-  //   var title1;
-  //   var title2;
-  //   var title3;
+  QUnit.test( "Test Getting List of Papers from a Conference [Feature ID: 8]", function( assert ) {
+    assert.expect(3);
+    var correctTitle1 = "Skyfire: Model-Based Testing with Cucumber";
+    var correctTitle2 = "Automatically Documenting Unit Test Cases";
+    var correctTitle3 = "Large Scale Generation of Complex and Faulty PHP Test Cases";
+    var title1;
+    var title2;
+    var title3;
 
-  //   function GetPapersForConf(conference){
-  //     $.ajax({
-  //       url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?jn="+conference,
-  //       dataType: "xml",
-  //       success: function( response ) {
-  //         title1 = response.getElementsByTagName("document")[9].getElementsByTagName("title")[0]["textContent"];
-  //         title2 = response.getElementsByTagName("document")[10].getElementsByTagName("title")[0]["textContent"];
-  //         title3 = response.getElementsByTagName("document")[12].getElementsByTagName("title")[0]["textContent"];
-  //       }
-  //     });
-  //   }
+    function GetPapersForConf(conference){
+      $.ajax({
+        url: "http://ieeexplore.ieee.org/gateway/ipsSearch.jsp?jn="+conference,
+        dataType: "xml",
+        success: function( response ) {
+          title1 = response.getElementsByTagName("document")[9].getElementsByTagName("title")[0]["textContent"];
+          title2 = response.getElementsByTagName("document")[10].getElementsByTagName("title")[0]["textContent"];
+          title3 = response.getElementsByTagName("document")[12].getElementsByTagName("title")[0]["textContent"];
+        }
+      });
+    }
 
-  //   var input = "2016 IEEE International Conference on Software Testing, Verification and Validation (ICST)";
-  //   GetPapersForConf(input);
+    var input = "2016 IEEE International Conference on Software Testing, Verification and Validation (ICST)";
+    GetPapersForConf(input);
 
-  //   var done = assert.async();
-  //   setTimeout(function(){
-  //     assert.deepEqual(title1, correctTitle1);
-  //     assert.deepEqual(title2, correctTitle2);
-  //     assert.deepEqual(title3, correctTitle3);
-  //     done();
-  //   }, 4000);
-  // });  
+    var done = assert.async();
+    setTimeout(function(){
+      assert.deepEqual(title1, correctTitle1);
+      assert.deepEqual(title2, correctTitle2);
+      assert.deepEqual(title3, correctTitle3);
+      done();
+    }, 4000);
+  });  
 
   // QUnit.test("Test Download Word Cloud Image [Feature ID: 13]", function(assert){
   //   assert.expect(1);
