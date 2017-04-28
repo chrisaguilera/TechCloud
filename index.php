@@ -125,7 +125,7 @@
 						populatePreviousSearches();
 					});
 
-				} else if (document.getElementById('keywordRadio')){
+				} else if (document.getElementById('keywordRadio').checked){
 					var request = $.ajax({
 						url: "StoreKeyword.php",
 						type: "POST",

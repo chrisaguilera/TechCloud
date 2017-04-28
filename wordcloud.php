@@ -197,6 +197,7 @@ function subsetWordcloud(array) {
 
 		populatePreviousSearches();
 
+
 		// Stuff for word cloud
 		var subsetArray;
 
@@ -290,16 +291,46 @@ function subsetWordcloud(array) {
 				});
 
 			} else if (document.getElementById('keywordRadio')){
-				var request = $.ajax({
-					url: "StoreKeyword.php",
+				// var request = $.ajax({
+				// 	url: "StoreKeyword.php",
+				// 	type: "POST",
+				// 	data: {keyword : inputField.value},
+				// 	dataType: "text"
+				// });
+				// request.done(function(msg) {
+				// 	window.location.href = "wordcloud.php";
+				// 	populatePreviousSearches();
+				// });
+				console.log("adding wang et al to authors array.");
+				$.ajax({
+					url: "StoreAuthor.php",
 					type: "POST",
-					data: {keyword : inputField.value},
-					dataType: "text"
+					data: {author: "wang"},
+					dataType: "text",
+					success: function(response){
+						console.log(response);
+					}
 				});
-				request.done(function(msg) {
-					window.location.href = "wordcloud.php";
-					populatePreviousSearches();
+				$.ajax({
+					url: "StoreAuthor.php",
+					type: "POST",
+					data: {author: "andrev"},
+					dataType: "text",
+					success: function(response){
+						console.log(response);
+					}
 				});
+				$.ajax({
+					url: "StoreAuthor.php",
+					type: "POST",
+					data: {author: "waseem ahmed"},
+					dataType: "text",
+					success: function(response){
+						console.log(response);
+					}
+				});
+				window.location.href = "wordcloud.php";
+				populatePreviousSearches
 			}
 
 
