@@ -76,10 +76,10 @@
 
 				        document.getElementById('abstractContent').innerHTML = newAbstract;
 
-				      },
-				      error: function(xhr, error){
-				      	// alert(error + xhr);
 				      }
+						},
+						error: function(xhr, error){
+							// alert(error + xhr);
 						}
 		    	});
 			}
@@ -92,7 +92,7 @@
 
 				// Setup callback
 				xhr.onload = function() {
-					var abstract = this.responseXML.getElementsByClassName("abstract")[i].innerHTML;
+					var abstract = this.responseXML.getElementsByClassName("abstract")[0].innerHTML;
 					abstract = abstract.toLowerCase();
 					//globaltext = abstract.split(wordd);
 					//console.log(abstract.split(wordd));
