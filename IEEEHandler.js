@@ -238,7 +238,7 @@ function printResultsForAuthor(authors, index) {
 							items = items.slice(0, 250);
 							publishtext(items);
 						}
-						acm(url, callback);
+						ACM1(url, callback);
 					}
 				}
 
@@ -312,7 +312,7 @@ function printResultsForTitle(titles, index) {
 						items = items.slice(0, 250);
 						publishtext(items);
 					}
-					acm1(url, callback);
+					ACM1(url, callback);
 				}
 			}
 
@@ -629,7 +629,6 @@ function populatetargetlist(papers, word, conference) {
 			conferencesearch(this.innerHTML, 0);
 		}
 		td3.appendChild(conferencespan);
-		conferencespan.id = papers [0][2];
 		tr.appendChild(td3);
 		/*for (var j = 1; j < 3; j++) {
 			var td = document.createElement('td');
@@ -649,8 +648,6 @@ function populatetargetlist(papers, word, conference) {
 		tr.appendChild(td);
 
 		var bibtexTD = document.createElement('td');
-		bibtexTD.id = papers[0][4];
-
 		var bibtexText = document.createTextNode(papers[i][4]);
 		bibtexTD.onclick = function() {
 
@@ -660,16 +657,8 @@ function populatetargetlist(papers, word, conference) {
 		tr.appendChild(bibtexTD);
 
 		list.appendChild(tr);
-
-
 	}
-	$("#realpapertable").tableExport({
-			formats: ['txt'],
-			bootstrap: true,
-			fileName: 'plaintext',
-			ignoreCols: [0, 4, 5],
 
-		});
 }
 
 function newauthor(authorvalue) {
