@@ -259,10 +259,8 @@ function ACM1(url, callback) { //0-3
       for (var i = 0; i < this.responseXML.getElementsByClassName("abstract").length; i++) {
 				text = this.responseXML.getElementsByClassName("abstract")[i].innerHTML;
 				dict = frequency(text, dict);
-
-				callback();
       }
-
+			callback();
     }
 
     // Get the HTML
@@ -506,13 +504,24 @@ function ACM2(url, targetword, type, papers, callback) { //0-3
 			for (var i = 0; i < this.responseXML.getElementsByClassName("title").length; i++) {
 				var info = [];
 				//0 tital, 1 author, 2 conference, 3 download, 4 doi, 5 wordcount
+				if (typeof this.responseXML.getElementsByClassName("abstract")[i] == 'undefined'){
+					continue;
+				}
 				var wordcount = checkWord(this.responseXML.getElementsByClassName("abstract")[i].innerHTML, targetword);
 				if (wordcount > 0) {
 					info[0] = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML;
-					info[1] = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+					//info[1] = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+					var authors = "";
+					for (var j = 0; j < this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a").length; j++) {
+						if (j != 0) {
+							authors += " ; ";
+						}
+						authors += this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[j].innerHTML;
+					}
+					info[1] = authors;
 					info[2] = this.responseXML.getElementsByClassName("source")[0].getElementsByTagName("span")[1].innerHTML;
 					info[3] = this.responseXML.getElementsByName("FullTextPDF")[i].href;
-					info[4] = "";
+					info[4] = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].href;;
 					info[5] = wordcount;
 
 					if (!papers.includes(info)) {
@@ -523,7 +532,9 @@ function ACM2(url, targetword, type, papers, callback) { //0-3
 			callback(papers, type, targetword);
 		}
 
-		// Get the HTML
+		// Get the HTML all the html
+		//get response type
+		//send it
 		xhr.open( 'GET', url );
 		xhr.responseType = 'document';
 		xhr.send();
@@ -582,6 +593,7 @@ function populatetargetlist(papers, word, conference) {
 		var checkboxtd = document.createElement('td');
 		var checkbox = document.createElement('input');
 		checkbox.type = "checkbox";
+		checkbox.id = papers[i][0];
 		checkboxtd.appendChild(checkbox);
 		tr.appendChild(checkboxtd);
 
@@ -626,6 +638,7 @@ function populatetargetlist(papers, word, conference) {
 		var td3 = document.createElement('td');
 		var conference = document.createTextNode(papers[i][2]);
 		var conferencespan = document.createElement('span');
+		conferencespan.id = papers[i][2];
 		conferencespan.appendChild(conference);
 		conferencespan.onclick = function() {
 
@@ -657,6 +670,7 @@ function populatetargetlist(papers, word, conference) {
 			showBibTeX(this.innerHTML);
 		}
 		bibtexTD.appendChild(bibtexText);
+		bibtexTD.id = papers[i][4];
 		tr.appendChild(bibtexTD);
 
 		list.appendChild(tr);
@@ -821,6 +835,7 @@ function newItem(title, author) {
 		li.className = "list-group-item";
 		var input = document.createElement("input");
 		input.type= "checkbox";
+		input.id = title;
 
 		li.appendChild(input);
 
@@ -894,7 +909,15 @@ function ACM3(url, targetword, type, papers, callback) { //0-3
 		xhr.onload = function() {
 			for (var i = 0; i < this.responseXML.getElementsByClassName("title").length; i++) {
 				var title = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML;
-				var author = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+				//var author = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
+				var authors = "";
+				for (var j = 0; j < this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a").length; j++) {
+					if (j != 0) {
+						authors += " ; ";
+					}
+					authors += this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[j].innerHTML;
+				}
+				info[1] = authors;
 				newItem(title, author);
 			}
 		}
@@ -931,49 +954,50 @@ function keyTermsSearchedDocsWith(word){
 }
 
 function showBibTeX(doi) {
-  $.ajax({
-    url : "http://dx.doi.org/"+doi,
-    headers: {
-      Accept: "application/x-bibtex; charset=utf-8",
-      "Content-Type": "application/x-bibtex; charset=utf-8"
-    },
-    success : function(result){
-    	console.log(result);
-    	console.log(typeof result);
-        alert(result);
-    }
-  });
+	if (doi.substring(0,7) == "http://") {
+		getACMDOI(doi);
+	} else {
+	  $.ajax({
+	    url : "http://dx.doi.org/"+doi,
+	    headers: {
+	      Accept: "application/x-bibtex; charset=utf-8",
+	      "Content-Type": "application/x-bibtex; charset=utf-8"
+	    },
+	    success : function(result){
+	    	console.log(result);
+	    	console.log(typeof result);
+	        alert(result);
+	    }
+	  });
+	}
 }
 
-function ACMconf(url, arr) { //0-3
+function getACMDOI(url) {
+	// Feature detection
+  if ( !window.XMLHttpRequest ) return;
 
-    // Feature detection
-    if ( !window.XMLHttpRequest ) return;
+  // Create new request
+  var xhr = new XMLHttpRequest();
 
-    // Create new request
-    var xhr = new XMLHttpRequest();
+  // Setup callback
+  xhr.onload = function() {
+    var doi = this.responseXML.getElementsByName("citation_doi")[0].content;
+		$.ajax({
+	    url : "http://dx.doi.org/"+doi,
+	    headers: {
+	      Accept: "application/x-bibtex; charset=utf-8",
+	      "Content-Type": "application/x-bibtex; charset=utf-8"
+	    },
+	    success : function(result){
+	    	console.log(result);
+	    	console.log(typeof result);
+	        alert(result);
+	    }
+	  });
+  }
 
-    // Setup callback
-    xhr.onload = function() {
-      for (var i = 0; i < 20; i++) {
-				var info = [];
-				//0 tital, 1 author, 2 conference, 3 download, 4 doi, 5 wordcount
-        info[0] = this.responseXML.getElementsByClassName("title")[i].getElementsByTagName("a")[0].innerHTML;
-        info[1] = this.responseXML.getElementsByClassName("authors")[i].getElementsByTagName("a")[0].innerHTML;
-        info[2] = this.responseXML.getElementsByClassName("source")[0].getElementsByTagName("span")[1].innerHTML;
-        info[3] = this.responseXML.getElementsByName("FullTextPDF")[i].href;
-
-				//this.responseXML.getElementsByClassName("abstract")[i].innerHTML;
-
-				if (!arr.includes(info)) {
-					arr.push(info);
-				}
-      }
-
-    }
-
-    // Get the HTML
-    xhr.open( 'GET', url );
-    xhr.responseType = 'document';
-    xhr.send();
-};
+  // Get the HTML
+  xhr.open( 'GET', url );
+  xhr.responseType = 'document';
+  xhr.send();
+}

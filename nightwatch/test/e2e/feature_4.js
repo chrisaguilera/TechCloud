@@ -11,6 +11,7 @@ module.exports = {
       .waitForElementVisible('p[id="wordcloudparagraph"]')
       .click('span[id="web"]')
       .waitForElementVisible('div[class="paperTable"]')
+      .waitForElementVisible('a[href="http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6405359"]')
       .click('a[href="http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=6405359"]');
 
     browser
