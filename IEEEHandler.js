@@ -503,6 +503,7 @@ function populatetargetlist(papers, word, conference) {
 			conferencesearch(this.innerHTML, 0);
 		}
 		td3.appendChild(conferencespan);
+		conferencespan.id = papers [0][2];
 		tr.appendChild(td3);
 		/*for (var j = 1; j < 3; j++) {
 			var td = document.createElement('td');
