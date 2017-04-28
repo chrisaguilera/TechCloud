@@ -532,6 +532,12 @@ function populatetargetlist(papers, word, conference) {
 			var span = document.createElement('span');
 			span.onclick = function () {
 				//console.log(this);
+				$.ajax({
+					url: "StoreSubsetBool.php",
+					type: "POST",
+					data: {bool : "false"},
+					dataType: "text"
+				});
 				newauthor(this.innerHTML);
 			}
 			span.appendChild(link);
