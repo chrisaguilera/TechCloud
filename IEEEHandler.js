@@ -362,10 +362,16 @@ function conferencesearch(conference, type) {
 		}
 		//CALL ACM HERE
 		if (type === 0) {
-			papers.sort(sortFunctionName);
+			papers.sort(sortFunctionFreq);
 		}
 		else if (type === 1) {
+			papers.sort(sortFunctionName);
+		}
+		else if (type === 2) {
 			papers.sort(sortFunctionAuth);
+		}
+		else if (type === 3) {
+			papers.sort(sortFunctionConf);
 		}
 
 				populatetargetlist(papers, conference, true);

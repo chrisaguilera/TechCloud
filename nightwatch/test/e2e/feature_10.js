@@ -10,12 +10,19 @@ module.exports = {
       .waitForElementVisible ('button[type="search"]')
       .click('button[type="search"]')
       .waitForElementVisible('p[id="wordcloudparagraph"]')
-      .waitForElementVisible ('button[id="download"]')
-      // .click('button[id="download"]')
-      .saveScreenshot('/Users/chrisaguilera/Desktop/WordCloud.png');
+      .waitForElementVisible('span[id="web"]')
+      .click('span[id="web"]')
+      .waitForElementVisible('td[id="Automated Checking of Web Application Invocations"]')
+      .waitForElementVisible('button[class="btn btn-default txt"]')
+      .click('button[class="btn btn-default txt"]')
+      .pause(1000)
+      // .acceptAlert()
+      .click('button[id="exportpdf"]')
+      .pause(1000)
+      // .acceptAlert()
 
     browser
-      .assert.title('Halfond')
+      .assert.elementPresent('button[class="btn btn-default txt"]')
       .end();
   }
 };
