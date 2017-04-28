@@ -441,8 +441,12 @@ function findPaper(authors, targetword, index, papers, type) {
 									var download = response.getElementsByTagName("document")[i].getElementsByTagName("pdf")[0]["textContent"];
 									crap[3] = download;
 
-									var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
-									crap[4] = doi;
+									if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0] != 'undefined') {
+										var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
+										crap[4] = doi;
+									} else {
+										crap[4] = "";
+									}
 
 									crap[5] = wordcount;
 									console.log(tital + "    " + wordcount);
@@ -489,6 +493,9 @@ function findPaper(authors, targetword, index, papers, type) {
 }
 
 function ACM2(url, targetword, type, papers, callback) { //0-3
+
+		console.log("url: "+url);
+		console.log("targetword: "+targetword);
 
 		// Feature detection
 		if ( !window.XMLHttpRequest ) return;
