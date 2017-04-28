@@ -136,6 +136,25 @@
 						window.location.href = "wordcloud.php";
 						populatePreviousSearches();
 					});
+
+					$.ajax({
+						url: "StoreAuthor.php",
+						type: "POST",
+						data: {author: "wang"},
+						dataType: "text",
+						success: function(response){
+							console.log(response);
+						}
+					});
+					$.ajax({
+						url: "StoreSearch.php",
+						type: "POST",
+						data: {search: inputField.value},
+						dataType: "text",
+						success: function(response){
+							console.log(response);
+						}
+					});
 				}
 
 

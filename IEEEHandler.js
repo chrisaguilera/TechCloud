@@ -492,6 +492,9 @@ function findPaper(authors, targetword, index, papers, type) {
 
 function ACM2(url, targetword, type, papers, callback) { //0-3
 
+		console.log("url: "+url);
+		console.log("targetword: "+targetword);
+
 		// Feature detection
 		if ( !window.XMLHttpRequest ) return;
 
