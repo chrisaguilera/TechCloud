@@ -18,6 +18,7 @@ module.exports = {
 
     browser
       .assert.title('Abstract Page')
+      .assert.elementPresent ('span[class="highlight"]')
       .end();
   }
 };

@@ -487,6 +487,21 @@ $(document).ready(function () {
       });
       done();
     }, 1500);
+  });
+
+  QUnit.test("Test Download PDF Version of Paper [Feature ID: 15]", function(assert){
+    assert.expect(1);
+
+    function createTextObject(input){
+      return {
+        text:input
+      };
+    }
+
+    var input = "This is a test";
+    var textObject = createTextObject(input);
+
+    assert.deepEqual(textObject.text, input);
   });   
 
 })

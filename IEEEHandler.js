@@ -441,8 +441,12 @@ function findPaper(authors, targetword, index, papers, type) {
 									var download = response.getElementsByTagName("document")[i].getElementsByTagName("pdf")[0]["textContent"];
 									crap[3] = download;
 
-									var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
-									crap[4] = doi;
+									if (typeof response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0] != 'undefined') {
+										var doi = response.getElementsByTagName("document")[i].getElementsByTagName("doi")[0]["textContent"];
+										crap[4] = doi;
+									} else {
+										crap[4] = "";
+									}
 
 									crap[5] = wordcount;
 									console.log(tital + "    " + wordcount);
@@ -619,6 +623,7 @@ function populatetargetlist(papers, word, conference) {
 			}
 			var link = document.createTextNode(arrayy[j]);
 			var span = document.createElement('span');
+			span.id = arrayy[j];
 			span.onclick = function () {
 				//console.log(this);
 				$.ajax({
