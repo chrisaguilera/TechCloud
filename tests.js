@@ -405,22 +405,22 @@ $(document).ready(function () {
     }, 4000);
   });  
 
-  // QUnit.test("Test Download Word Cloud Image [Feature ID: 13]", function(assert){
-  //   assert.expect(1);
+  QUnit.test("Test Download Word Cloud Image [Feature ID: 13]", function(assert){
+    assert.expect(1);
 
-  //   function downloadURI(uri, name) {
-  //     var link = document.createElement("a");
-  //     link.download = name;
-  //     link.href = uri;
-  //     document.body.appendChild(link);
-  //     //link.click();
-  //   }
+    function downloadURI(uri, name) {
+      var link = document.createElement("a");
+      link.download = name;
+      link.href = uri;
+      document.body.appendChild(link);
+      //link.click();
+    }
 
-  //   var uri = "data:picture.png";
-  //   downloadURI(uri, "myWordCloud.png");
-  //   assert.deepEqual(uri, "data:picture.png");
+    var uri = "data:picture.png";
+    downloadURI(uri, "myWordCloud.png");
+    assert.deepEqual(uri, "data:picture.png");
 
-  // }); 
+  }); 
 
   // QUnit.test("Test Export List to PDF and Text [Feature ID: 10]", function(assert){
   //   assert.expect(3);
